@@ -53,7 +53,7 @@ python money_manager/main.py
 
 <h2>▶️ Run the App</h2>
 <pre>
-python src/presentation/main.py
+python money_manager/main.py
 </pre>
 
 <h2>🔮 Future Enhancements</h2>
