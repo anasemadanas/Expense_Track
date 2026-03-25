@@ -67,26 +67,61 @@
 
 ## 6️⃣ Folder Structure
 ```bash
-money_manager/
+Expense_Track/
 │
-├── docs/
-│ └── project_document.md
-├── src/
-│ ├── presentation/
-│ │ ├── main.py
-│ │ ├── views/
-│ │ └── controllers/
-│ ├── business/
-│ │ ├── services/
-│ │ └── models/
-│ ├── data/
-│ │ ├── repositories/
-│ │ └── interfaces/
-│ └── shared/
-├── tests/
-├── requirements.txt
+├── README.md
+├── LICENSE
 ├── .gitignore
-└── README.md
+├── requirements.txt
+│
+└── money_manager/
+    ├── __init__.py
+    ├── main.py
+    ├── src/
+    │   ├── presentation/           # GUI Layer
+    │   │   ├── __init__.py
+    │   │   ├── views/
+    │   │   │   ├── __init__.py
+    │   │   │   ├── dashboard_view.py
+    │   │   │   ├── add_transaction_view.py
+    │   │   │   └── budget_view.py
+    │   │   └── controllers/
+    │   │       ├── __init__.py
+    │   │       └── transaction_controller.py
+    │   │
+    │   ├── business/                # Service Layer
+    │   │   ├── __init__.py
+    │   │   ├── services/
+    │   │   │   ├── __init__.py
+    │   │   │   ├── transaction_service.py
+    │   │   │   └── budget_service.py
+    │   │   └── models/
+    │   │       ├── __init__.py
+    │   │       ├── transaction.py
+    │   │       └── budget.py
+    │   │
+    │   ├── data/                    # Repository Layer
+    │   │   ├── __init__.py
+    │   │   ├── database.py
+    │   │   ├── repositories/
+    │   │   │   ├── __init__.py
+    │   │   │   ├── transaction_repo.py
+    │   │   │   └── budget_repo.py
+    │   │   └── interfaces/
+    │   │       ├── __init__.py
+    │   │       ├── ITransactionRepo.py
+    │   │       └── IBudgetRepo.py
+    │   │
+    │   └── shared/
+    │       ├── __init__.py
+    │       ├── util.py
+    │       └── constants.py
+    │
+    └── tests/
+        ├── __init__.py
+        ├── test_transaction_service.py
+        ├── test_budget_service.py
+        └── test_repo.py
 ```
 ---
 
