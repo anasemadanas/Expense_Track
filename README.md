@@ -45,7 +45,7 @@ money_manager/
 
 <h2>📦 Installation</h2>
 <pre>
-git clone https://github.com/your-username/money_manager.git
+git clone https://github.com/anasemadanas/Expense_Track.git
 cd money_manager
 pip install -r requirements.txt
 </pre>
