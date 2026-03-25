@@ -46,8 +46,9 @@ money_manager/
 <h2>📦 Installation</h2>
 <pre>
 git clone https://github.com/anasemadanas/Expense_Track.git
-cd money_manager
+cd Expense_Track
 pip install -r requirements.txt
+python money_manager/main.py
 </pre>
 
 <h2>▶️ Run the App</h2>
