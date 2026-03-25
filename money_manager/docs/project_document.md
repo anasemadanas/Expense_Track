@@ -109,7 +109,7 @@ money_manager/
 ## 9️⃣ How to Run
 1. Clone the repository:  
 ```bash
-git clone https://github.com/your-username/money_manager.git
+git clone https://github.com/anasemadanas/Expense_Track.git
 
 Install dependencies:
 pip install -r requirements.txt
