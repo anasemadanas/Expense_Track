@@ -28,21 +28,6 @@
     <li><strong>Data Layer:</strong> Handles SQLite storage using repositories and interfaces</li>
 </ul>
 
-<h2>📁 Folder Structure</h2>
-<pre>
-money_manager/
-├── docs/
-├── src/
-│   ├── presentation/
-│   ├── business/
-│   ├── data/
-│   └── shared/
-├── tests/
-├── requirements.txt
-├── .gitignore
-└── README.md
-</pre>
-
 <h2>📦 Installation</h2>
 <pre>
 git clone https://github.com/anasemadanas/Expense_Track.git
