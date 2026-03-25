@@ -66,6 +66,7 @@
 ---
 
 ## 6️⃣ Folder Structure
+```cpp
 money_manager/
 │
 ├── docs/
@@ -86,7 +87,7 @@ money_manager/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
-
+```
 ---
 
 ## 7️⃣ Database Design
