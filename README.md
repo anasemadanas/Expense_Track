@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Money Manager App</title>
+
 </head>
 <body>
 
@@ -62,6 +62,7 @@ python src/presentation/main.py
     <li>Cloud sync</li>
     <li>PDF Reports</li>
     <li>AI income/spending predictions</li>
+</ul>
 </ul>
 
 <h2>📜 License</h2>
