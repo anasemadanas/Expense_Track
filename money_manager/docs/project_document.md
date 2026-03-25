@@ -66,7 +66,7 @@
 ---
 
 ## 6️⃣ Folder Structure
-```cpp
+```bash
 money_manager/
 │
 ├── docs/
@@ -110,8 +110,6 @@ money_manager/
 1. Clone the repository:  
 ```bash
 git clone https://github.com/anasemadanas/Expense_Track.git
-
-Install dependencies:
+cd Expense_Track
 pip install -r requirements.txt
-Run the application:
-python src/presentation/main.py
+python money_manager/main.py
