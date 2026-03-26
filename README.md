@@ -12,11 +12,12 @@
 
 <h2> Table of Contents</h2>
 <ul>
-    <li>Features</li>
-    <li>Architecture</li>
-    <li>Installation</li>
-    <li>Future Enhancements</li>
-    <li>License</li>
+<a href="#introduction">🧾 Introduction</a>
+<a href="#features">✨ Features</a>
+<a href="#installation">⚙️ Installation</a>
+<a href="#how-to-contribute">🙌 How to Contribute</a>
+<a href="#license">📝 License</a>
+
 
 </ul>
 
