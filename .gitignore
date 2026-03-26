@@ -42,7 +42,6 @@ Thumbs.db
 # ============================
 # SQLite Database Files
 # ============================
-*.db
 *.sqlite
 *.sqlite3
 
