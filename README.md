@@ -12,7 +12,7 @@
 
 <h2> Table of Contents</h2>
 <ul>
-    <li>Features (#Features)</li>
+    <li>Features</li>
     <li>Architecture</li>
     <li>Installation</li>
     <li>Future Enhancements</li>
