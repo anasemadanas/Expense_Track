@@ -11,15 +11,13 @@
 <p>A clean and scalable financial management application built in Python using <strong>3-Tier Architecture</strong> and <strong>SOLID</strong> principles.</p>
 
 <h2> Table of Contents</h2>
-<ul>
-<a href="#introduction">🧾 Introduction</a>
-<a href="#features">✨ Features</a>
-<a href="#installation">⚙️ Installation</a>
-<a href="#how-to-contribute">🙌 How to Contribute</a>
-<a href="#license">📝 License</a>
-
-
-</ul>
+  <ul>
+    <li><a href="#introduction">🧾 Introduction</a></li>
+    <li><a href="#features">✨ Features</a></li>
+    <li><a href="#installation">⚙️ Installation</a></li>
+    <li><a href="#how-to-contribute">🙌 How to Contribute</a></li>
+    <li><a href="#license">📝 License</a></li>
+  </ul>
 
 
 
