@@ -9,19 +9,25 @@
 <h1>💰 Money Manager App</h1>
 
 <p>A clean and scalable financial management application built in Python using <strong>3-Tier Architecture</strong> and <strong>SOLID</strong> principles.</p>
+<h1>💰 Money Manager App</h1>
 
-<h2> Table of Contents</h2>
+<p>A clean and scalable financial management application built in Python using <strong>3‑Tier Architecture</strong> and <strong>SOLID</strong> principles.</p>
+
+<h2 id="table-of-contents">📑 Table of Contents</h2>
+<nav>
   <ul>
     <li><a href="#introduction">🧾 Introduction</a></li>
-    <li><a href="#Features">✨ Features</a></li>
-    <li><a href="#Installation">⚙️ Installation</a></li>
-    <li><a href="#Future Enhancements">🙌 Future Enhancements</a></li>
-    <li><a href="#License">📝 License</a></li>
+    <li><a href="#features">✨ Features</a></li>
+    <li><a href="#installation">⚙️ Installation</a></li>
+    <li><a href="#how-to-contribute">🙌 How to Contribute</a></li>
+    <li><a href="#license">📝 License</a></li>
   </ul>
+</nav>
 
+<h2 id="introduction">🧾 Introduction</h2>
+<p>A clean and scalable financial management application built in Python using 3‑Tier Architecture and SOLID principles.</p>
 
-
-<h2>🚀 Features</h2>
+<h2 id="features">✨ Features</h2>
 <ul>
     <li>Track expenses & income</li>
     <li>Categorize transactions</li>
@@ -39,7 +45,7 @@
     <li><strong>Data Layer:</strong> Handles SQLite storage using repositories and interfaces</li>
 </ul>
 
-<h2>📦 Installation</h2>
+<h2 id="installation">⚙️ Installation</h2>
 <pre>
 git clone https://github.com/anasemadanas/Expense_Track.git
 cd Expense_Track
@@ -59,10 +65,11 @@ python money_manager/main.py
     <li>PDF Reports</li>
     <li>AI income/spending predictions</li>
 </ul>
-</ul>
 
-<h2>📜 License</h2>
+<h2 id="license">📝 License</h2>
 <p>MIT License</p>
+
+<p><a href="#table-of-contents">↩️ Back to Table of Contents</a></p>
 
 </body>
 </html>
