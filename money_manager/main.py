@@ -1,15 +1,15 @@
 import sys
-from PyQt5.QtWidgets import QApplication
-from src.presentation.views.login_view import LoginView
+from PyQt5 import QtWidgets
+from src.presentation.views.frmLoginScreen import Ui_LoginScreen
 
-def main():
-    app = QApplication(sys.argv)
-    
-
-    login_window = LoginView()
-    login_window.show()
-    
-    sys.exit(app.exec_())
-
+class LoginWindow(QtWidgets.QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_LoginScreen()
+        self.ui.setupUi(self)
+        
 if __name__ == "__main__":
-    main()
+    app = QtWidgets.QApplication(sys.argv)
+    window = LoginWindow()
+    window.show()
+    sys.exit(app.exec_())

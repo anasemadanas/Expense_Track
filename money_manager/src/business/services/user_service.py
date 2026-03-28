@@ -1,20 +1,19 @@
-from src.data.repositories.user_repo import UserRepo
-from src.shared.utils import hash_password
+
 
 class UserService:
-    def __init__(self, user_repo: UserRepo):
-        self.user_repo = user_repo
+    login_attempts = 0
+    
+    def __init__(self):
+        self.admin_username = "admin"
+        self.admin_password = "1234"
+        self.max_attempts = 4
 
-    def register_user(self, username: str, password: str, email: str, phone: str = None):
-        hashed = hash_password(password)
-        return self.user_repo.create_user(username, hashed, email, phone)
-
-    def login_user(self, username: str, password: str):
-        hashed = hash_password(password)
-        user = self.user_repo.get_user_by_username(username)
-        if user and user['Password'] == hashed:
-            return user
-        return None
-
-    def get_user(self, user_id: int):
-        return self.user_repo.get_user_by_id(user_id)
+    def login(self, username, password):
+        if username == self.admin_username and password == self.admin_password:
+            UserService.login_attempts = 0
+            return True
+        else:
+            UserService.login_attempts += 1
+            if UserService.login_attempts >= self.max_attempts:
+                raise Exception("Too many login attempts! Access denied.")
+            return False

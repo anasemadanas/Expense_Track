@@ -1,4 +1,4 @@
-from src.data.repositories.budget_repo import BudgetRepo
+from ...data.repositories.budget_repo import BudgetRepo
 
 class BudgetService:
     def __init__(self, budget_repo: BudgetRepo):

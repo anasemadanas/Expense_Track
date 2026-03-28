@@ -1,4 +1,4 @@
-from src.business.services.transaction_service import TransactionService
+from ...business.services.transaction_service import TransactionService
 
 class TransactionController:
     def __init__(self):

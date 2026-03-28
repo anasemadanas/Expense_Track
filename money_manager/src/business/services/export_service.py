@@ -1,6 +1,6 @@
 import sqlite3
 import csv
-from shared.constants import DB_PATH, DATA_SAMPLE_PATH
+from ...shared.constants import DB_PATH, DATA_SAMPLE_PATH
 import os
 
 conn = sqlite3.connect(DB_PATH)
