@@ -80,19 +80,19 @@ The application follows a strict **3-Tier Architecture**, enforcing clear separa
 ```
 ┌─────────────────────────────────────────────────┐
 │          PRESENTATION LAYER (GUI)               │
-│     PyQt5 / Tkinter • Views • Event Handlers    │
+│     PyQt5 / Slide6 • Views • Event Handlers     │
 └──────────────────────┬──────────────────────────┘
                        │ calls
 ┌──────────────────────▼──────────────────────────┐
 │       BUSINESS LOGIC LAYER (Service)            │
-│  TransactionService • BudgetService • GoalService│
-│              Validators                          │
+│ TransactionService • BudgetService • GoalService│
+│                Validators                       │
 └──────────────────────┬──────────────────────────┘
                        │ calls
 ┌──────────────────────▼──────────────────────────┐
 │          DATA LAYER (Repository)                │
 │  SQLiteRepo • ITransactionRepo • IBudgetRepo    │
-│                INotesRepo                        │
+│                                                 │
 └──────────────────────┬──────────────────────────┘
                        │
                   [ SQLite DB ]
@@ -136,60 +136,70 @@ All components are designed in strict adherence to SOLID principles:
 
 ```
 Expense_Track/
-│
-├── README.md
-├── LICENSE
 ├── .gitignore
+├── LICENSE
+├── README.md
 ├── requirements.txt
-│
 └── money_manager/
     ├── __init__.py
     ├── main.py
+    ├── Data_sample/
+    │   └── Data_Examples.csv
+    ├── docs/
+    │   ├── Documentation.docx
+    │   ├── ExpenseTrack Diagram.pdf
+    │   └── project_document.md
     ├── src/
-    │   ├── presentation/              # GUI Layer
+    │   ├── __init__.py
+    │   ├── business/
     │   │   ├── __init__.py
-    │   │   ├── views/
+    │   │   ├── models/
     │   │   │   ├── __init__.py
-    │   │   │   ├── dashboard_view.py
-    │   │   │   ├── add_transaction_view.py
-    │   │   │   └── budget_view.py
-    │   │   └── controllers/
+    │   │   │   ├── budget.py
+    │   │   │   ├── QSqlTableModel.py
+    │   │   │   └── transaction.py
+    │   │   └── services/
     │   │       ├── __init__.py
-    │   │       └── transaction_controller.py
-    │   │
-    │   ├── business/                  # Service Layer
-    │   │   ├── __init__.py
-    │   │   ├── services/
-    │   │   │   ├── __init__.py
-    │   │   │   ├── transaction_service.py
-    │   │   │   └── budget_service.py
-    │   │   └── models/
-    │   │       ├── __init__.py
-    │   │       ├── transaction.py
-    │   │       └── budget.py
-    │   │
-    │   ├── data/                      # Repository Layer
+    │   │       ├── budget_service.py
+    │   │       ├── export_service.py
+    │   │       ├── transaction_service.py
+    │   │       └── user_service.py
+    │   ├── data/
     │   │   ├── __init__.py
     │   │   ├── database.py
-    │   │   ├── repositories/
+    │   │   ├── interfaces/
     │   │   │   ├── __init__.py
-    │   │   │   ├── transaction_repo.py
-    │   │   │   └── budget_repo.py
-    │   │   └── interfaces/
+    │   │   │   ├── IBudgetRepo.py
+    │   │   │   └── ITransactionRepo.py
+    │   │   └── repositories/
     │   │       ├── __init__.py
-    │   │       ├── ITransactionRepo.py
-    │   │       └── IBudgetRepo.py
-    │   │
+    │   │       ├── budget_repo.py
+    │   │       └── transaction_repo.py
+    │   ├── Database/
+    │   │   └── money_manager_DB.db
+    │   ├── presentation/
+    │   │   ├── __init__.py
+    │   │   ├── controllers/
+    │   │   │   ├── __init__.py
+    │   │   │   └── transaction_controller.py
+    │   │   └── views/
+    │   │       ├── __init__.py
+    │   │       ├── budget_view.py
+    │   │       ├── frmBudget.py
+    │   │       ├── frmLoginScreen.py
+    │   │       ├── frmManager.py
+    │   │       ├── frmTransaction.py
+    │   │       └── transaction_view.py
+    │   ├── resources/
+    │   │   └── icons/
     │   └── shared/
     │       ├── __init__.py
-    │       ├── util.py
-    │       └── constants.py
-    │
+    │       ├── constants.py
+    │       ├── helpers.py
+    │       └── utils.py
     └── tests/
-        ├── __init__.py
-        ├── test_transaction_service.py
         ├── test_budget_service.py
-        └── test_repo.py
+        └── test_transaction_service.py
 ```
 
 ---
