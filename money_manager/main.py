@@ -1,10 +1,15 @@
-from src.presentation.views.dashboard_view import DashboardView
+import sys
+from PyQt5.QtWidgets import QApplication
+from src.presentation.views.login_view import LoginView
 
 def main():
-    print("Starting Money Manager App...")
-    # TODO: launch GUI here
-    dashboard = DashboardView()
-    dashboard.show()
+    app = QApplication(sys.argv)
+    
+
+    login_window = LoginView()
+    login_window.show()
+    
+    sys.exit(app.exec_())
 
 if __name__ == "__main__":
     main()
