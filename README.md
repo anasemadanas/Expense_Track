@@ -3,7 +3,7 @@
 Organize your finances. Track your money. Plan smarter.
 
 A modern and scalable financial management tool built in Python using a clean 3-Tier Architecture and SOLID principles.
-
+---
 ## 📑 Table of Contents
 🧾 Introduction
 ✨ Features
@@ -16,7 +16,7 @@ A modern and scalable financial management tool built in Python using a clean 3-
 🙌 How to Contribute
 🔮 Future Enhancements
 📝 License
-
+---
 ## 🧾 Introduction
 
 Money Manager is a clean financial management application designed to help you:
@@ -26,7 +26,7 @@ Organize transactions into categories
 Plan monthly budgets
 View financial analytics through charts
 Take notes and set goals
-
+---
 Built using:
 
 3-Tier Architecture
@@ -44,9 +44,10 @@ PyQt5 / PySide6 (optional GUI)
 🗄️ SQLite with Repository Pattern
 🔌 Easy to extend or migrate (API / mobile / web)
 
+---
 ##  🖼️ Screenshots
 
-
+---
 ## structure:
 
 ```bash
@@ -55,21 +56,21 @@ screenshots/
  ├── add_transaction.png
  └── reports.png
  ```
-
+---
 ## 🧱 Architecture
 
-Presentation Layer:
+- Presentation Layer:
 
 GUI (PyQt5 / PySide6) or CLI
 
-Business Logic Layer:
+- Business Logic Layer:
 
 Services, validation, calculations
 
-Data Layer:
+- Data Layer:
 
 SQLite + Repository Pattern + interfaces
-
+---
 ## 📂 Project Structure
 ```bash
 Expense_Track/
@@ -85,23 +86,26 @@ Expense_Track/
 │   ├── models/
 │   └── main.py
 ```
-
+---
 ## 📦 Requirements
 ```bash
 Python 3.10+
 pip
 SQLite (included with Python)
 ```
+---
 ## ⚙️ Installation
 ```bash
 git clone https://github.com/anasemadanas/Expense_Track.git
 cd money_manager
 pip install -r requirements.txt
 ```
+---
 ## ▶️ Run the App
 ```bash
 python money_manager/main.py
 ```
+---
 🙌 How to Contribute
 
 ## Pull Requests are welcome!
@@ -110,18 +114,18 @@ Fork the repository
 Create a feature branch
 Commit your changes
 Submit a Pull Request
-🔮 Future Enhancements
-📱 Android version (Kivy / Flutter)
-🌐 Web version (FastAPI + React)
-☁️ Cloud sync
-🧾 PDF reports
-🤖 AI-powered spending predictions
-🎨 Modern UI redesign
-
+- 🔮 Future Enhancements
+- 📱 Android version (Kivy / Flutter)
+- 🌐 Web version (FastAPI + React)
+- ☁️ Cloud sync
+- 🧾 PDF reports
+- 🤖 AI-powered spending predictions
+- 🎨 Modern UI redesign
+---
 ## 📝 License
 
 MIT License — see the LICENSE file.
-
+---
 ## 🔗 Contact
 GitHub: [Github](https://github.com/anasemadanas/)
 LinkedIn: [LinkedIn](https://www.linkedin.com/in/eng-anasemad/)
