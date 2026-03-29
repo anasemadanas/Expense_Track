@@ -138,12 +138,3 @@ class Ui_AddBudget(object):
         self.lblPeriod.setText(_translate("AddBudget", "Period"))
         self.lblNewBudget.setText(_translate("AddBudget", "New Budget "))
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    AddBudget = QtWidgets.QWidget()
-    ui = Ui_AddBudget()
-    ui.setupUi(AddBudget)
-    AddBudget.show()
-    sys.exit(app.exec_())
