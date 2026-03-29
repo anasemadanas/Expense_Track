@@ -1,26 +1,30 @@
 # 💰 Money Manager App
+> Organize your finances. Track your money. Plan smarter.
 
-Organize your finances. Track your money. Plan smarter.
+A modern and scalable financial management tool built in Python using a clean **3-Tier Architecture** and **SOLID principles**.
 
-A modern and scalable financial management tool built in Python using a clean 3-Tier Architecture and SOLID principles.
 ---
+
 ## 📑 Table of Contents
-🧾 Introduction
-✨ Features
-🖼️ Screenshots
-🧱 Architecture
-📂 Project Structure
-📦 Requirements
-⚙️ Installation
-▶️ Run the App
-🙌 How to Contribute
-🔮 Future Enhancements
-📝 License
+
+- [🧾 Introduction](#-introduction)
+- [✨ Features](#-features)
+- [🖼️ Screenshots](#️-screenshots)
+- [🧱 Architecture](#-architecture)
+- [📂 Project Structure](#-project-structure)
+- [📦 Requirements](#-requirements)
+- [⚙️ Installation](#️-installation)
+- [▶️ Run the App](#️-run-the-app)
+- [🙌 How to Contribute](#-how-to-contribute)
+- [🔮 Future Enhancements](#-future-enhancements)
+- [📝 License](#-license)
+- [🔗 Contact](#-contact)
+
 ---
 
 ## 🧾 Introduction
 
-Money Manager is a clean financial management application designed to help you:
+**Money Manager** is a clean financial management application designed to help you:
 
 - Track expenses and income
 - Organize transactions into categories
@@ -28,16 +32,21 @@ Money Manager is a clean financial management application designed to help you:
 - View financial analytics through charts
 - Take notes and set goals
 
----
 Built using:
 
-- 3-Tier Architecture
-- SOLID principles
-- Repository Pattern
-- SQLite database
-- PyQt5 / PySide6 (optional GUI)
-- 
+| Technology | Purpose |
+|---|---|
+| Python 3.10+ | Core language |
+| PyQt5 | GUI framework |
+| SQLite | Local database |
+| 3-Tier Architecture | Clean separation of concerns |
+| Repository Pattern | Data access abstraction |
+| SOLID Principles | Scalable & maintainable code |
+
+---
+
 ## ✨ Features
+
 - 📘 Track expenses & income
 - 🏷️ Categorize transactions
 - 📆 Monthly budget planning
@@ -48,90 +57,167 @@ Built using:
 - 🔌 Easy to extend or migrate (API / mobile / web)
 
 ---
-##  🖼️ Screenshots
 
+## 🖼️ Screenshots
+
+| Dashboard | Add Transaction | Reports |
+|---|---|---|
+| ![Dashboard](screenshots/dashboard.png) | ![Add Transaction](screenshots/add_transaction.png) | ![Reports](screenshots/reports.png) |
 
 ---
-## structure:
 
-```bash
-screenshots/
- ├── dashboard.png
- ├── add_transaction.png
- └── reports.png
- ```
----
 ## 🧱 Architecture
 
-### Presentation Layer:
-
-- GUI (PyQt5 / PySide6) or CLI
-
-### Business Logic Layer:
-
-- Services, validation, calculations
-
-### Data Layer:
-
-- SQLite + Repository Pattern + interfaces
+```
+┌─────────────────────────────┐
+│      Presentation Layer      │  ← PyQt5 GUI / CLI
+├─────────────────────────────┤
+│    Business Logic Layer      │  ← Services, Validation, Calculations
+├─────────────────────────────┤
+│        Data Layer            │  ← SQLite + Repository Pattern + Interfaces
+└─────────────────────────────┘
+```
 
 ---
+
 ## 📂 Project Structure
+
 ```bash
 Expense_Track/
-│── money_manager/
-│   ├── data/
-│   │   ├── database.py
-│   │   └── repositories/
-│   ├── business/
-│   │   └── services/
-│   ├── ui/
-│   │   ├── main_window.py
-│   │   └── components/
-│   ├── models/
-│   └── main.py
+└── money_manager/
+    ├── main.py
+    ├── requirements.txt
+    ├── Database/
+    │   └── money_manager_DB.db
+    ├── src/
+    │   ├── business/
+    │   │   ├── models/
+    │   │   │   ├── budget.py
+    │   │   │   ├── note.py
+    │   │   │   ├── transaction.py
+    │   │   │   └── user.py
+    │   │   └── services/
+    │   │       ├── budget_service.py
+    │   │       ├── export_service.py
+    │   │       ├── note_service.py
+    │   │       ├── transaction_service.py
+    │   │       └── user_service.py
+    │   ├── data/
+    │   │   ├── database.py
+    │   │   ├── interfaces/
+    │   │   │   ├── IBudgetRepo.py
+    │   │   │   ├── INotesRepo.py
+    │   │   │   ├── ITransactionRepo.py
+    │   │   │   └── IUserRepo.py
+    │   │   └── repositories/
+    │   │       ├── budget_repo.py
+    │   │       ├── note_repo.py
+    │   │       ├── transaction_repo.py
+    │   │       └── user_repo.py
+    │   ├── presentation/
+    │   │   ├── controllers/
+    │   │   │   └── transaction_controller.py
+    │   │   └── views/
+    │   │       ├── login_view.py
+    │   │       ├── budget_view.py
+    │   │       ├── dashboard_view.py
+    │   │       ├── transaction_view.py
+    │   │       └── notes_view.py
+    │   ├── shared/
+    │   │   ├── constants.py
+    │   │   ├── helpers.py
+    │   │   └── utils.py
+    │   └── ui/
+    │       ├── frmLogin.py / .ui
+    │       ├── frmManager.py / .ui
+    │       ├── frmBudget.py / .ui
+    │       └── frmTransaction.py / .ui
+    └── tests/
+        ├── test_budget_service.py
+        ├── test_note.py
+        ├── test_repo.py
+        ├── test_transaction_service.py
+        └── test_user.py
 ```
+
 ---
+
 ## 📦 Requirements
-```bash
+
+```
 Python 3.10+
-pip
+PyQt5
 SQLite (included with Python)
 ```
----
-## ⚙️ Installation
+
+Install dependencies:
+
 ```bash
-git clone https://github.com/anasemadanas/Expense_Track.git
-cd money_manager
 pip install -r requirements.txt
 ```
+
 ---
-## ▶️ Run the App
+
+## ⚙️ Installation
+
 ```bash
-python money_manager/main.py
+# 1. Clone the repository
+git clone https://github.com/anasemadanas/Expense_Track.git
+
+# 2. Navigate to the project folder
+cd Expense_Track/money_manager
+
+# 3. Install requirements
+pip install -r requirements.txt
 ```
+
 ---
-🙌 How to Contribute
 
-## Pull Requests are welcome!
+## ▶️ Run the App
 
-Fork the repository
-Create a feature branch
-Commit your changes
-Submit a Pull Request
-- 🔮 Future Enhancements
+```bash
+python main.py
+```
+
+> Make sure you're inside the `money_manager/` folder before running.
+
+---
+
+## 🙌 How to Contribute
+
+Pull Requests are welcome! Follow these steps:
+
+1. **Fork** the repository
+2. **Create** a feature branch → `git checkout -b feature/your-feature`
+3. **Commit** your changes → `git commit -m "Add: your feature"`
+4. **Push** to your branch → `git push origin feature/your-feature`
+5. **Submit** a Pull Request
+
+---
+
+## 🔮 Future Enhancements
+
 - 📱 Android version (Kivy / Flutter)
 - 🌐 Web version (FastAPI + React)
 - ☁️ Cloud sync
 - 🧾 PDF reports
 - 🤖 AI-powered spending predictions
 - 🎨 Modern UI redesign
+
 ---
+
 ## 📝 License
 
-MIT License — see the LICENSE file.
+MIT License — see the [LICENSE](LICENSE) file for details.
+
 ---
+
 ## 🔗 Contact
-GitHub: [Github](https://github.com/anasemadanas/)
-LinkedIn: [LinkedIn](https://www.linkedin.com/in/eng-anasemad/)
-Email: [Email]anaspython3@gmail.com
+
+| Platform | Link |
+|---|---|
+| 🐙 GitHub | [anasemadanas](https://github.com/anasemadanas/) |
+| 💼 LinkedIn | [eng-anasemad](https://www.linkedin.com/in/eng-anasemad/) |
+| 📧 Email | anaspython3@gmail.com |
+
+[↩️ Back to Table of Contents](#table-of-contents)
