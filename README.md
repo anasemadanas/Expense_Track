@@ -66,7 +66,7 @@ python money_manager/main.py
     <li>AI income/spending predictions</li>
 </ul>
 
-<h2 id="license">📝 License</h2>
+## 📝 License
 MIT License — see the [LICENSE](https://github.com/anasemadanas/Expense_Track/blob/main/LICENSE)
 
 <p><a href="#table-of-contents">↩️ Back to Table of Contents</a></p>
