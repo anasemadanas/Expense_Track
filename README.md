@@ -8,9 +8,6 @@
 
 <h1>💰 Money Manager App</h1>
 
-<p>A clean and scalable financial management application built in Python using <strong>3-Tier Architecture</strong> and <strong>SOLID</strong> principles.</p>
-<h1>💰 Money Manager App</h1>
-
 <p>A clean and scalable financial management application built in Python using <strong>3‑Tier Architecture</strong> and <strong>SOLID</strong> principles.</p>
 
 <h2 id="table-of-contents">📑 Table of Contents</h2>
