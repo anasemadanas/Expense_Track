@@ -1,73 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+💰 Money Manager App
 
-</head>
-<body>
+Organize your finances. Track your money. Plan smarter.
 
-<h1>💰 Money Manager App</h1>
+A modern and scalable financial management tool built in Python using a clean 3-Tier Architecture and SOLID principles.
 
-<p> A modern and scalable financial management tool to track your spending and improve your budgeting.</p>
+📑 Table of Contents
+🧾 Introduction
+✨ Features
+🖼️ Screenshots
+🧱 Architecture
+📂 Project Structure
+📦 Requirements
+⚙️ Installation
+▶️ Run the App
+🙌 How to Contribute
+🔮 Future Enhancements
+📝 License
+🧾 Introduction
 
-<h2 id="table-of-contents">📑 Table of Contents</h2>
-<nav>
-  <ul>
-    <li><a href="#introduction">🧾 Introduction</a></li>
-    <li><a href="#features">✨ Features</a></li>
-    <li><a href="#installation">⚙️ Installation</a></li>
-    <li><a href="#how-to-contribute">🙌 How to Contribute</a></li>
-    <li><a href="#license">📝 License</a></li>
-  </ul>
-</nav>
+Money Manager is a clean financial management application designed to help you:
 
-<h2 id="introduction">🧾 Introduction</h2>
-<p> Money Manager is built in Python using a clean 3-Tier Architecture and SOLID principles.
-It provides an easy and efficient way to track expenses, log income, plan budgets, and monitor financial health through charts and reports. </p>
+Track expenses and income
+Organize transactions into categories
+Plan monthly budgets
+View financial analytics through charts
+Take notes and set goals
 
-<h2 id="features">✨ Features</h2>
-<ul>
-    <li>Track expenses & income</li>
-    <li>Categorize transactions</li>
-    <li>Monthly budget planning</li>
-    <li>Dashboard with charts</li>
-    <li>Notes & goals system</li>
-    <li>Clean architecture suitable for future scaling</li>
-    <li>SQLite database with Repository Pattern</li>
-</ul>
+Built using:
 
-<h2>🧱 Architecture</h2>
-<ul>
-    <li><strong>Presentation Layer:</strong> Handles GUI (PyQt5 or pySlide6)</li>
-    <li><strong>Business Logic Layer:</strong> Implements financial rules and validation</li>
-    <li><strong>Data Layer:</strong> Handles SQLite storage using repositories and interfaces</li>
-</ul>
+3-Tier Architecture
+SOLID principles
+Repository Pattern
+SQLite database
+PyQt5 / PySide6 (optional GUI)
+✨ Features
+📘 Track expenses & income
+🏷️ Categorize transactions
+📆 Monthly budget planning
+📊 Dashboard with charts
+🗒️ Notes & financial goals
+🏛️ Clean and scalable architecture
+🗄️ SQLite with Repository Pattern
+🔌 Easy to extend or migrate (API / mobile / web)
+🖼️ Screenshots
 
-<h2 id="installation">⚙️ Installation</h2>
-<pre>
+(Add screenshots here later)
+Suggested structure:
+
+screenshots/
+ ├── dashboard.png
+ ├── add_transaction.png
+ └── reports.png
+🧱 Architecture
+
+Presentation Layer:
+
+GUI (PyQt5 / PySide6) or CLI
+
+Business Logic Layer:
+
+Services, validation, calculations
+
+Data Layer:
+
+SQLite + Repository Pattern + interfaces
+📂 Project Structure
+Expense_Track/
+│── money_manager/
+│   ├── data/
+│   │   ├── database.py
+│   │   └── repositories/
+│   ├── Services/
+│   │   └── services/
+|   |   └── models/
+│   ├── ui/
+│   │   └── controllers/
+│   ├── models/
+│   └── main.py
+📦 Requirements
+Python 3.10+
+pip
+SQLite (included with Python)
+⚙️ Installation
 git clone https://github.com/anasemadanas/Expense_Track.git
 cd Expense_Track
 pip install -r requirements.txt
-</pre>
-
-<h2>▶️ Run the App</h2>
-<pre>
+▶️ Run the App
 python money_manager/main.py
-</pre>
+🙌 How to Contribute
 
-<h2>🔮 Future Enhancements</h2>
-<ul>
-    <li>Android version (Kivy or Flutter)</li>
-    <li>Web version (FastAPI backend)</li>
-    <li>Cloud sync</li>
-    <li>PDF Reports</li>
-    <li>AI income/spending predictions</li>
-</ul>
+Pull Requests are welcome!
 
-## 📝 License
-MIT License — see the [License](https://github.com/anasemadanas/Expense_Track/blob/main/LICENSE)
+Fork the repository
+Create a feature branch
+Commit your changes
+Submit a Pull Request
+🔮 Future Enhancements
+📱 Android version (Kivy / Flutter)
+🌐 Web version (FastAPI + React)
+☁️ Cloud sync
+🧾 PDF reports
+🤖 AI-powered spending predictions
+🎨 Modern UI redesign
+📝 License
 
-<p><a href="#table-of-contents">↩️ Back to Table of Contents</a></p>
+MIT License — see the LICENSE file.
 
-</body>
-</html>
+🔗 (Optional) Contact
+GitHub: your link
+LinkedIn: your link
+Email: your email
