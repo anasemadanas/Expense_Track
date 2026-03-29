@@ -49,11 +49,13 @@ PyQt5 / PySide6 (optional GUI)
 
 ## structure:
 
+```bash
 screenshots/
  ├── dashboard.png
  ├── add_transaction.png
  └── reports.png
- 
+ ```
+
 ## 🧱 Architecture
 
 Presentation Layer:
@@ -69,6 +71,7 @@ Data Layer:
 SQLite + Repository Pattern + interfaces
 
 ## 📂 Project Structure
+```bash
 Expense_Track/
 │── money_manager/
 │   ├── data/
@@ -81,19 +84,24 @@ Expense_Track/
 │   │   └── components/
 │   ├── models/
 │   └── main.py
+```
 
 ## 📦 Requirements
+```bash
 Python 3.10+
 pip
 SQLite (included with Python)
-
+```
 ## ⚙️ Installation
+```bash
 git clone https://github.com/anasemadanas/Expense_Track.git
-cd Expense_Track
+cd money_manager
 pip install -r requirements.txt
-
+```
 ## ▶️ Run the App
+```bash
 python money_manager/main.py
+```
 🙌 How to Contribute
 
 ## Pull Requests are welcome!
@@ -115,6 +123,6 @@ Submit a Pull Request
 MIT License — see the LICENSE file.
 
 ## 🔗 Contact
-GitHub: [your link](https://github.com/anasemadanas/)
-LinkedIn: [your link](https://www.linkedin.com/in/eng-anasemad/)
-Email: anaspython3@gmail.com
+GitHub: [Github](https://github.com/anasemadanas/)
+LinkedIn: [LinkedIn](https://www.linkedin.com/in/eng-anasemad/)
+Email: [Email]anaspython3@gmail.com
