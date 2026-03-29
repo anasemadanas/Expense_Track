@@ -8,7 +8,7 @@
 
 <h1>💰 Money Manager App</h1>
 
-<p>A clean and scalable financial management application built in Python using <strong>3‑Tier Architecture</strong> and <strong>SOLID</strong> principles.</p>
+<p> A modern and scalable financial management tool to track your spending and improve your budgeting.</p>
 
 <h2 id="table-of-contents">📑 Table of Contents</h2>
 <nav>
@@ -22,7 +22,8 @@
 </nav>
 
 <h2 id="introduction">🧾 Introduction</h2>
-<p>A clean and scalable financial management application built in Python using 3‑Tier Architecture and SOLID principles.</p>
+<p>Money Manager is built in Python using a clean 3-Tier Architecture and SOLID principles.
+It provides an easy and efficient way to track expenses, log income, plan budgets, and monitor financial health through charts and reports.</p>
 
 <h2 id="features">✨ Features</h2>
 <ul>
