@@ -40,7 +40,7 @@
 
 <h2>🧱 Architecture</h2>
 <ul>
-    <li><strong>Presentation Layer:</strong> Handles GUI (PyQt or Tkinter)</li>
+    <li><strong>Presentation Layer:</strong> Handles GUI (PyQt5 or pySlide6)</li>
     <li><strong>Business Logic Layer:</strong> Implements financial rules and validation</li>
     <li><strong>Data Layer:</strong> Handles SQLite storage using repositories and interfaces</li>
 </ul>
