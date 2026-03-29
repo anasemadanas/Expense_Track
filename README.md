@@ -1,10 +1,10 @@
-💰 Money Manager App
+# 💰 Money Manager App
 
 Organize your finances. Track your money. Plan smarter.
 
 A modern and scalable financial management tool built in Python using a clean 3-Tier Architecture and SOLID principles.
 
-📑 Table of Contents
+## 📑 Table of Contents
 🧾 Introduction
 ✨ Features
 🖼️ Screenshots
@@ -16,7 +16,8 @@ A modern and scalable financial management tool built in Python using a clean 3-
 🙌 How to Contribute
 🔮 Future Enhancements
 📝 License
-🧾 Introduction
+
+## 🧾 Introduction
 
 Money Manager is a clean financial management application designed to help you:
 
@@ -33,7 +34,7 @@ SOLID principles
 Repository Pattern
 SQLite database
 PyQt5 / PySide6 (optional GUI)
-✨ Features
+## ✨ Features
 📘 Track expenses & income
 🏷️ Categorize transactions
 📆 Monthly budget planning
@@ -42,16 +43,18 @@ PyQt5 / PySide6 (optional GUI)
 🏛️ Clean and scalable architecture
 🗄️ SQLite with Repository Pattern
 🔌 Easy to extend or migrate (API / mobile / web)
-🖼️ Screenshots
 
-(Add screenshots here later)
-Suggested structure:
+##  🖼️ Screenshots
+
+
+## structure:
 
 screenshots/
  ├── dashboard.png
  ├── add_transaction.png
  └── reports.png
-🧱 Architecture
+ 
+## 🧱 Architecture
 
 Presentation Layer:
 
@@ -64,32 +67,36 @@ Services, validation, calculations
 Data Layer:
 
 SQLite + Repository Pattern + interfaces
-📂 Project Structure
+
+## 📂 Project Structure
 Expense_Track/
 │── money_manager/
 │   ├── data/
 │   │   ├── database.py
 │   │   └── repositories/
-│   ├── Services/
+│   ├── business/
 │   │   └── services/
-|   |   └── models/
 │   ├── ui/
-│   │   └── controllers/
+│   │   ├── main_window.py
+│   │   └── components/
 │   ├── models/
 │   └── main.py
-📦 Requirements
+
+## 📦 Requirements
 Python 3.10+
 pip
 SQLite (included with Python)
-⚙️ Installation
+
+## ⚙️ Installation
 git clone https://github.com/anasemadanas/Expense_Track.git
 cd Expense_Track
 pip install -r requirements.txt
-▶️ Run the App
+
+## ▶️ Run the App
 python money_manager/main.py
 🙌 How to Contribute
 
-Pull Requests are welcome!
+## Pull Requests are welcome!
 
 Fork the repository
 Create a feature branch
@@ -102,11 +109,12 @@ Submit a Pull Request
 🧾 PDF reports
 🤖 AI-powered spending predictions
 🎨 Modern UI redesign
-📝 License
+
+## 📝 License
 
 MIT License — see the LICENSE file.
 
-🔗 (Optional) Contact
-GitHub: your link
-LinkedIn: your link
-Email: your email
+## 🔗 Contact
+GitHub: [your link](https://github.com/anasemadanas/)
+LinkedIn: [your link](https://www.linkedin.com/in/eng-anasemad/)
+Email: anaspython3@gmail.com
