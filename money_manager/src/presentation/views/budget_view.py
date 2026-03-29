@@ -66,11 +66,11 @@ class Ui_AddBudget(object):
 
         # ── Row: Amount ───────────────────────────────────────────────────────
         make_label("Amount",   70, 165)
-        self.txtAmount = make_input(200, 160, placeholder="0.00")
+        self.txtAmount = make_input(200, 160, placeholder="000.00")
 
         # ── Row: Spent ────────────────────────────────────────────────────────
         make_label("Spent",    70, 230)
-        self.txtSpent  = make_input(200, 225, placeholder="0.00 (optional)")
+        self.txtSpent  = make_input(200, 225, placeholder="000.00 (optional)")
 
         # ── Row: Period ───────────────────────────────────────────────────────
         make_label("Period",   70, 295)
