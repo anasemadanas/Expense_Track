@@ -22,8 +22,8 @@
 </nav>
 
 <h2 id="introduction">🧾 Introduction</h2>
-<p>Money Manager is built in Python using a clean 3-Tier Architecture and SOLID principles.
-It provides an easy and efficient way to track expenses, log income, plan budgets, and monitor financial health through charts and reports.</p>
+<p> Money Manager is built in Python using a clean 3-Tier Architecture and SOLID principles.
+It provides an easy and efficient way to track expenses, log income, plan budgets, and monitor financial health through charts and reports. </p>
 
 <h2 id="features">✨ Features</h2>
 <ul>
