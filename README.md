@@ -17,35 +17,39 @@ A modern and scalable financial management tool built in Python using a clean 3-
 🔮 Future Enhancements
 📝 License
 ---
+
 ## 🧾 Introduction
 
 Money Manager is a clean financial management application designed to help you:
 
-Track expenses and income
-Organize transactions into categories
-Plan monthly budgets
-View financial analytics through charts
-Take notes and set goals
+- Track expenses and income
+- Organize transactions into categories
+- Plan monthly budgets
+- View financial analytics through charts
+- Take notes and set goals
+
 ---
 Built using:
 
-3-Tier Architecture
-SOLID principles
-Repository Pattern
-SQLite database
-PyQt5 / PySide6 (optional GUI)
+- 3-Tier Architecture
+- SOLID principles
+- Repository Pattern
+- SQLite database
+- PyQt5 / PySide6 (optional GUI)
+- 
 ## ✨ Features
-📘 Track expenses & income
-🏷️ Categorize transactions
-📆 Monthly budget planning
-📊 Dashboard with charts
-🗒️ Notes & financial goals
-🏛️ Clean and scalable architecture
-🗄️ SQLite with Repository Pattern
-🔌 Easy to extend or migrate (API / mobile / web)
+- 📘 Track expenses & income
+- 🏷️ Categorize transactions
+- 📆 Monthly budget planning
+- 📊 Dashboard with charts
+- 🗒️ Notes & financial goals
+- 🏛️ Clean and scalable architecture
+- 🗄️ SQLite with Repository Pattern
+- 🔌 Easy to extend or migrate (API / mobile / web)
 
 ---
 ##  🖼️ Screenshots
+
 
 ---
 ## structure:
@@ -59,17 +63,18 @@ screenshots/
 ---
 ## 🧱 Architecture
 
-- Presentation Layer:
+### Presentation Layer:
 
-GUI (PyQt5 / PySide6) or CLI
+- GUI (PyQt5 / PySide6) or CLI
 
-- Business Logic Layer:
+### Business Logic Layer:
 
-Services, validation, calculations
+- Services, validation, calculations
 
-- Data Layer:
+### Data Layer:
 
-SQLite + Repository Pattern + interfaces
+- SQLite + Repository Pattern + interfaces
+
 ---
 ## 📂 Project Structure
 ```bash
