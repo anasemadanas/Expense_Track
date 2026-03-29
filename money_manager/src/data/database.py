@@ -1,7 +1,11 @@
 import sqlite3
 import os
 
-DB_NAME = "Database/money_manager_DB.db"
+CURRENT = os.path.abspath(__file__)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(CURRENT)))
+DB_PATH = os.path.join(PROJECT_ROOT, "Database", "money_manager_DB.db")
+DB_PATH = os.path.normpath(DB_PATH)
+
 
 class DatabaseConnection:
     def __init__(self):
