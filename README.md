@@ -67,7 +67,7 @@ python money_manager/main.py
 </ul>
 
 ## 📝 License
-MIT License — see the [LICENSE](https://github.com/anasemadanas/Expense_Track/blob/main/LICENSE)
+MIT License — see the [License](https://github.com/anasemadanas/Expense_Track/blob/main/LICENSE)
 
 <p><a href="#table-of-contents">↩️ Back to Table of Contents</a></p>
 
