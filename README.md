@@ -84,60 +84,22 @@ Built using:
 
 ```bash
 Expense_Track/
-└── money_manager/
-    ├── main.py
-    ├── requirements.txt
-    ├── Database/
-    │   └── money_manager_DB.db
-    ├── src/
-    │   ├── business/
-    │   │   ├── models/
-    │   │   │   ├── budget.py
-    │   │   │   ├── note.py
-    │   │   │   ├── transaction.py
-    │   │   │   └── user.py
-    │   │   └── services/
-    │   │       ├── budget_service.py
-    │   │       ├── export_service.py
-    │   │       ├── note_service.py
-    │   │       ├── transaction_service.py
-    │   │       └── user_service.py
-    │   ├── data/
-    │   │   ├── database.py
-    │   │   ├── interfaces/
-    │   │   │   ├── IBudgetRepo.py
-    │   │   │   ├── INotesRepo.py
-    │   │   │   ├── ITransactionRepo.py
-    │   │   │   └── IUserRepo.py
-    │   │   └── repositories/
-    │   │       ├── budget_repo.py
-    │   │       ├── note_repo.py
-    │   │       ├── transaction_repo.py
-    │   │       └── user_repo.py
-    │   ├── presentation/
-    │   │   ├── controllers/
-    │   │   │   └── transaction_controller.py
-    │   │   └── views/
-    │   │       ├── login_view.py
-    │   │       ├── budget_view.py
-    │   │       ├── dashboard_view.py
-    │   │       ├── transaction_view.py
-    │   │       └── notes_view.py
-    │   ├── shared/
-    │   │   ├── constants.py
-    │   │   ├── helpers.py
-    │   │   └── utils.py
-    │   └── ui/
-    │       ├── frmLogin.py / .ui
-    │       ├── frmManager.py / .ui
-    │       ├── frmBudget.py / .ui
-    │       └── frmTransaction.py / .ui
-    └── tests/
-        ├── test_budget_service.py
-        ├── test_note.py
-        ├── test_repo.py
-        ├── test_transaction_service.py
-        └── test_user.py
+├── .gitignore
+├── LICENSE
+├── README.md
+├── requirements.txt
+Expense_Track/
+│── money_manager/
+│   ├── data/
+│   │   ├── database.py
+│   │   └── repositories/
+│   ├── business/
+│   │   └── services/
+│   ├── ui/
+│   │   ├── main_window.py
+│   │   └── components/
+│   ├── models/
+│   └── main.py
 ```
 
 ---
