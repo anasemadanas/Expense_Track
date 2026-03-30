@@ -10,8 +10,8 @@ class UserService:
         self.login_attempts = 0
 
     def CheckLogin (self, username, password):
-        lowercase_username = username.lower()
-        if lowercase_username == self.admin_username and password == self.admin_password:
+
+        if username.lower() == self.admin_username and password == self.admin_password:
             self.login_attempts = 0
             return True
         else:

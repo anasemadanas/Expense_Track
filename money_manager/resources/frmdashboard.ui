@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainScreen</class>
+ <widget class="QMainWindow" name="MainScreen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>952</width>
+    <height>827</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="lblTitleDashBoard">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>0</y>
+      <width>371</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MV Boli</family>
+      <pointsize>58</pointsize>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(85, 0, 255);
+font: 58pt &quot;MV Boli&quot;;</string>
+    </property>
+    <property name="text">
+     <string>DashBoard</string>
+    </property>
+   </widget>
+   <widget class="QStackedWidget" name="stackedWidgetChart">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>510</y>
+      <width>811</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="pageSpending_1">
+     <widget class="QGraphicsView" name="gvPieChart">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>30</y>
+        <width>581</width>
+        <height>221</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblSpendingHistory">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>-9</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:30px;
+color:rgb(255, 255, 0)</string>
+      </property>
+      <property name="text">
+       <string>History</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>201</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="hlSpendingInfo">
+       <item>
+        <layout class="QVBoxLayout" name="vlSpendingInfo">
+         <item>
+          <widget class="QLabel" name="lblSpendingAmount">
+           <property name="styleSheet">
+            <string notr="true">font:20px;
+color:rgb(255, 255, 0)</string>
+           </property>
+           <property name="text">
+            <string>Amount</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblSpendingSpent">
+           <property name="styleSheet">
+            <string notr="true">font:20px;
+color:rgb(255, 255, 0)</string>
+           </property>
+           <property name="text">
+            <string>spent</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblSpendingPeriod">
+           <property name="styleSheet">
+            <string notr="true">font:20px;
+color:rgb(255, 255, 0)</string>
+           </property>
+           <property name="text">
+            <string>period</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblSpendingBudget">
+           <property name="styleSheet">
+            <string notr="true">font:20px;
+color:rgb(255, 255, 0)</string>
+           </property>
+           <property name="text">
+            <string>Budget</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="vlSpendingCalc">
+         <item>
+          <widget class="QLabel" name="lblAmountTotal">
+           <property name="styleSheet">
+            <string notr="true">font:20px;
+color:rgb(255, 255, 0)</string>
+           </property>
+           <property name="text">
+            <string>???</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblSpentTotal">
+           <property name="styleSheet">
+            <string notr="true">font:20px;
+color:rgb(255, 255, 0)</string>
+           </property>
+           <property name="text">
+            <string>???</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblPeriodTotal">
+           <property name="styleSheet">
+            <string notr="true">font:20px;
+color:rgb(255, 255, 0)</string>
+           </property>
+           <property name="text">
+            <string>???</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_BudgetTotal">
+           <property name="styleSheet">
+            <string notr="true">font:20px;
+color:rgb(255, 255, 0)</string>
+           </property>
+           <property name="text">
+            <string>???</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="pageLineGraph_3">
+     <widget class="QGraphicsView" name="gvLineGraph">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>30</y>
+        <width>801</width>
+        <height>221</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="pageBudget_2">
+     <widget class="QGraphicsView" name="gvBarChart">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>30</y>
+        <width>801</width>
+        <height>221</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>470</y>
+      <width>811</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="hlChart">
+     <item>
+      <widget class="QPushButton" name="btnSpending">
+       <property name="tabletTracking">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QWidget {
+    background-color: #E6E9E7;
+    font-family: &quot;Segoe UI&quot;;
+}
+
+QPushButton {
+    height: 32px;
+    border-radius: 6px;
+    background-color: #0078D4;
+    color: white;
+    font-weight: 500;
+}
+
+QPushButton:hover {
+    background-color: #106EBE;
+}
+
+QPushButton:pressed {
+    background-color: #0056B3;
+}
+
+QPushButton:checked {
+    background-color: #0056D2;
+    color: white;
+}</string>
+       </property>
+       <property name="text">
+        <string>Spending</string>
+       </property>
+       <property name="icon">
+        <iconset resource="Resources.qrc">
+         <normaloff>:/icons/piechart_black.png</normaloff>:/icons/piechart_black.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <property name="autoRepeat">
+        <bool>false</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnBudgetProgress">
+       <property name="text">
+        <string>Budget Progress</string>
+       </property>
+       <property name="icon">
+        <iconset resource="Resources.qrc">
+         <normaloff>:/icons/barchart_black.png</normaloff>:/icons/barchart_black.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+       <property name="autoRepeat">
+        <bool>false</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnLineGraphinDate">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Line Graph inDate</string>
+       </property>
+       <property name="icon">
+        <iconset resource="Resources.qrc">
+         <normaloff>:/icons/linegraph_black.png</normaloff>:/icons/linegraph_black.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+       <property name="autoRepeat">
+        <bool>false</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>130</y>
+      <width>321</width>
+      <height>52</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="hlTotalBlalance">
+     <item>
+      <widget class="QLabel" name="lblTotalBalance">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Mudir MT</family>
+         <pointsize>20</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(85, 255, 255);
+font: 20pt ;</string>
+       </property>
+       <property name="text">
+        <string>Total Balance</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblTotalBalanceCalc">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Modir MT</family>
+         <pointsize>20</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(85, 255, 255);
+font: 20pt &quot;Modir MT&quot;;</string>
+       </property>
+       <property name="text">
+        <string>          ???</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>190</y>
+      <width>321</width>
+      <height>52</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="hlCurrentBlalance">
+     <item>
+      <widget class="QLabel" name="lblCurrentBalance">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Mudir MT</family>
+         <pointsize>20</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(85, 255, 255);
+font: 20pt ;</string>
+       </property>
+       <property name="text">
+        <string>Current Balance</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblCurrentBalanceCalc">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Modir MT</family>
+         <pointsize>20</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(85, 255, 255);
+font: 20pt &quot;Modir MT&quot;;</string>
+       </property>
+       <property name="text">
+        <string>       ???</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>130</y>
+      <width>251</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="vlbtnAdd">
+     <item>
+      <widget class="QPushButton" name="btnAddTransaction">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>20</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 20pt &quot;Segoe UI&quot;;
+color:rgb(0, 255, 0);</string>
+       </property>
+       <property name="text">
+        <string>Add Transaction</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnAddBudget">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>20</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(0, 255, 0);
+font: 20pt &quot;Segoe UI&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Add Budget</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnExit">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>20</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(0, 255, 0);
+font: 20pt &quot;Segoe UI&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Logout</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>250</y>
+      <width>321</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="vlThisMonth">
+     <item>
+      <widget class="QLabel" name="lblThisMonth">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>MV Boli</family>
+         <pointsize>36</pointsize>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(85, 255, 255);
+font: 36pt &quot;MV Boli&quot;;</string>
+       </property>
+       <property name="text">
+        <string>This Month</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="vlThisMonthSub">
+       <item>
+        <layout class="QHBoxLayout" name="hlExpense">
+         <item>
+          <widget class="QLabel" name="lblExpense">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Expense</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="pbExpense">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="value">
+            <number>24</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="hlEarn">
+         <item>
+          <widget class="QLabel" name="lblEarn">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Earn      </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="pbEarn">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="value">
+            <number>24</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>952</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actSave"/>
+    <addaction name="actExit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actExport"/>
+   </widget>
+   <widget class="QMenu" name="menuHel">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actAbout"/>
+    <addaction name="actGuide"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuHel"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actExport">
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </action>
+  <action name="actGuide">
+   <property name="text">
+    <string>Guide</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>btnAddTransaction</tabstop>
+  <tabstop>btnExit</tabstop>
+  <tabstop>btnSpending</tabstop>
+  <tabstop>btnBudgetProgress</tabstop>
+  <tabstop>btnLineGraphinDate</tabstop>
+  <tabstop>gvLineGraph</tabstop>
+  <tabstop>gvBarChart</tabstop>
+  <tabstop>gvPieChart</tabstop>
+ </tabstops>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

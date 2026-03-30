@@ -1,103 +1,20 @@
-
 from PySide6 import QtCore, QtGui, QtWidgets
 
+from ui.ui_frmdashboard import Ui_MainScreen
+from PySide6 import QtCharts
 
-class MainScreen(object):
-    def setupUi(self, MainScreen):
-        MainScreen.setObjectName("MainScreen")
-        MainScreen.resize(717, 523)
-        self.centralwidget = QtWidgets.QWidget(MainScreen)
-        self.centralwidget.setObjectName("centralwidget")
-        self.btnAddBudget = QtWidgets.QPushButton(self.centralwidget)
-        self.btnAddBudget.setGeometry(QtCore.QRect(170, 100, 171, 61))
-        font = QtGui.QFont()
-        font.setFamily("Calibri")
-        font.setPointSize(14)
-        self.btnAddBudget.setFont(font)
-        self.btnAddBudget.setObjectName("btnAddBudget")
-        self.btnAddTransaction = QtWidgets.QPushButton(self.centralwidget)
-        self.btnAddTransaction.setGeometry(QtCore.QRect(390, 100, 171, 61))
-        font = QtGui.QFont()
-        font.setFamily("Calibri")
-        font.setPointSize(14)
-        self.btnAddTransaction.setFont(font)
-        self.btnAddTransaction.setObjectName("btnAddTransaction")
-        self.lstTransaction = QtWidgets.QTreeView(self.centralwidget)
-        self.lstTransaction.setGeometry(QtCore.QRect(40, 180, 641, 192))
-        font = QtGui.QFont()
-        font.setFamily("Calibri")
-        font.setPointSize(12)
-        self.lstTransaction.setFont(font)
-        self.lstTransaction.setObjectName("lstTransaction")
-        self.btnExit = QtWidgets.QPushButton(self.centralwidget)
-        self.btnExit.setGeometry(QtCore.QRect(510, 390, 171, 61))
-        font = QtGui.QFont()
-        font.setFamily("Calibri")
-        font.setPointSize(14)
-        self.btnExit.setFont(font)
-        self.btnExit.setObjectName("btnExit")
-        self.lblExpenseTrack = QtWidgets.QLabel(self.centralwidget)
-        self.lblExpenseTrack.setEnabled(True)
-        self.lblExpenseTrack.setGeometry(QtCore.QRect(200, 20, 411, 71))
-        font = QtGui.QFont()
-        font.setFamily("MV Boli")
-        font.setPointSize(36)
-        font.setBold(False)
-        font.setItalic(False)
-        self.lblExpenseTrack.setFont(font)
-        self.lblExpenseTrack.setStyleSheet("color:rgb(85, 0, 255);\n"
-"font: 36pt \"MV Boli\";")
-        self.lblExpenseTrack.setObjectName("lblExpenseTrack")
-        MainScreen.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainScreen)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 717, 33))
-        self.menubar.setObjectName("menubar")
-        self.menuFile = QtWidgets.QMenu(self.menubar)
-        self.menuFile.setObjectName("menuFile")
-        self.menuEdit = QtWidgets.QMenu(self.menubar)
-        self.menuEdit.setObjectName("menuEdit")
-        self.menuHel = QtWidgets.QMenu(self.menubar)
-        self.menuHel.setObjectName("menuHel")
-        MainScreen.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainScreen)
-        self.statusbar.setObjectName("statusbar")
-        MainScreen.setStatusBar(self.statusbar)
-        self.actSave = QtWidgets.QWidgetAction(MainScreen)
-        self.actSave.setObjectName("actSave")
-        self.actExit = QtWidgets.QWidgetAction(MainScreen)
-        self.actExit.setObjectName("actExit")
-        self.actAbout = QtWidgets.QWidgetAction(MainScreen)
-        self.actAbout.setObjectName("actAbout")
-        self.actExport = QtWidgets.QWidgetAction(MainScreen)
-        self.actExport.setObjectName("actExport")
-        self.actGuide = QtWidgets.QWidgetAction(MainScreen)
-        self.actGuide.setObjectName("actGuide")
-        self.menuFile.addAction(self.actSave)
-        self.menuFile.addAction(self.actExit)
-        self.menuEdit.addAction(self.actExport)
-        self.menuHel.addAction(self.actAbout)
-        self.menuHel.addAction(self.actGuide)
-        self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuEdit.menuAction())
-        self.menubar.addAction(self.menuHel.menuAction())
+class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
-        self.retranslateUi(MainScreen)
-        QtCore.QMetaObject.connectSlotsByName(MainScreen)
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
 
-    def retranslateUi(self, MainScreen):
-        _translate = QtCore.QCoreApplication.translate
-        MainScreen.setWindowTitle(_translate("MainScreen", "MainWindow"))
-        self.btnAddBudget.setText(_translate("MainScreen", "Add Budget"))
-        self.btnAddTransaction.setText(_translate("MainScreen", "Add transaction"))
-        self.btnExit.setText(_translate("MainScreen", "Exit"))
-        self.lblExpenseTrack.setText(_translate("MainScreen", "Expense Track"))
-        self.menuFile.setTitle(_translate("MainScreen", "File"))
-        self.menuEdit.setTitle(_translate("MainScreen", "Edit"))
-        self.menuHel.setTitle(_translate("MainScreen", "Help"))
-        self.actSave.setText(_translate("MainScreen", "Save"))
-        self.actExit.setText(_translate("MainScreen", "Exit"))
-        self.actAbout.setText(_translate("MainScreen", "About"))
-        self.actExport.setText(_translate("MainScreen", "Export"))
-        self.actGuide.setText(_translate("MainScreen", "Guide"))
-
-
+  
+   
+        
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    window = MainScreen()
+    window.show()
+    sys.exit(app.exec_())
