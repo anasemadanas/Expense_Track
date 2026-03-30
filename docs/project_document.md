@@ -69,7 +69,7 @@ The Money Manager Application is a standalone desktop personal finance tool that
 | **CRUD Operations** | Full create/read/update/delete for all entities |
 | **Reports Export** | Generate PDF and Excel reports filtered by date or category |
 | **Multi-currency Support** | User-configurable display currency |
-| **Easy-to-use GUI** | Built with PyQt5 or Tkinter |
+| **Easy-to-use GUI** | Built with PyQt5 or PySide6 |
 
 ---
 
@@ -80,7 +80,7 @@ The application follows a strict **3-Tier Architecture**, enforcing clear separa
 ```
 ┌─────────────────────────────────────────────────┐
 │          PRESENTATION LAYER (GUI)               │
-│     PyQt5 / Slide6 • Views • Event Handlers     │
+│     PyQt5 / PySide6 • Views • Event Handlers    │
 └──────────────────────┬──────────────────────────┘
                        │ calls
 ┌──────────────────────▼──────────────────────────┐
