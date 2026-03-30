@@ -101,11 +101,3 @@ class MainScreen(object):
         self.actGuide.setText(_translate("MainScreen", "Guide"))
 
 
-if __name__ == "__main__":
-        import sys
-        app = QtWidgets.QApplication(sys.argv)
-        show_MainScreen = QtWidgets.QMainWindow()
-        ui = MainScreen()
-        ui.setupUi(MainScreen)
-        show_MainScreen.show()
-        sys.exit(app.exec_())
