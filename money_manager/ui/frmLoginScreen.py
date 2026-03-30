@@ -1,20 +1,21 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-import os
+from PySide6 import QtCore, QtGui, QtWidgets
+import sys
 
-CURRENT = os.path.abspath(__file__)
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(CURRENT)))
-DB_PATH = os.path.join(PROJECT_ROOT, "Database", "money_manager_DB.db")
-DB_PATH = os.path.normpath(DB_PATH)
+from Services.user_service import UserService
+    
+class LoginScreen(object):
 
-
-class Ui_LoginScreen(object):
-
+    def __init__(self):
+        self.service = UserService()
+    
+    
     def setupUi(self, LoginScreen):
+        
         LoginScreen.setObjectName("LoginScreen")
         LoginScreen.resize(474, 340)
         LoginScreen.setWindowTitle("Login - Money Manager")
 
-        # ── Title label ──────────────────────────────────────────────────────
+        # ── Title  ──────────────────────────────────────────────────────
         self.lblManagerMoney = QtWidgets.QLabel(LoginScreen)
         self.lblManagerMoney.setGeometry(QtCore.QRect(80, 20, 320, 71))
         font_big = QtGui.QFont()
@@ -22,10 +23,8 @@ class Ui_LoginScreen(object):
         font_big.setPointSize(24)
         self.lblManagerMoney.setFont(font_big)
         self.lblManagerMoney.setStyleSheet("color: rgb(85, 0, 255);")
-        self.lblManagerMoney.setAlignment(QtCore.Qt.AlignCenter)
         self.lblManagerMoney.setObjectName("lblManagerMoney")
 
-        # ── Shared font ───────────────────────────────────────────────────────
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(14)
@@ -51,7 +50,7 @@ class Ui_LoginScreen(object):
         self.lnePassword = QtWidgets.QLineEdit(LoginScreen)
         self.lnePassword.setGeometry(QtCore.QRect(210, 170, 181, 31))
         self.lnePassword.setFont(font)
-        self.lnePassword.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.lnePassword.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.lnePassword.setObjectName("lnePassword")
 
         # ── Buttons ───────────────────────────────────────────────────────────
@@ -65,23 +64,22 @@ class Ui_LoginScreen(object):
         self.btnClose.setFont(font)
         self.btnClose.setObjectName("btnClose")
 
-        # ── Error label (hidden by default) ───────────────────────────────────
+        # ── Error label  ───────────────────────────────────
         self.lblError = QtWidgets.QLabel(LoginScreen)
         self.lblError.setGeometry(QtCore.QRect(60, 215, 360, 25))
         self.lblError.setStyleSheet("color: red;")
         self.lblError.setText("")
         self.lblError.setObjectName("lblError")
 
-        # ── Signals ───────────────────────────────────────────────────────────
+
+        # ── Call  ───────────────────────────────────────────────────────────
         self.btnLogin.clicked.connect(self.try_login)
         self.btnClose.clicked.connect(LoginScreen.close)
-        # Allow pressing Enter to login
-        self.lnePassword.returnPressed.connect(self.try_login)
 
         self.LoginScreen = LoginScreen
         self.retranslateUi(LoginScreen)
         QtCore.QMetaObject.connectSlotsByName(LoginScreen)
-
+        
     # ── Translations ──────────────────────────────────────────────────────────
     def retranslateUi(self, LoginScreen):
         _translate = QtCore.QCoreApplication.translate
@@ -92,38 +90,53 @@ class Ui_LoginScreen(object):
         self.btnClose.setText(_translate("LoginScreen", "Close"))
         self.lblManagerMoney.setText(_translate("LoginScreen", "Money Manager"))
 
-    # ── Login logic ───────────────────────────────────────────────────────────
-    
+
+    # ── Login  ───────────────────────────────────────────────────────────
     
     def try_login(self):
-            from ...business.services.user_service import UserService  
 
-            self.service = UserService() 
+        username = self.lneUsername.text().strip()
+        password = self.lnePassword.text().strip()
 
-            username = self.lneUsername.text().strip()
-            password = self.lnePassword.text().strip()
+        if not username or not password:
+            self.lblError.setText("Please enter username and password.")
+            return
 
-            if not username or not password:
-                self.lblError.setText("Please enter username and password.")
-                return
-
-
+        try:                
             if self.service.login(username, password):
+                self.lblError.setText("")
                 self.open_manager()
             else:
                 remaining = self.service.max_attempts - self.service.login_attempts
                 self.lblError.setText(f"Invalid credentials! {remaining} attempts left.")
 
+        except Exception as e:
+            self.lblError.setText("Too many attempts! Access denied.")
+            self.btnLogin.setEnabled(False)        
+            self.lneUsername.setEnabled(False)
+            self.lnePassword.setEnabled(False)
+            
+            msg_box = QtWidgets.QMessageBox()
+            msg_box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+            msg_box.setWindowTitle("Access Denied")
+            msg_box.setText("Contact Admin, Too many login attempts!")
+            msg_box.setInformativeText("You have exceeded the maximum number of login attempts.")
+            msg_box.exec()
 
 
-    # ── Open Manager window ───────────────────────────────────────────────────
+
     def open_manager(self):
-        from .frmManager import Ui_MainScreen
+        try:
+            from ui.frmdashboard import MainScreen   
 
-        self.manager_window = QtWidgets.QMainWindow()
-        self.manager_ui = Ui_MainScreen()
-        self.manager_ui.setupUi(self.manager_window)
-        self.manager_window.show()
-        self.LoginScreen.close()
+            self.main_window = QtWidgets.QMainWindow()
+            self.open_Main_ui = MainScreen()
+            self.open_Main_ui.setupUi(self.main_window)
+            self.main_window.show()
+            self.LoginScreen.close()
+            
+        except Exception as e:
+            self.lblError.setText("Error opening main window!")
+            print("Open Manager Error:", e)
 
 
