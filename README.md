@@ -1,4 +1,4 @@
-# 💰 Money Manager App
+<img width="153" height="74" alt="image" src="https://github.com/user-attachments/assets/d0c555cc-06a3-43c7-8a39-18d33abf94ee" /># 💰 Money Manager App
 > Organize your finances. Track your money. Plan smarter.
 
 A modern and scalable financial management tool built in Python using a clean **3-Tier Architecture** and **SOLID principles**.
@@ -37,7 +37,7 @@ Built using:
 | Technology | Purpose |
 |---|---|
 | Python 3.10+ | Core language |
-| PyQt5 | GUI framework |
+| PySide6 | GUI framework |
 | SQLite | Local database |
 | 3-Tier Architecture | Clean separation of concerns |
 | Repository Pattern | Data access abstraction |
