@@ -3,39 +3,49 @@ from Services.user_service import UserService
 
 from ui.ui_frmLogin import Ui_LoginScreen
 
-class LoginScreen(QtWidgets.QWidget):
+class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
     def __init__(self):
         super().__init__()
 
         self.ui = Ui_LoginScreen()
         self.ui.setupUi(self)
 
-        self.service = UserService()
 
+        self.service = UserService()
+        
+        self.lblError = QtWidgets.QLabel(self)   
+        self.lblError.setGeometry(QtCore.QRect(60, 215, 360, 25))
+        self.lblError.setStyleSheet("color: red;")
+        self.lblError.setObjectName("lblError")
+        self.lblError.setText("")
+        
         self.ui.btnLogin.clicked.connect(self.try_login)
         self.ui.btnClose.clicked.connect(self.close)
-
+        
     def try_login(self):
-  
+
+        
         username = self.ui.lneUsername.text().strip()
         password = self.ui.lnePassword.text().strip()
         
 
         if not username or not password:
-            self.ui.lblError.setText("Please enter username and password.")
+            self.lblError.setText("Please enter username and password.")
             return
 
         try:
             if self.service.login(username, password):
-                self.ui.lblError.setText("")
+                self.lblError.setText("")
                 self.open_Dashboard()
             else:
-                remaining = self.service.max_attempts - self.service.login_attempts
-                self.ui.lblError.setText(f"Invalid credentials! {remaining} attempts left.")
+                remaining = self.service.max_attempts - self.service.login_attempts -1
+                self.lblError.setText(f"Invalid credentials! {remaining} attempts left.")
 
-        except Exception:
+        except Exception as e:
+                print("Login error:", e)
                 self.lock_account()
-    
+                
+                
     def lock_account(self):
         self.ui.btnLogin.setEnabled(False)
         self.ui.lneUsername.setEnabled(False)
@@ -53,5 +63,3 @@ class LoginScreen(QtWidgets.QWidget):
             self.dashboard = MainScreen()
             self.dashboard.show()
             self.close()
-
-

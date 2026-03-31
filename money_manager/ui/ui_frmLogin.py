@@ -103,11 +103,7 @@ class Ui_LoginScreen(object):
 
         QMetaObject.connectSlotsByName(LoginScreen)
         
-        self.lblError = QLabel(LoginScreen)
-        self.lblError.setGeometry(QRect(60, 215, 360, 25))
-        self.lblError.setStyleSheet("color: red;")
-        self.lblError.setObjectName("lblError")
-        self.lblError.setText("")
+
     # setupUi
 
     def retranslateUi(self, LoginScreen):
