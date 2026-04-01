@@ -70,7 +70,7 @@ Built using:
 
 ```
 ┌─────────────────────────────┐
-│      Presentation Layer      │  ← PyQt5 GUI / CLI
+│      Presentation Layer      │  ← PySide6 GUI / CLI
 ├─────────────────────────────┤
 │    Business Logic Layer      │  ← Services, Validation, Calculations
 ├─────────────────────────────┤
@@ -87,19 +87,20 @@ Expense_Track/
 ├── .gitignore
 ├── LICENSE
 ├── README.md
-├── requirements.txt
-Expense_Track/
 │── money_manager/
 │   ├── data/
 │   │   ├── database.py
 │   │   └── repositories/
-│   ├── business/
-│   │   └── services/
+│   │   └── interfaces/
+│   ├── services/
+│   ├── database/
+│   ├── resources/
+│   │   └── Icon/
 │   ├── ui/
 │   │   ├── main_window.py
 │   │   └── components/
-│   ├── models/
-│   └── main.py
+│   ├── main.py
+    └──requirements.txt
 ```
 
 ---
