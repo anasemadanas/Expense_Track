@@ -1,5 +1,5 @@
-from ...data.database import DatabaseConnection
-from ..interfaces.IBudgetRepo import IBudgetRepo
+from data.database import DatabaseConnection
+from data.interfaces.IBudgetRepo import IBudgetRepo
 
 
 class BudgetRepo(IBudgetRepo):

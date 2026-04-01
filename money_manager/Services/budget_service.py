@@ -1,4 +1,4 @@
-from ...data.repositories.budget_repo import BudgetRepo
+from data.repositories.budget_repo import BudgetRepo
 
 class BudgetService:
     def __init__(self, budget_repo: BudgetRepo):
@@ -14,6 +14,3 @@ class BudgetService:
 
     def update_spent(self, budget_id, spent_amount):
         budget = self.budget_repo.get_budget_by_id(budget_id)
-        if budget:
-            budget['Spent'] += spent_amount
-            self.budget_repo.update_budget(budget_id, budget)

@@ -1,5 +1,5 @@
-from ...data.database import DatabaseConnection
-from ...data.interfaces.ITransactionRepo import ITransactionRepo
+from data.database import DatabaseConnection
+from data.interfaces.ITransactionRepo import ITransactionRepo
 
 
 class TransactionRepo(ITransactionRepo):

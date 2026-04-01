@@ -1,4 +1,4 @@
-from ...data.repositories.transaction_repo import TransactionRepo
+from data.repositories.transaction_repo import TransactionRepo
 
 class TransactionService:
     def __init__(self, transaction_repo: TransactionRepo):

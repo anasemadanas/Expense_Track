@@ -1,6 +1,6 @@
 import pytest
-from src.business.services.budget_service import BudgetService
-from src.data.repositories.budget_repo import BudgetRepo
+from Services.budget_service import BudgetService
+from data.repositories.budget_repo import BudgetRepo
 
 
 repo = BudgetRepo()

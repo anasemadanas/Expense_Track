@@ -1,6 +1,6 @@
 from PySide6 import QtCore, QtGui, QtWidgets
 from Services.user_service import UserService
-
+from PySide6.QtGui import Qt, QIcon
 from ui.ui_frmLogin import Ui_LoginScreen
 
 class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
@@ -9,7 +9,7 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
 
         self.ui = Ui_LoginScreen()
         self.ui.setupUi(self)
-
+    
 
         self.service = UserService()
         
@@ -18,6 +18,9 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
         self.lblError.setStyleSheet("color: red;")
         self.lblError.setObjectName("lblError")
         self.lblError.setText("")
+        
+        self.setWindowTitle("Login")
+        self.setWindowIcon(QIcon("resources\\icons\\login.png"))
         
         self.ui.btnLogin.clicked.connect(self.try_login)
         self.ui.btnClose.clicked.connect(self.close)

@@ -1,7 +1,6 @@
 import pytest
-from src.business.services.transaction_service import TransactionService
-from src.data.repositories.transaction_repo import TransactionRepo
-from src.data.database import DB_NAME
+from Services.transaction_service import TransactionService
+from data.repositories.transaction_repo import TransactionRepo
 
 @pytest.fixture
 def transaction_service():
