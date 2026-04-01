@@ -109,7 +109,7 @@ Expense_Track/
 
 ```
 Python 3.10+
-PyQt5
+PySide6
 SQLite (included with Python)
 ```
 
