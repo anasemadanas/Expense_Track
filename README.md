@@ -60,10 +60,10 @@ Built using:
 
 ## 🖼️ Screenshots
 
-|---|---|---|---|
 | Login | Dashboard | Transaction | Budget |
-|-----------|-----------|-----------|
+|-------|-----------|------------|--------|
 | ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) | ![Transaction](screenshots/Transaction.png) | ![Budget](screenshots/Budget.png) |
+
 ---
 
 ## 🧱 Architecture
