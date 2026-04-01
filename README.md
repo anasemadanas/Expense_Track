@@ -60,12 +60,10 @@ Built using:
 
 ## 🖼️ Screenshots
 
-| Dashboard | Add Transaction | Reports |
-|---|---|---|
-| ![Dashboard](screenshots/dashboard.png) | ![Add Transaction](screenshots/add_transaction.png) | ![Reports](screenshots/reports.png) |
-| Review 1 | Review 2 | Review 3 |
+
+| Login | Dashboard | Transaction |
 |-----------|-----------|-----------|
-| ![Review 1](screenshots/review1.png) | ![Review 2](screenshots/review2.png) | ![Review 3](screenshots/review3.png) |
+| ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) | ![Transaction](screenshots/Transaction.png) | ![Budget](screenshots/Budget.png) |
 ---
 
 ## 🧱 Architecture
