@@ -135,71 +135,92 @@ All components are designed in strict adherence to SOLID principles:
 ## 📁 Folder Structure
 
 ```
-Expense_Track/
-├── .gitignore
-├── LICENSE
-├── README.md
-├── requirements.txt
-└── money_manager/
-    ├── __init__.py
-    ├── main.py
-    ├── Data_sample/
-    │   └── Data_Examples.csv
-    ├── docs/
-    │   ├── Documentation.docx
-    │   ├── ExpenseTrack Diagram.pdf
-    │   └── project_document.md
-    ├── src/
-    │   ├── __init__.py
-    │   ├── business/
-    │   │   ├── __init__.py
-    │   │   ├── models/
-    │   │   │   ├── __init__.py
-    │   │   │   ├── budget.py
-    │   │   │   ├── QSqlTableModel.py
-    │   │   │   └── transaction.py
-    │   │   └── services/
-    │   │       ├── __init__.py
-    │   │       ├── budget_service.py
-    │   │       ├── export_service.py
-    │   │       ├── transaction_service.py
-    │   │       └── user_service.py
-    │   ├── data/
-    │   │   ├── __init__.py
-    │   │   ├── database.py
-    │   │   ├── interfaces/
-    │   │   │   ├── __init__.py
-    │   │   │   ├── IBudgetRepo.py
-    │   │   │   └── ITransactionRepo.py
-    │   │   └── repositories/
-    │   │       ├── __init__.py
-    │   │       ├── budget_repo.py
-    │   │       └── transaction_repo.py
-    │   ├── Database/
-    │   │   └── money_manager_DB.db
-    │   ├── presentation/
-    │   │   ├── __init__.py
-    │   │   ├── controllers/
-    │   │   │   ├── __init__.py
-    │   │   │   └── transaction_controller.py
-    │   │   └── views/
-    │   │       ├── __init__.py
-    │   │       ├── budget_view.py
-    │   │       ├── frmBudget.py
-    │   │       ├── frmLoginScreen.py
-    │   │       ├── frmManager.py
-    │   │       ├── frmTransaction.py
-    │   │       └── transaction_view.py
-    │   ├── resources/
-    │   │   └── icons/
-    │   └── shared/
-    │       ├── __init__.py
-    │       ├── constants.py
-    │       ├── helpers.py
-    │       └── utils.py
-    └── tests/
-        ├── test_budget_service.py
-        └── test_transaction_service.py
+Expense_Track                             
+├─.gitignore                              
+├─LICENSE                                 
+├─README.md                               
+└─money_manager                           
+  ├─__init__.py                           
+  ├─main.py                               
+  ├─requirements.txt                      
+  ├─resources_rc.py                       
+  ├─data                                  
+  │ ├─__init__.py                         
+  │ ├─database.py                         
+  │ ├─interfaces                          
+  │ │ ├─__init__.py                       
+  │ │ ├─IBudgetRepo.py                    
+  │ │ ├─ITransactionRepo.py               
+  │ │ ├─IUserRepo.py                      
+  │ │ └─__pycache__                       
+  │ │   ├─__init__.cpython-314.pyc        
+  │ │   ├─IBudgetRepo.cpython-314.pyc     
+  │ │   ├─ITransactionRepo.cpython-314.pyc
+  │ │   └─IUserRepo.cpython-314.pyc       
+  │ └─repositories                        
+  │   ├─__init__.py                       
+  │   ├─budget_repo.py                    
+  │   ├─transaction_repo.py               
+  │   ├─user_repo.py                      
+  │   └─__pycache__                       
+  │     ├─__init__.cpython-314.pyc        
+  │     ├─budget_repo.cpython-314.pyc     
+  │     ├─transaction_repo.cpython-314.pyc
+  │     └─user_repo.cpython-314.pyc       
+  ├─Database                              
+  │ ├─create table basic.py               
+  │ ├─Data_Examples.csv                   
+  │ └─Money_Manager_DB.db                 
+  ├─resources                             
+  │ ├─frmBudget.ui                        
+  │ ├─frmdashboard.ui                     
+  │ ├─frmLogin.ui                         
+  │ ├─frmTransaction.ui                   
+  │ ├─Resources.qrc                       
+  │ ├─resources_rc.py                     
+  │ ├─ui_frmBudget.py                     
+  │ ├─ui_frmdashboard.py                  
+  │ ├─ui_frmLogin.py                      
+  │ ├─ui_frmTransaction.py                
+  │ └─icons                               
+  │   ├─barchart_black.png                
+  │   ├─barchart_white.png                
+  │   ├─budget.png                        
+  │   ├─linegraph_black.png               
+  │   ├─linegraph_white.png               
+  │   ├─login.png                         
+  │   ├─logo.png                          
+  │   ├─piechart_black.png                
+  │   ├─piechart_white.png                
+  │   └─transaction.png                   
+  ├─Services                              
+  │ ├─__init__.py                         
+  │ ├─budget_service.py                   
+  │ ├─dashboard_service.py                
+  │ ├─transaction_service.py              
+  │ └─user_service.py                     
+  ├─shared                                
+  │ ├─__init__.py                         
+  │ ├─constants.py                        
+  │ ├─helpers.py                          
+  │ └─utils.py                            
+  ├─tests                                 
+  │ ├─test_budget_service.py              
+  │ └─test_transaction_service.py         
+  └─ui                                    
+    ├─__init__.py                         
+    ├─frmAddBudget.py                     
+    ├─frmAddTransaction.py                
+    ├─frmdashboard.py                     
+    ├─frmLoginScreen.py                   
+    ├─ui_frmBudget.py                     
+    ├─ui_frmdashboard.py                  
+    ├─ui_frmLogin.py                      
+    ├─ui_frmTransaction.py                
+    └─controllers                         
+      ├─__init__.py                       
+      └─transaction_controller.py    
+         
 ```
 
 ---
