@@ -62,7 +62,7 @@ Built using:
 
 | Login | Dashboard | Transaction | Budget |
 |-------|-----------|------------|--------|
-| ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) | ![Transaction](screenshots/Transaction.png) | ![Budget](screenshots/Budget.png) |
+| ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) | ![Transaction](screenshots/transaction.png) | ![Budget](screenshots/budget.png) |
 
 ---
 
