@@ -9,7 +9,7 @@
 [![Status](https://img.shields.io/badge/Status-In%20Development-orange)]()
 
 **Version:** 1.0  
-**Author:** Your Name  
+**Author:** Team Student
 **Language:** Python  
 **Architecture:** 3-Tier + SOLID  
 **Future Platforms:** Desktop, Android, Web
@@ -69,7 +69,7 @@ The Money Manager Application is a standalone desktop personal finance tool that
 | **CRUD Operations** | Full create/read/update/delete for all entities |
 | **Reports Export** | Generate PDF and Excel reports filtered by date or category |
 | **Multi-currency Support** | User-configurable display currency |
-| **Easy-to-use GUI** | Built with PyQt5 or PySide6 |
+| **Easy-to-use GUI** | Built with PySide6  |
 
 ---
 
@@ -80,18 +80,18 @@ The application follows a strict **3-Tier Architecture**, enforcing clear separa
 ```
 ┌─────────────────────────────────────────────────┐
 │          PRESENTATION LAYER (GUI)               │
-│     PyQt5 / PySide6 • Views • Event Handlers    │
+│      PySide6 • Views • Event Handlers           │
 └──────────────────────┬──────────────────────────┘
                        │ calls
 ┌──────────────────────▼──────────────────────────┐
 │       BUSINESS LOGIC LAYER (Service)            │
-│ TransactionService • BudgetService • GoalService│
-│                Validators                       │
+│ TransactionService • BudgetService • Validators │
+│           UserService • DashboardService        │
 └──────────────────────┬──────────────────────────┘
                        │ calls
 ┌──────────────────────▼──────────────────────────┐
-│          DATA LAYER (Repository)                │
-│  SQLiteRepo • ITransactionRepo • IBudgetRepo    │
+│           DATA LAYER (Repository)               │
+│   IUserRepo • ITransactionRepo • IBudgetRepo    │
 │                                                 │
 └──────────────────────┬──────────────────────────┘
                        │
@@ -100,7 +100,7 @@ The application follows a strict **3-Tier Architecture**, enforcing clear separa
 
 ### A. Presentation Layer (GUI Layer)
 
-- Responsible for the graphical user interface (PyQt or Tkinter)
+- Responsible for the graphical user interface (PySide6)
 - Does **not** contain business logic
 - Interacts only with the Business Layer
 
@@ -112,7 +112,7 @@ The application follows a strict **3-Tier Architecture**, enforcing clear separa
 
 ### C. Data Layer (Repository Layer)
 
-- Responsible for data storage (SQLite, JSON, or API)
+- Responsible for data storage (SQLite)
 - Contains Repositories and Interfaces
 - Allows changing the storage implementation without modifying the Business Layer
 
