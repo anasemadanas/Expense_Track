@@ -7,223 +7,32 @@
     <x>0</x>
     <y>0</y>
     <width>520</width>
-    <height>604</height>
+    <height>613</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QDialogButtonBox" name="btnOkCnacel">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>520</y>
-     <width>211</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="txtNote">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>390</y>
-     <width>361</width>
-     <height>101</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Segoe UI</family>
-     <pointsize>12</pointsize>
-     <italic>false</italic>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">
-font: 12pt &quot;Segoe UI&quot;;</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblBudget">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>100</y>
-     <width>60</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">Color:rgb(0, 255, 0)</string>
-   </property>
-   <property name="text">
-    <string>Budget</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblNote">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>410</y>
-     <width>111</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">Color:rgb(0, 255, 0)</string>
-   </property>
-   <property name="text">
-    <string>Note</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblAmount">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>170</y>
-     <width>67</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color:rgb(85, 255, 0)</string>
-   </property>
-   <property name="text">
-    <string>Amount</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblSpent">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>240</y>
-     <width>48</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">Color:rgb(0, 255, 0)</string>
-   </property>
-   <property name="text">
-    <string>Spent</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblPeriod">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>310</y>
-     <width>54</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">Color:rgb(0, 255, 0)</string>
-   </property>
-   <property name="text">
-    <string>Period</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="txtAmount">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>170</y>
-     <width>161</width>
-     <height>36</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Segoe UI</family>
-     <pointsize>12</pointsize>
-     <italic>false</italic>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 12pt &quot;Arial&quot;;
-font: 12pt &quot;Segoe UI&quot;;</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="txtSpent">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>240</y>
-     <width>161</width>
-     <height>36</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Segoe UI</family>
-     <pointsize>12</pointsize>
-     <italic>false</italic>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="lblNewBudget">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>30</y>
-     <width>201</width>
+     <x>130</x>
+     <y>40</y>
+     <width>301</width>
      <height>51</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>MV Boli</family>
-     <pointsize>20</pointsize>
+     <pointsize>36</pointsize>
      <italic>false</italic>
      <bold>false</bold>
     </font>
    </property>
    <property name="styleSheet">
     <string notr="true">
-font: 20pt &quot;MV Boli&quot;;
+font: 36pt &quot;MV Boli&quot;;
 color:rgb(170, 0, 255)
 
 </string>
@@ -232,47 +41,181 @@ color:rgb(170, 0, 255)
     <string>New Budget </string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="txtPeriod">
+  <widget class="QPushButton" name="btnSaveBudget">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>310</y>
-     <width>161</width>
-     <height>36</height>
+     <x>90</x>
+     <y>510</y>
+     <width>151</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <family>Segoe UI</family>
-     <pointsize>12</pointsize>
-     <italic>false</italic>
-     <bold>false</bold>
+     <family>Nirmala UI Semilight</family>
+     <pointsize>14</pointsize>
     </font>
    </property>
-   <property name="styleSheet">
-    <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+   <property name="text">
+    <string>Save</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="txtBudget">
+  <widget class="QPushButton" name="btnCloseBudget">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>100</y>
-     <width>161</width>
-     <height>36</height>
+     <x>270</x>
+     <y>510</y>
+     <width>151</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <family>Segoe UI</family>
-     <pointsize>12</pointsize>
-     <italic>false</italic>
-     <bold>false</bold>
+     <family>Nirmala UI Semilight</family>
+     <pointsize>14</pointsize>
     </font>
    </property>
-   <property name="styleSheet">
-    <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+   <property name="text">
+    <string>Close</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>150</y>
+     <width>401</width>
+     <height>331</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayoutBugdet">
+    <item row="0" column="0">
+     <widget class="QLabel" name="lblYearBugdet">
+      <property name="font">
+       <font>
+        <family>Myanmar Texti</family>
+        <pointsize>20</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+font: 20pt &quot;Myanmar Texti&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Year</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="lblAmountBugdet">
+      <property name="font">
+       <font>
+        <family>Myanmar Texti</family>
+        <pointsize>20</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+font: 20pt &quot;Myanmar Texti&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Amount</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="txtAmountBugdet">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>12</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 12pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QDateEdit" name="dateYear">
+      <property name="styleSheet">
+       <string notr="true">font: 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="maximumDate">
+       <date>
+        <year>2100</year>
+        <month>12</month>
+        <day>31</day>
+       </date>
+      </property>
+      <property name="minimumDate">
+       <date>
+        <year>2020</year>
+        <month>9</month>
+        <day>14</day>
+       </date>
+      </property>
+      <property name="displayFormat">
+       <string>yyyy</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="lblMonthBugdet">
+      <property name="font">
+       <font>
+        <family>Myanmar Texti</family>
+        <pointsize>20</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+font: 20pt &quot;Myanmar Texti&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Month Budget</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QDateEdit" name="dateMonthBugdet">
+      <property name="styleSheet">
+       <string notr="true">font: 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="maximumDate">
+       <date>
+        <year>2100</year>
+        <month>12</month>
+        <day>31</day>
+       </date>
+      </property>
+      <property name="minimumDate">
+       <date>
+        <year>2020</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+      <property name="displayFormat">
+       <string>MM</string>
+      </property>
+      <property name="calendarPopup">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

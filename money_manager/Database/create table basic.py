@@ -1,33 +1,24 @@
+
 import sqlite3
 conn = sqlite3.connect('Money_Manager_DB.db')
 cursor = conn.cursor()
 
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS Budget (
-    Budget_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name TEXT NOT NULL,
-    Amount REAL NOT NULL,
-    Spent REAL DEFAULT 0,
-    Period TEXT,
-    BudgetPerCategory TEXT
-)
-''')
+cursor.executescript("""
+    CREATE TABLE IF NOT EXISTS transactions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        amount REAL NOT NULL,
+        category TEXT NOT NULL,
+        date TEXT NOT NULL
+    );
 
+    CREATE TABLE IF NOT EXISTS budgets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        amount REAL NOT NULL,
+        month INTEGER NOT NULL,
+        year INTEGER NOT NULL
+    );
 
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS Transactions (
-    Transaction_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name TEXT NOT NULL,
-    Amount REAL NOT NULL,
-    Category TEXT,
-    Date TEXT,
-    Type TEXT,
-    Note TEXT,
-    Budget_ID INTEGER,
-    FOREIGN KEY (Budget_ID) REFERENCES Budget(Budget_ID)
-)
-''')
-
+    """)
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS Users (
@@ -36,6 +27,7 @@ CREATE TABLE IF NOT EXISTS Users (
     Password TEXT NOT NULL
 )
 ''')
+
 
 cursor.execute('''
 INSERT OR IGNORE INTO Users (Username, Password) 
@@ -48,4 +40,3 @@ conn.commit()
 conn.close()
 
 
-    

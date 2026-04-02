@@ -8,8 +8,13 @@ class AddTransaction(QtWidgets.QMainWindow,Ui_AddTransaction):
         super().__init__()
         self.setupUi(self)
         self.service = TransactionService
-        self.btnClose.clicked.connect(self.close)
+        self.btnCloseTransaction.clicked.connect(self.close)
+        self.btnSaveTransaction.clicked.connect(self.save_transaction)
         self.setWindowTitle("Transaction")
         self.setWindowIcon(QIcon("resources\\icons\\transaction.png"))
+        
+    def save_transaction(self):
+        print("Transaction saved!")
+        
 
 

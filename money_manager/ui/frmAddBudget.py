@@ -9,7 +9,8 @@ class AddBudget(QtWidgets.QMainWindow,Ui_AddBudget):
         super().__init__()
         self.setupUi(self)
         self.service = BudgetService
-        self.btnOkCnacel.clicked.connect(self.close)
+        self.btnCloseBudget.clicked.connect(self.close)
+        self.btnSaveBudget.clicked.connect(self.save_budget)
         self.setWindowTitle("Budget")
         self.setWindowIcon(QIcon("resources\\icons\\budget.png"))
         

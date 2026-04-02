@@ -1,5 +1,6 @@
 import sys
 from PySide6 import QtWidgets
+import PySide6
 from ui.frmLoginScreen import LoginScreen
 
 if __name__ == "__main__":
