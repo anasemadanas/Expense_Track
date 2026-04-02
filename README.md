@@ -179,8 +179,8 @@ MIT License — see the [LICENSE](LICENSE) file for details.
 
 | Platform | Link |
 |---|---|
-| 🐙 GitHub | [anasemadanas](https://github.com/anasemadanas/) |
-| 💼 LinkedIn | [eng-anasemad](https://www.linkedin.com/in/eng-anasemad/) |
+| 🐙 GitHub | [GitHub](https://github.com/anasemadanas/) |
+| 💼 LinkedIn | [LinkedIn][eng-anasemad](https://www.linkedin.com/in/eng-anasemad/) |
 | 📧 Email | [Email](mailto:anaspython3@gmail.com) |
 
 [↩️ Back to Table of Contents](#table-of-contents)
