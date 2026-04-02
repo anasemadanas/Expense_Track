@@ -151,22 +151,12 @@ Expense_Track
   │ │ ├─__init__.py                       
   │ │ ├─IBudgetRepo.py                    
   │ │ ├─ITransactionRepo.py               
-  │ │ ├─IUserRepo.py                      
-  │ │ └─__pycache__                       
-  │ │   ├─__init__.cpython-314.pyc        
-  │ │   ├─IBudgetRepo.cpython-314.pyc     
-  │ │   ├─ITransactionRepo.cpython-314.pyc
-  │ │   └─IUserRepo.cpython-314.pyc       
+  │ │ ├─IUserRepo.py                                       
   │ └─repositories                        
   │   ├─__init__.py                       
   │   ├─budget_repo.py                    
   │   ├─transaction_repo.py               
-  │   ├─user_repo.py                      
-  │   └─__pycache__                       
-  │     ├─__init__.cpython-314.pyc        
-  │     ├─budget_repo.cpython-314.pyc     
-  │     ├─transaction_repo.cpython-314.pyc
-  │     └─user_repo.cpython-314.pyc       
+  │   ├─user_repo.py                                          
   ├─Database                              
   │ ├─create table basic.py               
   │ ├─Data_Examples.csv                   
@@ -198,15 +188,7 @@ Expense_Track
   │ ├─budget_service.py                   
   │ ├─dashboard_service.py                
   │ ├─transaction_service.py              
-  │ └─user_service.py                     
-  ├─shared                                
-  │ ├─__init__.py                         
-  │ ├─constants.py                        
-  │ ├─helpers.py                          
-  │ └─utils.py                            
-  ├─tests                                 
-  │ ├─test_budget_service.py              
-  │ └─test_transaction_service.py         
+  │ └─user_service.py                                          
   └─ui                                    
     ├─__init__.py                         
     ├─frmAddBudget.py                     
@@ -237,33 +219,25 @@ The application uses **SQLite** for local data persistence. All entities are lin
 │          │       └──────────────┘
 │  id (PK) │       ┌──────────────┐
 │ username │──1:N──│   Budget     │
-│  email   │       └──────────────┘
-│ password │       ┌──────────────┐
-│ currency │──1:N──│    Note      │
-│  theme   │       └──────────────┘
-│          │       ┌──────────────┐
-│          │──1:N──│    Goal      │
-└──────────┘       └──────────────┘
+│ password │       └──────────────┘
+│          │  
+└──────────┘      
 ```
 
 ### Tables
 
-**`users`** — `id`, `username`, `email`, `password_hash`, `currency`, `theme`
+**`users`** — `id`, `username`, `password`, 
 
-**`transactions`** — `id`, `user_id (FK)`, `name`, `amount`, `category`, `date`, `type`
+**`transactions`** — `id`, `amount`, `category`, `date`
 
-**`budgets`** — `id`, `user_id (FK)`, `name`, `amount`, `period`
-
-**`notes`** — `id`, `user_id (FK)`, `title`, `content`, `date`, `tag`
-
-**`goals`** — `id`, `user_id (FK)`, `title`, `target_amount`, `saved_amount`, `deadline`
+**`budgets`** — `id`,  `amount`, `date`
 
 ---
 
 ## 📌 Functional Requirements
 
 ### FR-01: Transaction Management
-- Add new transactions with name, amount, type (income/expense), category, and date
+- Add new transactions with name, amount, category, and date
 - View all transactions with filtering by date range, category, and type
 - Edit any field of an existing transaction
 - Delete a transaction with confirmation prompt
