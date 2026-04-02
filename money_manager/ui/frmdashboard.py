@@ -33,20 +33,40 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
          
          
     def Switch_to_PieChart(self):
-        self.stackedWidgetChart.setCurrentWidget(self.pageSpending_1)
+        self.stackedWidgetChart.setCurrentIndex(0)
 
     def Switch_to_BarChart(self):
-        self.stackedWidgetChart.setCurrentWidget(self.pageBudget_2)
+        self.stackedWidgetChart.setCurrentIndex(1)
 
     def Switch_to_LineGraph(self):
-        self.stackedWidgetChart.setCurrentWidget(self.pageLineGraph_3)
+        self.stackedWidgetChart.setCurrentIndex(2)
         
 
         
     def update_piechart (self):
-        self.gvPieChart = QtCharts.QChart
+        self.gvPieChart = QtCharts.QChart()
+
+        self.gvPieChart = QtCharts.QPieSeries()
+        self.gvPieChart.setLabelsVisible(True)
+        self.gvPieChart.setLabelsPosition(QtCharts.QPieSeries.LabelOutside)
         
-    
+        self.slice_food = QtCharts.QPieSlice("Food", 30)
+        self.slice_transport = QtCharts.QPieSlice("Transport", 20)
+        self.slice_entertainment = QtCharts.QPieSlice("Entertainment", 10)
+        self.slice_other = QtCharts.QPieSlice("Other", 40)
+
+        self.gvPieChart.append(self.slice_food)
+        self.gvPieChart.append(self.slice_transport)
+        self.gvPieChart.append(self.slice_entertainment)
+        self.gvPieChart.append(self.slice_other)
+        
+        self.gvPieChart.addSeries(self.gvPieChart)
+        self.gvPieChart.setTitle("Spending by Category")
+        self.gvPieChart.legend().setAlignment(Qt.AlignBottom)
+        self.gvPieChart.legend().setVisible(True)
+
+        self.stackedWidgetChart.setChart(self.gvPieChart)
+        
     def open_AddBudget(self):
             from ui.frmAddBudget import AddBudget
             self.Add = AddBudget()
