@@ -70,11 +70,11 @@ Built using:
 
 ```
 ┌─────────────────────────────┐
-│      Presentation Layer      │  ← PySide6 GUI / CLI
+│      Presentation Layer     │  ← PySide6 GUI / CLI
 ├─────────────────────────────┤
-│    Business Logic Layer      │  ← Services, Validation, Calculations
+│    Business Logic Layer     │  ← Services, Validation, Calculations
 ├─────────────────────────────┤
-│        Data Layer            │  ← SQLite + Repository Pattern + Interfaces
+│        Data Layer           │  ← SQLite + Repository Pattern + Interfaces
 └─────────────────────────────┘
 ```
 
@@ -97,10 +97,11 @@ Expense_Track/
 │   ├── resources/
 │   │   └── Icon/
 │   ├── ui/
-│   │   ├── main_window.py
 │   │   └── components/
+│   ├── shared/
+│   ├── tests/
 │   ├── main.py
-    └──requirements.txt
+│── └──requirements.txt
 ```
 
 ---
@@ -179,8 +180,8 @@ MIT License — see the [LICENSE](LICENSE) file for details.
 
 | Platform | Link |
 |---|---|
-| 🐙 GitHub | [anasemadanas](https://github.com/anasemadanas/) |
-| 💼 LinkedIn | [eng-anasemad](https://www.linkedin.com/in/eng-anasemad/) |
-| 📧 Email | anaspython3@gmail.com |
+| 🐙 GitHub | [GitHub](https://github.com/anasemadanas/) |
+| 💼 LinkedIn | [LinkedIn](https://www.linkedin.com/in/eng-anasemad/) |
+| 📧 Email | [Email](mailto:anaspython3@gmail.com) |
 
 [↩️ Back to Table of Contents](#table-of-contents)
