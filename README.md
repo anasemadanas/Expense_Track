@@ -70,11 +70,11 @@ Built using:
 
 ```
 ┌─────────────────────────────┐
-│      Presentation Layer      │  ← PySide6 GUI / CLI
+│      Presentation Layer     │  ← PySide6 GUI / CLI
 ├─────────────────────────────┤
-│    Business Logic Layer      │  ← Services, Validation, Calculations
+│    Business Logic Layer     │  ← Services, Validation, Calculations
 ├─────────────────────────────┤
-│        Data Layer            │  ← SQLite + Repository Pattern + Interfaces
+│        Data Layer           │  ← SQLite + Repository Pattern + Interfaces
 └─────────────────────────────┘
 ```
 
@@ -181,6 +181,6 @@ MIT License — see the [LICENSE](LICENSE) file for details.
 |---|---|
 | 🐙 GitHub | [anasemadanas](https://github.com/anasemadanas/) |
 | 💼 LinkedIn | [eng-anasemad](https://www.linkedin.com/in/eng-anasemad/) |
-| 📧 Email | anaspython3@gmail.com |
+| 📧 Email | mailto:anaspython3@gmail.com |
 
 [↩️ Back to Table of Contents](#table-of-contents)
