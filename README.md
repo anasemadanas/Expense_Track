@@ -97,9 +97,6 @@ Expense_Track/
 │   ├── resources/
 │   │   └── Icon/
 │   ├── ui/
-│   │   └── components/
-│   ├── shared/
-│   ├── tests/
 │   ├── main.py
 │── └──requirements.txt
 ```
