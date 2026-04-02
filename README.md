@@ -97,10 +97,11 @@ Expense_Track/
 │   ├── resources/
 │   │   └── Icon/
 │   ├── ui/
-│   │   ├── main_window.py
 │   │   └── components/
+│   ├── shared/
+│   ├── tests/
 │   ├── main.py
-    └──requirements.txt
+│── └──requirements.txt
 ```
 
 ---
@@ -180,7 +181,7 @@ MIT License — see the [LICENSE](LICENSE) file for details.
 | Platform | Link |
 |---|---|
 | 🐙 GitHub | [GitHub](https://github.com/anasemadanas/) |
-| 💼 LinkedIn | [LinkedIn][eng-anasemad](https://www.linkedin.com/in/eng-anasemad/) |
+| 💼 LinkedIn | [LinkedIn](https://www.linkedin.com/in/eng-anasemad/) |
 | 📧 Email | [Email](mailto:anaspython3@gmail.com) |
 
 [↩️ Back to Table of Contents](#table-of-contents)
