@@ -3,23 +3,19 @@ from abc import ABC, abstractmethod
 class IBudgetRepo(ABC):
 
     @abstractmethod
-    def create_budget(self, name: str, amount: float, user_id: int, period: str = None):
+    def create_budget(self, amount: float, month: int, year: int):
         pass
 
     @abstractmethod
-    def get_budget(self, budget_id: int):
+    def get_budget(self, month: int, year: int):
         pass
 
     @abstractmethod
-    def get_budgets_by_user(self, user_id: int):
+    def get_budget_by_id(self, budget_id: int):
         pass
 
     @abstractmethod
-    def update_spent(self, budget_id: int, spent: float):
-        pass
-
-    @abstractmethod
-    def update_budget(self, budget_id: int, name: str = None, amount: float = None, period: str = None):
+    def update_budget(self, budget_id: int, amount: float):
         pass
 
     @abstractmethod

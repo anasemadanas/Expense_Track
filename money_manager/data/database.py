@@ -9,7 +9,15 @@ class DatabaseConnection:
         self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()
 
-    def execute(self, query, params=(), fetch="all"):
+        self.conn.row_factory = sqlite3.Row
+        
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close() 
+        
+    def execute(self, query, params=(), fetch=None):
         self.cursor.execute(query, params)
 
         if fetch == "one":
@@ -18,4 +26,12 @@ class DatabaseConnection:
             return self.cursor.fetchall()
         else:
             self.conn.commit()
-            return None
+            return self.cursor.lastrowid 
+        
+
+        
+    def close(self):
+        if self.cursor:
+            self.cursor.close()
+        if self.conn:
+            self.conn.close()
