@@ -20,6 +20,9 @@ class TransactionRepo:
 
         return self.db.execute(query, params)
     
+    
+    
+    
     def get_transactions(self):
         query = "SELECT * FROM transactions"
         rows = self.db.execute(query, fetch="all")

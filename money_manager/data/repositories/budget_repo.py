@@ -47,7 +47,7 @@ class BudgetRepo(IBudgetRepo):
         if new_amount < 0:
             new_amount = 0  
         query = "UPDATE budgets SET amount = ? WHERE month = ? AND year = ?"
-        self.db.execute(query, (new_amount, month, year), fetch=None)
+        self.db.execute(query, (new_amount,new_amount, month, year), fetch=None)
         return new_amount
 
 
