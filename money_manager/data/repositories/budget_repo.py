@@ -67,5 +67,5 @@ class BudgetRepo(IBudgetRepo):
         return self.db.execute(query, (amount, budget_id), fetch=None)
 
     def delete_budget(self, budget_id: int):
-        query = "DELETE FROM Budget WHERE Budget_ID = ?"
+        query = "DELETE FROM Budgets WHERE Budget_ID = ?"
         return self.db.execute(query, (budget_id,), fetch=None)

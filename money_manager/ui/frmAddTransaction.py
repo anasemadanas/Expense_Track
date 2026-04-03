@@ -56,4 +56,3 @@ class AddTransaction(QtWidgets.QMainWindow,Ui_AddTransaction):
         msg.setText(text)
         msg.setIcon(QMessageBox.Icon.Warning)
         msg.exec()
-

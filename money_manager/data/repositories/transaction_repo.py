@@ -34,3 +34,6 @@ class TransactionRepo:
             ))
         return transactions
     
+    def delete_transaction(self, transaction_id: int):
+        query = "DELETE FROM transactions WHERE transaction_ID = ?"
+        return self.db.execute(query, (transaction_id,), fetch=None)
