@@ -27,10 +27,21 @@ class DashBoardService:
             QtGui.QDesktopServices.openUrl(QtCore.QUrl("https://github.com/anasemadanas/Expense_Track"))
 
     def save_data(self):
-        print("Saving…")
+        print("Saving… :")
 
     def open_guide(self):
-        QtGui.QDesktopServices.openUrl(QtCore.QUrl("https://github.com/anasemadanas/Expense_Track"))
+        msg = QtWidgets.QMessageBox()
+        msg.setWindowTitle("Guide")
+        msg.setIcon(QtWidgets.QMessageBox.Icon.Information)
+        msg.setText("Click below to visit my GitHub page:")
+        msg.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+        btn_link = msg.addButton("Open Guide", QtWidgets.QMessageBox.ButtonRole.ActionRole)
+        msg.exec()
+        if msg.clickedButton() == btn_link:
+            QtGui.QDesktopServices.openUrl(QtCore.QUrl("https://github.com/anasemadanas/Expense_Track/blob/main/docs/project_document.md"))
+
+
+
 
     def export_data(self):
         file, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Export Data", "Summary_Budget.csv", "CSV Files (*.csv);;All Files (*)")

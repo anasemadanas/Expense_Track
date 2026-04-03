@@ -135,73 +135,54 @@ All components are designed in strict adherence to SOLID principles:
 ## 📁 Folder Structure
 
 ```
-Expense_Track                             
-├─.gitignore                              
-├─LICENSE                                 
-├─README.md                               
-└─money_manager                           
-  ├─__init__.py                           
-  ├─main.py                               
-  ├─requirements.txt                      
-  ├─resources_rc.py                       
-  ├─data                                  
-  │ ├─__init__.py                         
-  │ ├─database.py                         
-  │ ├─interfaces                          
-  │ │ ├─__init__.py                       
-  │ │ ├─IBudgetRepo.py                    
-  │ │ ├─ITransactionRepo.py               
-  │ │ ├─IUserRepo.py                                       
-  │ └─repositories                        
-  │   ├─__init__.py                       
-  │   ├─budget_repo.py                    
-  │   ├─transaction_repo.py               
-  │   ├─user_repo.py                                          
-  ├─Database                              
-  │ ├─create table basic.py               
-  │ ├─Data_Examples.csv                   
-  │ └─Money_Manager_DB.db                 
-  ├─resources                             
-  │ ├─frmBudget.ui                        
-  │ ├─frmdashboard.ui                     
-  │ ├─frmLogin.ui                         
-  │ ├─frmTransaction.ui                   
-  │ ├─Resources.qrc                       
-  │ ├─resources_rc.py                     
-  │ ├─ui_frmBudget.py                     
-  │ ├─ui_frmdashboard.py                  
-  │ ├─ui_frmLogin.py                      
-  │ ├─ui_frmTransaction.py                
-  │ └─icons                               
-  │   ├─barchart_black.png                
-  │   ├─barchart_white.png                
-  │   ├─budget.png                        
-  │   ├─linegraph_black.png               
-  │   ├─linegraph_white.png               
-  │   ├─login.png                         
-  │   ├─logo.png                          
-  │   ├─piechart_black.png                
-  │   ├─piechart_white.png                
-  │   └─transaction.png                   
-  ├─Services                              
-  │ ├─__init__.py                         
-  │ ├─budget_service.py                   
-  │ ├─dashboard_service.py                
-  │ ├─transaction_service.py              
-  │ └─user_service.py                                          
-  └─ui                                    
-    ├─__init__.py                         
-    ├─frmAddBudget.py                     
-    ├─frmAddTransaction.py                
-    ├─frmdashboard.py                     
-    ├─frmLoginScreen.py                   
-    ├─ui_frmBudget.py                     
-    ├─ui_frmdashboard.py                  
-    ├─ui_frmLogin.py                      
-    ├─ui_frmTransaction.py                
-    └─controllers                         
-      ├─__init__.py                       
-      └─transaction_controller.py    
+Expense_Track               
+├─.gitignore                
+├─LICENSE                   
+├─README.md                 
+└─money_manager             
+  ├─__init__.py             
+  ├─main.py                 
+  ├─requirements.txt        
+  ├─resources_rc.py         
+  ├─ui_frmdashboard.py      
+  ├─data                    
+  │ ├─__init__.py           
+  │ ├─database.py           
+  │ ├─interfaces            
+  │ │ ├─__init__.py         
+  │ │ ├─IBudgetRepo.py      
+  │ │ ├─ITransactionRepo.py 
+  │ │ └─IUserRepo.py        
+  │ └─repositories          
+  │   ├─__init__.py         
+  │   ├─budget_repo.py      
+  │   ├─transaction_repo.py 
+  │   └─user_repo.py        
+  ├─Database                
+  │ ├─create table basic.py 
+  │ ├─Data_Examples.csv     
+  │ └─Money_Manager_DB.db   
+  ├─Services                
+  │ ├─__init__.py           
+  │ ├─budget_service.py     
+  │ ├─dashboard_service.py  
+  │ ├─transaction_service.py
+  │ ├─user_service.py       
+  │ └─models                
+  │   ├─__init__.py         
+  │   ├─budget.py           
+  │   ├─transaction.py      
+  │   └─user.py             
+  └─ui                      
+    ├─__init__.py           
+    ├─frmAddBudget.py       
+    ├─frmAddTransaction.py  
+    ├─frmdashboard.py       
+    ├─frmLoginScreen.py     
+    ├─ui_frmBudget.py       
+    ├─ui_frmdashboard.py    
+    ├─ui_frmLogin.py        
+    └─ui_frmTransaction.py     
          
 ```
 
