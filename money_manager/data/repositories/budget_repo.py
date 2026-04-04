@@ -20,6 +20,12 @@ class BudgetRepo(IBudgetRepo):
             year=row["year"],
             id=row["id"]
         )
+        
+
+    def get_all_budgets(self):
+        query = "SELECT * FROM budgets ORDER BY year, month"
+        return self.db.execute(query, fetch="all")
+    
     def create_budget(self, amount: float, month: int, year: int):
         existing_budget = self.get_budget(month, year)  
         if existing_budget:
@@ -43,6 +49,11 @@ class BudgetRepo(IBudgetRepo):
 
 
 
+    
+    
+    
+    
+    
     def get_budget_by_date(self, month: int, year: int):
         query = "SELECT * FROM Budget WHERE Month = ? AND Year = ?"
         return self.db.execute(query, (month, year), fetch="one")

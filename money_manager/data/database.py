@@ -5,34 +5,35 @@ class DatabaseConnection:
     def __init__(self):
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         db_path = os.path.join(project_root, "Database", "Money_Manager_DB.db")
+        #db_path = "Database/Money_Manager_DB.db"
 
         self.conn = sqlite3.connect(db_path)
         self.conn.row_factory = sqlite3.Row
-        self.cursor = self.conn.cursor()
 
 
-        
     def __enter__(self):
         return self
-
+    
     def __exit__(self, exc_type, exc_value, traceback):
-        self.close() 
+        self.conn.close()
+        
         
     def execute(self, query, params=(), fetch=None):
-        self.cursor.execute(query, params)
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(query, params)
 
-        if fetch == "one":
-            return self.cursor.fetchone()
-        elif fetch == "all":
-            return self.cursor.fetchall()
-        else:
+            if fetch == "one":
+                return cursor.fetchone()
+
+            if fetch == "all":
+                return cursor.fetchall()
+
             self.conn.commit()
-            return self.cursor.lastrowid 
+            return cursor.lastrowid
         
+        except sqlite3.Error as e:
+            print("Database error:", e)
+            return None
 
-        
-    def close(self):
-        if self.cursor:
-            self.cursor.close()
-        if self.conn:
-            self.conn.close()
+

@@ -4,11 +4,11 @@ from data.repositories.user_repo import UserRepo
 
 
 class UserService:
-
     def __init__(self, user_repo=None):
         self.user_repo = user_repo or UserRepo()
-        self.max_attempts = 4
         self.login_attempts = 0
+        self.max_attempts = 4
+
 
         
     def CheckLogin(self, username, password):

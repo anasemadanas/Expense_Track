@@ -32,3 +32,5 @@ class TransactionService:
 
         return transaction
 
+    def get_transactions(self):
+        return self.repo.get_transactions_with_budget()

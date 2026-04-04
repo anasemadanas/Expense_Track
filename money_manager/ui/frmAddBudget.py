@@ -1,10 +1,10 @@
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtGui import QIcon
 from Services.budget_service import BudgetService
-from ui.ui_frmBudget import Ui_AddBudget
+from ui.ui_frmAddBudget import Ui_AddBudget
 from PySide6.QtCore import QDate
 
-class AddBudget(QtWidgets.QMainWindow, Ui_AddBudget):
+class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
 
     def __init__(self):
         super().__init__()
@@ -23,7 +23,7 @@ class AddBudget(QtWidgets.QMainWindow, Ui_AddBudget):
         now = QDate.currentDate()
         self.dateMonthBugdet.setDate(now)
         self.dateYear.setDate(now)
-
+    # ---- ------------------------------------------------------------- ----
         
     def save_budget(self):
         amount_text = self.txtAmountBugdet.text().strip()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'frmBudget.ui'
+## Form generated from reading UI file 'frmAddBudget.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.11.0
 ##
@@ -15,17 +15,18 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDateEdit, QGridLayout, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QDateEdit, QDialog, QGridLayout,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QWidget)
 
 class Ui_AddBudget(object):
     def setupUi(self, AddBudget):
         if not AddBudget.objectName():
             AddBudget.setObjectName(u"AddBudget")
-        AddBudget.resize(520, 613)
+        AddBudget.resize(574, 597)
         self.lblNewBudget = QLabel(AddBudget)
         self.lblNewBudget.setObjectName(u"lblNewBudget")
-        self.lblNewBudget.setGeometry(QRect(130, 40, 301, 51))
+        self.lblNewBudget.setGeometry(QRect(140, 30, 301, 51))
         font = QFont()
         font.setFamilies([u"MV Boli"])
         font.setPointSize(36)
@@ -37,73 +38,65 @@ class Ui_AddBudget(object):
 "color:rgb(170, 0, 255)\n"
 "\n"
 "")
-        self.btnSaveBudget = QPushButton(AddBudget)
-        self.btnSaveBudget.setObjectName(u"btnSaveBudget")
-        self.btnSaveBudget.setGeometry(QRect(90, 510, 151, 61))
-        font1 = QFont()
-        font1.setFamilies([u"Nirmala UI Semilight"])
-        font1.setPointSize(14)
-        self.btnSaveBudget.setFont(font1)
-        self.btnCloseBudget = QPushButton(AddBudget)
-        self.btnCloseBudget.setObjectName(u"btnCloseBudget")
-        self.btnCloseBudget.setGeometry(QRect(270, 510, 151, 61))
-        self.btnCloseBudget.setFont(font1)
-        self.widget = QWidget(AddBudget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(60, 150, 401, 331))
-        self.gridLayoutBugdet = QGridLayout(self.widget)
+        self.layoutWidget = QWidget(AddBudget)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(70, 140, 401, 331))
+        self.gridLayoutBugdet = QGridLayout(self.layoutWidget)
         self.gridLayoutBugdet.setObjectName(u"gridLayoutBugdet")
         self.gridLayoutBugdet.setContentsMargins(0, 0, 0, 0)
-        self.lblYearBugdet = QLabel(self.widget)
+        self.lblYearBugdet = QLabel(self.layoutWidget)
         self.lblYearBugdet.setObjectName(u"lblYearBugdet")
-        font2 = QFont()
-        font2.setFamilies([u"Myanmar Texti"])
-        font2.setPointSize(20)
-        font2.setBold(False)
-        font2.setItalic(False)
-        self.lblYearBugdet.setFont(font2)
+        font1 = QFont()
+        font1.setFamilies([u"Myanmar Texti"])
+        font1.setPointSize(20)
+        font1.setBold(False)
+        font1.setItalic(False)
+        self.lblYearBugdet.setFont(font1)
         self.lblYearBugdet.setStyleSheet(u"\n"
 "font: 20pt \"Myanmar Texti\";")
 
         self.gridLayoutBugdet.addWidget(self.lblYearBugdet, 0, 0, 1, 1)
 
-        self.lblAmountBugdet = QLabel(self.widget)
+        self.lblAmountBugdet = QLabel(self.layoutWidget)
         self.lblAmountBugdet.setObjectName(u"lblAmountBugdet")
-        self.lblAmountBugdet.setFont(font2)
+        self.lblAmountBugdet.setFont(font1)
         self.lblAmountBugdet.setStyleSheet(u"\n"
 "font: 20pt \"Myanmar Texti\";")
 
         self.gridLayoutBugdet.addWidget(self.lblAmountBugdet, 6, 0, 1, 1)
 
-        self.txtAmountBugdet = QLineEdit(self.widget)
+        self.txtAmountBugdet = QLineEdit(self.layoutWidget)
         self.txtAmountBugdet.setObjectName(u"txtAmountBugdet")
-        font3 = QFont()
-        font3.setFamilies([u"Segoe UI"])
-        font3.setPointSize(12)
-        font3.setBold(False)
-        font3.setItalic(False)
-        self.txtAmountBugdet.setFont(font3)
+        font2 = QFont()
+        font2.setFamilies([u"Segoe UI"])
+        font2.setPointSize(12)
+        font2.setBold(False)
+        font2.setItalic(False)
+        self.txtAmountBugdet.setFont(font2)
         self.txtAmountBugdet.setStyleSheet(u"font: 12pt \"Segoe UI\";")
+        self.txtAmountBugdet.setMaxLength(20)
 
         self.gridLayoutBugdet.addWidget(self.txtAmountBugdet, 6, 1, 1, 1)
 
-        self.dateYear = QDateEdit(self.widget)
+        self.dateYear = QDateEdit(self.layoutWidget)
         self.dateYear.setObjectName(u"dateYear")
         self.dateYear.setStyleSheet(u"font: 18pt \"Segoe UI\";")
+        self.dateYear.setDateTime(QDateTime(QDate(2020, 1, 1), QTime(0, 0, 0)))
+        self.dateYear.setMinimumDateTime(QDateTime(QDate(2020, 1, 1), QTime(0, 0, 0)))
         self.dateYear.setMaximumDate(QDate(2100, 12, 31))
-        self.dateYear.setMinimumDate(QDate(2020, 9, 14))
+        self.dateYear.setMinimumDate(QDate(2020, 1, 1))
 
         self.gridLayoutBugdet.addWidget(self.dateYear, 0, 1, 1, 1)
 
-        self.lblMonthBugdet = QLabel(self.widget)
+        self.lblMonthBugdet = QLabel(self.layoutWidget)
         self.lblMonthBugdet.setObjectName(u"lblMonthBugdet")
-        self.lblMonthBugdet.setFont(font2)
+        self.lblMonthBugdet.setFont(font1)
         self.lblMonthBugdet.setStyleSheet(u"\n"
 "font: 20pt \"Myanmar Texti\";")
 
         self.gridLayoutBugdet.addWidget(self.lblMonthBugdet, 5, 0, 1, 1)
 
-        self.dateMonthBugdet = QDateEdit(self.widget)
+        self.dateMonthBugdet = QDateEdit(self.layoutWidget)
         self.dateMonthBugdet.setObjectName(u"dateMonthBugdet")
         self.dateMonthBugdet.setStyleSheet(u"font: 18pt \"Segoe UI\";")
         self.dateMonthBugdet.setMaximumDate(QDate(2100, 12, 31))
@@ -112,6 +105,17 @@ class Ui_AddBudget(object):
 
         self.gridLayoutBugdet.addWidget(self.dateMonthBugdet, 5, 1, 1, 1)
 
+        self.btnCloseBudget = QPushButton(AddBudget)
+        self.btnCloseBudget.setObjectName(u"btnCloseBudget")
+        self.btnCloseBudget.setGeometry(QRect(280, 500, 151, 61))
+        font3 = QFont()
+        font3.setFamilies([u"Nirmala UI Semilight"])
+        font3.setPointSize(14)
+        self.btnCloseBudget.setFont(font3)
+        self.btnSaveBudget = QPushButton(AddBudget)
+        self.btnSaveBudget.setObjectName(u"btnSaveBudget")
+        self.btnSaveBudget.setGeometry(QRect(100, 500, 151, 61))
+        self.btnSaveBudget.setFont(font3)
 
         self.retranslateUi(AddBudget)
 
@@ -119,15 +123,15 @@ class Ui_AddBudget(object):
     # setupUi
 
     def retranslateUi(self, AddBudget):
-        AddBudget.setWindowTitle(QCoreApplication.translate("AddBudget", u"Form", None))
+        AddBudget.setWindowTitle(QCoreApplication.translate("AddBudget", u"Dialog", None))
         self.lblNewBudget.setText(QCoreApplication.translate("AddBudget", u"New Budget ", None))
-        self.btnSaveBudget.setText(QCoreApplication.translate("AddBudget", u"Save", None))
-        self.btnCloseBudget.setText(QCoreApplication.translate("AddBudget", u"Close", None))
         self.lblYearBugdet.setText(QCoreApplication.translate("AddBudget", u"Year", None))
         self.lblAmountBugdet.setText(QCoreApplication.translate("AddBudget", u"Amount", None))
         self.txtAmountBugdet.setText("")
         self.dateYear.setDisplayFormat(QCoreApplication.translate("AddBudget", u"yyyy", None))
         self.lblMonthBugdet.setText(QCoreApplication.translate("AddBudget", u"Month Budget", None))
         self.dateMonthBugdet.setDisplayFormat(QCoreApplication.translate("AddBudget", u"MM", None))
+        self.btnCloseBudget.setText(QCoreApplication.translate("AddBudget", u"Close", None))
+        self.btnSaveBudget.setText(QCoreApplication.translate("AddBudget", u"Save", None))
     # retranslateUi
 

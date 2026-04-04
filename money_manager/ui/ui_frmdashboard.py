@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'frmdashboard.ui'
+## Form generated from reading UI file 'frmDashBoard.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.11.0
 ##
@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QGraphicsView, QGridLayo
     QHBoxLayout, QLabel, QMainWindow, QMenu,
     QMenuBar, QProgressBar, QPushButton, QSizePolicy,
     QStackedWidget, QStatusBar, QVBoxLayout, QWidget)
-import resources_rc
+import Resources_rc
 
 class Ui_MainScreen(object):
     def setupUi(self, MainScreen):
@@ -57,24 +57,24 @@ class Ui_MainScreen(object):
         self.stackedWidgetChart = QStackedWidget(self.centralwidget)
         self.stackedWidgetChart.setObjectName(u"stackedWidgetChart")
         self.stackedWidgetChart.setGeometry(QRect(50, 510, 831, 251))
-        self.pageSpending_1 = QWidget()
-        self.pageSpending_1.setObjectName(u"pageSpending_1")
-        self.gvPieChart = QGraphicsView(self.pageSpending_1)
+        self.pageSpending = QWidget()
+        self.pageSpending.setObjectName(u"pageSpending")
+        self.gvPieChart = QGraphicsView(self.pageSpending)
         self.gvPieChart.setObjectName(u"gvPieChart")
         self.gvPieChart.setGeometry(QRect(-10, 30, 811, 221))
-        self.stackedWidgetChart.addWidget(self.pageSpending_1)
-        self.pageLineGraph_3 = QWidget()
-        self.pageLineGraph_3.setObjectName(u"pageLineGraph_3")
-        self.gvLineGraph = QGraphicsView(self.pageLineGraph_3)
+        self.stackedWidgetChart.addWidget(self.pageSpending)
+        self.pageLineGraph = QWidget()
+        self.pageLineGraph.setObjectName(u"pageLineGraph")
+        self.gvLineGraph = QGraphicsView(self.pageLineGraph)
         self.gvLineGraph.setObjectName(u"gvLineGraph")
         self.gvLineGraph.setGeometry(QRect(0, 30, 801, 221))
-        self.stackedWidgetChart.addWidget(self.pageLineGraph_3)
-        self.pageBudget_2 = QWidget()
-        self.pageBudget_2.setObjectName(u"pageBudget_2")
-        self.gvBarChart = QGraphicsView(self.pageBudget_2)
+        self.stackedWidgetChart.addWidget(self.pageLineGraph)
+        self.pageBudget = QWidget()
+        self.pageBudget.setObjectName(u"pageBudget")
+        self.gvBarChart = QGraphicsView(self.pageBudget)
         self.gvBarChart.setObjectName(u"gvBarChart")
         self.gvBarChart.setGeometry(QRect(0, 30, 801, 221))
-        self.stackedWidgetChart.addWidget(self.pageBudget_2)
+        self.stackedWidgetChart.addWidget(self.pageBudget)
         self.layoutWidget = QWidget(self.centralwidget)
         self.layoutWidget.setObjectName(u"layoutWidget")
         self.layoutWidget.setGeometry(QRect(50, 460, 831, 44))
@@ -147,6 +147,14 @@ class Ui_MainScreen(object):
 
         self.vlbtnAdd.addWidget(self.btnAddBudget)
 
+        self.btnListTransaction = QPushButton(self.layoutWidget1)
+        self.btnListTransaction.setObjectName(u"btnListTransaction")
+        self.btnListTransaction.setFont(font1)
+        self.btnListTransaction.setStyleSheet(u"font: 20pt \"Segoe UI\";\n"
+"color:rgb(0, 255, 0);")
+
+        self.vlbtnAdd.addWidget(self.btnListTransaction)
+
         self.btnLogout = QPushButton(self.layoutWidget1)
         self.btnLogout.setObjectName(u"btnLogout")
         self.btnLogout.setFont(font1)
@@ -157,54 +165,61 @@ class Ui_MainScreen(object):
 
         self.layoutWidget2 = QWidget(self.centralwidget)
         self.layoutWidget2.setObjectName(u"layoutWidget2")
-        self.layoutWidget2.setGeometry(QRect(50, 130, 361, 304))
+        self.layoutWidget2.setGeometry(QRect(60, 110, 391, 336))
         self.gridLayoutThisMonth = QGridLayout(self.layoutWidget2)
         self.gridLayoutThisMonth.setObjectName(u"gridLayoutThisMonth")
         self.gridLayoutThisMonth.setContentsMargins(0, 0, 0, 0)
-        self.pbSave = QProgressBar(self.layoutWidget2)
-        self.pbSave.setObjectName(u"pbSave")
+        self.lblExpense = QLabel(self.layoutWidget2)
+        self.lblExpense.setObjectName(u"lblExpense")
         font2 = QFont()
         font2.setPointSize(14)
-        self.pbSave.setFont(font2)
-        self.pbSave.setValue(24)
+        self.lblExpense.setFont(font2)
 
-        self.gridLayoutThisMonth.addWidget(self.pbSave, 4, 1, 1, 4)
+        self.gridLayoutThisMonth.addWidget(self.lblExpense, 4, 0, 1, 1)
 
         self.pbExpense = QProgressBar(self.layoutWidget2)
         self.pbExpense.setObjectName(u"pbExpense")
         self.pbExpense.setFont(font2)
         self.pbExpense.setValue(24)
 
-        self.gridLayoutThisMonth.addWidget(self.pbExpense, 3, 1, 1, 4)
-
-        self.lblTotalBalanceCalc = QLabel(self.layoutWidget2)
-        self.lblTotalBalanceCalc.setObjectName(u"lblTotalBalanceCalc")
-        self.lblTotalBalanceCalc.setEnabled(True)
-        font3 = QFont()
-        font3.setFamilies([u"Modir MT"])
-        font3.setPointSize(20)
-        font3.setBold(False)
-        font3.setItalic(False)
-        self.lblTotalBalanceCalc.setFont(font3)
-        self.lblTotalBalanceCalc.setStyleSheet(u"\n"
-"font: 20pt \"Modir MT\";")
-
-        self.gridLayoutThisMonth.addWidget(self.lblTotalBalanceCalc, 1, 3, 1, 2)
+        self.gridLayoutThisMonth.addWidget(self.pbExpense, 4, 1, 1, 4)
 
         self.lblSave = QLabel(self.layoutWidget2)
         self.lblSave.setObjectName(u"lblSave")
         self.lblSave.setFont(font2)
 
-        self.gridLayoutThisMonth.addWidget(self.lblSave, 4, 0, 1, 1)
+        self.gridLayoutThisMonth.addWidget(self.lblSave, 5, 0, 1, 1)
 
-        self.lblCurrentBalanceCalc = QLabel(self.layoutWidget2)
-        self.lblCurrentBalanceCalc.setObjectName(u"lblCurrentBalanceCalc")
-        self.lblCurrentBalanceCalc.setEnabled(True)
-        self.lblCurrentBalanceCalc.setFont(font3)
-        self.lblCurrentBalanceCalc.setStyleSheet(u"\n"
-"font: 20pt \"Modir MT\";")
+        self.pbSave = QProgressBar(self.layoutWidget2)
+        self.pbSave.setObjectName(u"pbSave")
+        self.pbSave.setFont(font2)
+        self.pbSave.setValue(24)
 
-        self.gridLayoutThisMonth.addWidget(self.lblCurrentBalanceCalc, 2, 3, 1, 2)
+        self.gridLayoutThisMonth.addWidget(self.pbSave, 5, 1, 1, 4)
+
+        self.lblThisMonth = QLabel(self.layoutWidget2)
+        self.lblThisMonth.setObjectName(u"lblThisMonth")
+        self.lblThisMonth.setEnabled(True)
+        font3 = QFont()
+        font3.setFamilies([u"MV Boli"])
+        font3.setPointSize(36)
+        font3.setBold(False)
+        font3.setItalic(False)
+        self.lblThisMonth.setFont(font3)
+        self.lblThisMonth.setStyleSheet(u"color:rgb(255, 84, 87);\n"
+"font: 36pt \"MV Boli\";")
+
+        self.gridLayoutThisMonth.addWidget(self.lblThisMonth, 0, 0, 1, 4)
+
+        self.cmbMonths = QComboBox(self.layoutWidget2)
+        self.cmbMonths.setObjectName(u"cmbMonths")
+
+        self.gridLayoutThisMonth.addWidget(self.cmbMonths, 1, 2, 1, 2)
+
+        self.cmbYears = QComboBox(self.layoutWidget2)
+        self.cmbYears.setObjectName(u"cmbYears")
+
+        self.gridLayoutThisMonth.addWidget(self.cmbYears, 1, 0, 1, 2)
 
         self.lblTotalBalance = QLabel(self.layoutWidget2)
         self.lblTotalBalance.setObjectName(u"lblTotalBalance")
@@ -218,7 +233,21 @@ class Ui_MainScreen(object):
         self.lblTotalBalance.setStyleSheet(u"color:rgb(255, 84, 87);\n"
 "font: 20pt ;")
 
-        self.gridLayoutThisMonth.addWidget(self.lblTotalBalance, 1, 0, 1, 3)
+        self.gridLayoutThisMonth.addWidget(self.lblTotalBalance, 2, 0, 1, 3)
+
+        self.lblTotalBalanceCalc = QLabel(self.layoutWidget2)
+        self.lblTotalBalanceCalc.setObjectName(u"lblTotalBalanceCalc")
+        self.lblTotalBalanceCalc.setEnabled(True)
+        font5 = QFont()
+        font5.setFamilies([u"Modir MT"])
+        font5.setPointSize(20)
+        font5.setBold(False)
+        font5.setItalic(False)
+        self.lblTotalBalanceCalc.setFont(font5)
+        self.lblTotalBalanceCalc.setStyleSheet(u"\n"
+"font: 20pt \"Modir MT\";")
+
+        self.gridLayoutThisMonth.addWidget(self.lblTotalBalanceCalc, 2, 3, 1, 2)
 
         self.lblCurrentBalance = QLabel(self.layoutWidget2)
         self.lblCurrentBalance.setObjectName(u"lblCurrentBalance")
@@ -227,32 +256,16 @@ class Ui_MainScreen(object):
         self.lblCurrentBalance.setStyleSheet(u"color:rgb(255, 84, 87);\n"
 "font: 20pt ;")
 
-        self.gridLayoutThisMonth.addWidget(self.lblCurrentBalance, 2, 0, 1, 3)
+        self.gridLayoutThisMonth.addWidget(self.lblCurrentBalance, 3, 0, 1, 3)
 
-        self.lblExpense = QLabel(self.layoutWidget2)
-        self.lblExpense.setObjectName(u"lblExpense")
-        self.lblExpense.setFont(font2)
+        self.lblCurrentBalanceCalc = QLabel(self.layoutWidget2)
+        self.lblCurrentBalanceCalc.setObjectName(u"lblCurrentBalanceCalc")
+        self.lblCurrentBalanceCalc.setEnabled(True)
+        self.lblCurrentBalanceCalc.setFont(font5)
+        self.lblCurrentBalanceCalc.setStyleSheet(u"\n"
+"font: 20pt \"Modir MT\";")
 
-        self.gridLayoutThisMonth.addWidget(self.lblExpense, 3, 0, 1, 1)
-
-        self.lblThisMonth = QLabel(self.layoutWidget2)
-        self.lblThisMonth.setObjectName(u"lblThisMonth")
-        self.lblThisMonth.setEnabled(True)
-        font5 = QFont()
-        font5.setFamilies([u"MV Boli"])
-        font5.setPointSize(36)
-        font5.setBold(False)
-        font5.setItalic(False)
-        self.lblThisMonth.setFont(font5)
-        self.lblThisMonth.setStyleSheet(u"color:rgb(255, 84, 87);\n"
-"font: 36pt \"MV Boli\";")
-
-        self.gridLayoutThisMonth.addWidget(self.lblThisMonth, 0, 0, 1, 4)
-
-        self.cmbMonths = QComboBox(self.layoutWidget2)
-        self.cmbMonths.setObjectName(u"cmbMonths")
-
-        self.gridLayoutThisMonth.addWidget(self.cmbMonths, 0, 4, 1, 1)
+        self.gridLayoutThisMonth.addWidget(self.lblCurrentBalanceCalc, 3, 3, 1, 2)
 
         MainScreen.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainScreen)
@@ -287,7 +300,7 @@ class Ui_MainScreen(object):
 
         self.retranslateUi(MainScreen)
 
-        self.stackedWidgetChart.setCurrentIndex(2)
+        self.stackedWidgetChart.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainScreen)
@@ -306,14 +319,15 @@ class Ui_MainScreen(object):
         self.btnLineGraphinDate.setText(QCoreApplication.translate("MainScreen", u"Line Graph inDate", None))
         self.btnAddTransaction.setText(QCoreApplication.translate("MainScreen", u"Add Transaction", None))
         self.btnAddBudget.setText(QCoreApplication.translate("MainScreen", u"Add Budget", None))
+        self.btnListTransaction.setText(QCoreApplication.translate("MainScreen", u"List Transaction", None))
         self.btnLogout.setText(QCoreApplication.translate("MainScreen", u"Logout", None))
-        self.lblTotalBalanceCalc.setText(QCoreApplication.translate("MainScreen", u"???", None))
-        self.lblSave.setText(QCoreApplication.translate("MainScreen", u"Saving", None))
-        self.lblCurrentBalanceCalc.setText(QCoreApplication.translate("MainScreen", u"???", None))
-        self.lblTotalBalance.setText(QCoreApplication.translate("MainScreen", u"Total Balance", None))
-        self.lblCurrentBalance.setText(QCoreApplication.translate("MainScreen", u"Current Balance", None))
         self.lblExpense.setText(QCoreApplication.translate("MainScreen", u"Expense", None))
+        self.lblSave.setText(QCoreApplication.translate("MainScreen", u"Saving", None))
         self.lblThisMonth.setText(QCoreApplication.translate("MainScreen", u"This Month", None))
+        self.lblTotalBalance.setText(QCoreApplication.translate("MainScreen", u"Total Balance", None))
+        self.lblTotalBalanceCalc.setText(QCoreApplication.translate("MainScreen", u"???", None))
+        self.lblCurrentBalance.setText(QCoreApplication.translate("MainScreen", u"Current Balance", None))
+        self.lblCurrentBalanceCalc.setText(QCoreApplication.translate("MainScreen", u"???", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainScreen", u"File", None))
         self.menuEdit.setTitle(QCoreApplication.translate("MainScreen", u"Edit", None))
         self.menuHel.setTitle(QCoreApplication.translate("MainScreen", u"Help", None))

@@ -31,7 +31,9 @@ class BudgetService:
             raise ValueError("Year must be between 2000 and 2100")
         if month < 1 or month > 12:
             raise ValueError("Month must be between 1 and 12")
-
+        if amount > 1000000.00:
+            raise ValueError("Amount must be less than 1,000,000")
+        
         now = datetime.now()
         selected = datetime(year, month, 1)
         min_date = datetime(now.year, now.month, 1) - relativedelta(months=6)
@@ -41,7 +43,7 @@ class BudgetService:
             raise ValueError("Date must be within 6 months in the past and 2 years in the future")
 
         if self.get_budget(month, year):
-            result = self.show_update_confirm()
+            result = self.show_update_confirm(amount, month, year)
             if result == QMessageBox.StandardButton.Yes:
                 return self.repo.create_budget(amount, month, year) 
             else:
@@ -57,10 +59,11 @@ class BudgetService:
             year = datetime.now().year
         return self.repo.get_budget(month, year)
         
-    def show_update_confirm(self):
+    def show_update_confirm(self, amount, month, year):
         msg = QMessageBox()
         msg.setWindowTitle("Budget Already Exists")
-        msg.setText("Budget for this month/year already exists. Do you want to update it?")
+        msg.setText(f"Budget for {month}/{year} already exists. Do you want to update it?\nNew amount: {self.get_budget(month, year).amount + amount:.2f}")
+        
         msg.setIcon(QMessageBox.Icon.Warning)
         msg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         return msg.exec()

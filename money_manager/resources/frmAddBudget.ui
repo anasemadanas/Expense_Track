@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>AddBudget</class>
- <widget class="QWidget" name="AddBudget">
+ <widget class="QDialog" name="AddBudget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>613</height>
+    <width>574</width>
+    <height>597</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Dialog</string>
   </property>
   <widget class="QLabel" name="lblNewBudget">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>40</y>
+     <x>140</x>
+     <y>30</y>
      <width>301</width>
      <height>51</height>
     </rect>
@@ -41,49 +41,11 @@ color:rgb(170, 0, 255)
     <string>New Budget </string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnSaveBudget">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>510</y>
-     <width>151</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Nirmala UI Semilight</family>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Save</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnCloseBudget">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>510</y>
-     <width>151</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Nirmala UI Semilight</family>
-     <pointsize>14</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Close</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>150</y>
+     <x>70</x>
+     <y>140</y>
      <width>401</width>
      <height>331</height>
     </rect>
@@ -143,12 +105,35 @@ font: 20pt &quot;Myanmar Texti&quot;;</string>
       <property name="text">
        <string/>
       </property>
+      <property name="maxLength">
+       <number>20</number>
+      </property>
      </widget>
     </item>
     <item row="0" column="1">
      <widget class="QDateEdit" name="dateYear">
       <property name="styleSheet">
        <string notr="true">font: 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="dateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2020</year>
+        <month>1</month>
+        <day>1</day>
+       </datetime>
+      </property>
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2020</year>
+        <month>1</month>
+        <day>1</day>
+       </datetime>
       </property>
       <property name="maximumDate">
        <date>
@@ -160,8 +145,8 @@ font: 20pt &quot;Myanmar Texti&quot;;</string>
       <property name="minimumDate">
        <date>
         <year>2020</year>
-        <month>9</month>
-        <day>14</day>
+        <month>1</month>
+        <day>1</day>
        </date>
       </property>
       <property name="displayFormat">
@@ -216,6 +201,44 @@ font: 20pt &quot;Myanmar Texti&quot;;</string>
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="btnCloseBudget">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>500</y>
+     <width>151</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Nirmala UI Semilight</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnSaveBudget">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>500</y>
+     <width>151</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Nirmala UI Semilight</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
   </widget>
  </widget>
  <resources/>
