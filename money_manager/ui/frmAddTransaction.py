@@ -11,14 +11,12 @@ class AddTransaction(QtWidgets.QMainWindow,Ui_AddTransaction):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        
 
         self.transaction_service = TransactionService()
         
         self.setWindowTitle("Transaction")
         self.setWindowIcon(QIcon("resources\\icons\\transaction.png"))
-        self.btnCloseTransaction.clicked.connect(self.close)
-        self.btnSaveTransaction.clicked.connect(self.save_transaction)
+
 
         now = QDate.currentDate()
         self.dateMonthTransaction.setDate(now)
@@ -29,7 +27,9 @@ class AddTransaction(QtWidgets.QMainWindow,Ui_AddTransaction):
         
         validator = QDoubleValidator(0.00, 999999.99, 2)  
         self.txtAmountTransaction.setValidator(validator)
-
+        
+        self.btnSaveTransaction.clicked.connect(self.save_transaction)
+        self.btnCloseTransaction.clicked.connect(self.close)
         
     def save_transaction(self):
         if self.txtAmountTransaction.text() == "":
@@ -41,6 +41,7 @@ class AddTransaction(QtWidgets.QMainWindow,Ui_AddTransaction):
             category = self.chkboxCatagory.currentText()
             selected_month = self.dateMonthTransaction.date().month()
             selected_year = self.dateYearTransaction.date().year()
+
 
             self.transaction_service.add_transaction(amount, category, selected_month, selected_year)
             QtWidgets.QMessageBox.information(self, "Success", "Transaction saved!")

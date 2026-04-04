@@ -13,29 +13,22 @@ class TransactionService:
         self.budget_service = BudgetService()
 
     def add_transaction(self, amount_trans, category, month, year):
-        
-        self.budget_service = BudgetService()
+        budget = self.budget_service.get_budget(month, year)
 
-        budget_amount = self.budget_service.get_budget_amount(month, year)
-        
-        if budget_amount is None:
-            raise ValueError("No budget found for this month/year")
-        if amount_trans >  budget_amount :
-                raise ValueError(f"Amount exceeds the available budget ({budget_amount})!")
+        if budget is None:
+            raise ValueError("No available budget for this month/year")
+        if amount_trans > budget.amount:
+            raise ValueError(f"Amount exceeds the available budget ({budget.amount})!")
         if amount_trans <= 0:
             raise ValueError("Amount must be greater than 0")
-        if year < datetime.now().year or year > datetime.now().year + 5:
-            raise ValueError("Year must be between the current year and 5 years in the future")
+        if year < 2000 or year > 2100:
+            raise ValueError("Year must be between 2000 and 2100")
+        if month < 1 or month > 12:
+            raise ValueError("Month must be between 1 and 12")
         
-        transaction = Transaction(amount_trans, category, month, year)
+        transaction = Transaction(amount=amount_trans, category=category, month=month, year=year)
         self.repo.add_transaction(transaction)
-
         self.budget_service.deduct_from_budget(amount_trans, month, year)
+
         return transaction
 
-
-
-    def get_transactions(self):
-        return self.repo.get_transactions()
-    
-    

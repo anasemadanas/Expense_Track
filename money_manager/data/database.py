@@ -7,9 +7,10 @@ class DatabaseConnection:
         db_path = os.path.join(project_root, "Database", "Money_Manager_DB.db")
 
         self.conn = sqlite3.connect(db_path)
+        self.conn.row_factory = sqlite3.Row
         self.cursor = self.conn.cursor()
 
-        self.conn.row_factory = sqlite3.Row
+
         
     def __enter__(self):
         return self

@@ -22,20 +22,7 @@ class TransactionRepo:
     
     
     
-    
-    def get_transactions(self):
-        query = "SELECT * FROM transactions"
-        rows = self.db.execute(query, fetch="all")
-        transactions = []
-        for row in rows:
-            transactions.append(Transaction(
-                amount=row["amount"],
-                category=row["category"],
-                month=row["month"],
-                year=row["year"],
-                id=row["id"]
-            ))
-        return transactions
+
     
     def delete_transaction(self, transaction_id: int):
         query = "DELETE FROM transactions WHERE transaction_ID = ?"

@@ -8,14 +8,11 @@ class BudgetRepo(IBudgetRepo):
         self.db = DatabaseConnection()
         
     def get_budget(self, month, year):
-        
         cursor = self.db.conn.cursor()
         cursor.execute("SELECT * FROM budgets WHERE month=? AND year=?", (month, year))
-        row = cursor.fetchone()  
-        
+        row = cursor.fetchone()
         if row is None:
             return None
-
         return Budget(
             amount=row["amount"],
             totalamount=row["total_amount"],
@@ -23,32 +20,24 @@ class BudgetRepo(IBudgetRepo):
             year=row["year"],
             id=row["id"]
         )
-        
     def create_budget(self, amount: float, month: int, year: int):
-        existing_budget = self.get_budget(month, year)
+        existing_budget = self.get_budget(month, year)  
         if existing_budget:
-            query = "UPDATE budgets SET amount = ? WHERE month = ? AND year = ?"
-            self.db.execute(query, (amount, month, year))
-            return existing_budget
-        else:
-            query = """
-            INSERT INTO budgets (amount, total_amount, month, year)
-            VALUES (?, ?, ?, ?)
-            """
+            query = "UPDATE budgets SET amount = amount + ?, total_amount = total_amount + ? WHERE month = ? AND year = ?"
             self.db.execute(query, (amount, amount, month, year))
-            return self.get_budget(month, year)
 
+        else:
+            query = "INSERT INTO budgets (amount, total_amount, month, year) VALUES (?, ?, ?, ?)"
+            self.db.execute(query, (amount, amount, month, year))
+        return self.get_budget(month, year)
 
     def update_budget_amount(self, amount_spent: float, month: int, year: int):
-        budget = self.get_budget(month, year)
+        budget = self.get_budget(month, year)  
         if not budget:
-            return None  
-        new_amount = budget.amount - amount_spent
-        if new_amount < 0:
-            new_amount = 0  
+            return None
+        new_amount = max(budget.amount - amount_spent, 0)
         query = "UPDATE budgets SET amount = ? WHERE month = ? AND year = ?"
-        self.db.execute(query, (new_amount,new_amount, month, year), fetch=None)
-        return new_amount
+        return self.db.execute(query, (new_amount, month, year), fetch=None)
 
 
 

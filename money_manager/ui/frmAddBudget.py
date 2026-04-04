@@ -38,10 +38,10 @@ class AddBudget(QtWidgets.QMainWindow, Ui_AddBudget):
             amount = float(self.txtAmountBugdet.text())
             selected_month = self.dateMonthBugdet.date().month()
             selected_year = self.dateYear.date().year()
-            self.service.create_budget(amount, selected_month, selected_year)
             
-            QtWidgets.QMessageBox.information(self, "Success", "Budget saved!")
-            self.close()
+            if amount > 0 and self.service.create_budget(amount, selected_month, selected_year):
+                QtWidgets.QMessageBox.information(self, "Success", "Budget saved!")
+                self.close()
 
         except Exception as e:
             QtWidgets.QMessageBox.critical(self, "Error", str(e))
