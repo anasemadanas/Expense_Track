@@ -7,11 +7,16 @@ class IBudgetRepo(ABC):
         pass
 
     @abstractmethod
-    def get_budget(self, month: int, year: int):
+    def check_budget(self, month: int, year: int):
+        pass
+    
+    def deduct_from_budget(self, amount_spent: float, month: int, year: int):
         pass
 
+
+
     @abstractmethod
-    def get_budget_by_id(self, budget_id: int):
+    def get_budget(self, month: int, year: int):
         pass
 
     @abstractmethod

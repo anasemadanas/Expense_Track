@@ -1,5 +1,4 @@
 
-
 from data.repositories.user_repo import UserRepo
 
 
@@ -8,8 +7,6 @@ class UserService:
         self.user_repo = user_repo or UserRepo()
         self.login_attempts = 0
         self.max_attempts = 4
-
-
         
     def CheckLogin(self, username, password):
         username = username.strip().lower()

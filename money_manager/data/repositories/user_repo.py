@@ -1,5 +1,4 @@
 from data.database import DatabaseConnection
-
 from data.interfaces.IUserRepo import IUserRepo
 
 class UserRepo(IUserRepo):

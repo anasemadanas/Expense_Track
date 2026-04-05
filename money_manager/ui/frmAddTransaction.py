@@ -28,6 +28,12 @@ class AddTransaction(QtWidgets.QDialog,Ui_AddTransaction):
         
         self.btnSaveTransaction.clicked.connect(self.save_transaction)
         self.btnCloseTransaction.clicked.connect(self.close)
+        
+        month = self.dateMonthTransaction.date().month()
+        year = self.dateYearTransaction.date().year()
+        balance = self.transaction_service.get_budget_balance(month, year)
+        self.lblTotalAmountBudget.setText(str(balance))
+
     # ---- ------------------------------------------------------------- ----
             
     def save_transaction(self):

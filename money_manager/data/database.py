@@ -30,7 +30,7 @@ class DatabaseConnection:
                 return cursor.fetchall()
 
             self.conn.commit()
-            return cursor.lastrowid
+            return None
         
         except sqlite3.Error as e:
             print("Database error:", e)

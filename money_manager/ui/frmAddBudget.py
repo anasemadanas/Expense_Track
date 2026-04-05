@@ -31,11 +31,9 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
         if not amount_text:
             QtWidgets.QMessageBox.warning(self, "Error", "Please enter amount")
             return
-
-        amount = float(amount_text)
         
         try:
-            amount = float(self.txtAmountBugdet.text())
+            amount = float(amount_text)
             selected_month = self.dateMonthBugdet.date().month()
             selected_year = self.dateYear.date().year()
             
