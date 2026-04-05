@@ -337,7 +337,7 @@ Please ensure your code follows the SOLID principles and the 3-Tier architecture
 This project is licensed under the MIT License — see the [LICENSE](https://github.com/anasemadanas/Expense_Track/blob/main/LICENSE) file for details.
 
 ---
-[↩️ Back to Table of Contents](#table-of-contents)
+[↩️ Back to Table of Contents](#Table of Contents)
 ---
 <p align="center">
   <sub>Built with ❤️ using Python • Designed with SOLID principles in mind</sub>
