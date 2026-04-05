@@ -35,8 +35,8 @@ class TransactionService:
     
     
     # ----------------------- ------------------------------------------- ----
-    def get_transactions(self, month, year):
-        return self.budget_service.check_budget(month, year)
+    def get_transactions(self):
+        return self.repo.get_transactions()
 
     def get_budget_balance(self, month, year):
         row = self.budget_repo.get_budget_balance(month, year)

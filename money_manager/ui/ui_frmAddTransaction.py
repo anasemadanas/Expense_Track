@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'frmAddTransaction.ui'
+## Form generated from reading UI file 'ui_frmAddTransaction.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.11.0
 ##
@@ -164,7 +164,7 @@ class Ui_AddTransaction(object):
         self.lblMonth.setText(QCoreApplication.translate("AddTransaction", u"Month", None))
         self.lblNewTransaction.setText(QCoreApplication.translate("AddTransaction", u"New Transaction ", None))
         self.btnSaveTransaction.setText(QCoreApplication.translate("AddTransaction", u"Save", None))
-        self.lblTotalAmountBudgetHave.setText(QCoreApplication.translate("AddTransaction", u"have Total amount", None))
+        self.lblTotalAmountBudgetHave.setText(QCoreApplication.translate("AddTransaction", u"Available Balance", None))
         self.lblTotalAmountBudget.setText(QCoreApplication.translate("AddTransaction", u"???", None))
     # retranslateUi
 

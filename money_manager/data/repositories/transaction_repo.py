@@ -16,8 +16,9 @@ class TransactionRepo(ITransactionRepo):
 
     # ----------------------- get transactions ------------------------------------------- ----
     def get_transactions(self):
-        query = "SELECT * FROM transactions ORDER BY year, month"
+        query = "SELECT id, amount, category, month, year FROM transactions ORDER BY year, month"
         return self.db.execute(query, fetch="all")
+
 
 
     def delete_transaction(self, transaction_id: int):
@@ -33,11 +34,7 @@ class TransactionRepo(ITransactionRepo):
     def get_transactions_with_budget(self):
         query = "select * from transactions"
         return self.db.execute(query, fetch="all")
-    
-    
-    def get_budget_balance(self):
-        query = "select amount from budgets where month = ? and year = ?"
-        return self.db.execute(query, fetch="one")
+
 
     def get_transactions_by_month_year(self, month, year):
         query = """

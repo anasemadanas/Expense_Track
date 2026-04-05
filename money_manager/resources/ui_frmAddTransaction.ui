@@ -287,7 +287,7 @@ color:rgb(170, 0, 255)
        </font>
       </property>
       <property name="text">
-       <string>have Total amount</string>
+       <string>Available Balance</string>
       </property>
      </widget>
     </item>
