@@ -20,5 +20,5 @@ class UserRepo(IUserRepo):
         return {
             "id": result[0],
             "username": result[1],
-            "permissions": result[2]
+            "permissions": result[3]
         }

@@ -11,7 +11,7 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.service = TransactionService()
+        self.transaction_service = TransactionService()
         self.budget_service = BudgetService()
         
         self.setWindowTitle("List Transactions")
@@ -56,54 +56,67 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
                     return
 
                 self.edit_transaction(tid, old_amount, month, year)
+                self.load_data()
 
         # ------------------- DELETE -------------------
         if action == delete_action:
+            row = self.tableWidgetTransaction.currentRow()
+            if row < 0:
+                return
 
             transaction_id = int(self.tableWidgetTransaction.item(row, 0).text())
-            amount_item = float(self.tableWidgetTransaction.item(row, 1).text())
+            amount = float(self.tableWidgetTransaction.item(row, 1).text())
+            month = int(self.tableWidgetTransaction.item(row, 3).text())
+            year = int(self.tableWidgetTransaction.item(row, 4).text())
+
+            self.delete_transaction(transaction_id, amount, month, year)
+
+    def delete_transaction(self, transaction_id, amount, month, year):
+        msg = QMessageBox()
+        msg.setWindowTitle("Confirm Delete")
+        msg.setText("Are you sure you want to delete this transaction?")
+        msg.setIcon(QMessageBox.Icon.Warning)
+        delete_btn = msg.addButton("Delete", QMessageBox.ButtonRole.AcceptRole)
+        cancel_btn = msg.addButton("Cancel", QMessageBox.ButtonRole.RejectRole)
+        msg.setDefaultButton(cancel_btn)
+        msg.exec()
+
+        if msg.clickedButton() != delete_btn:
+            return  
+        
+        confirm = QMessageBox.question(
+            self,
+            "Confirm Delete",
+            "Deleting this transaction cannot be undone.\nProceed with delete?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No
+        )
+
+        if confirm != QMessageBox.StandardButton.Yes:
+            return
+
+        self.transaction_service.delete_transaction(transaction_id)
+        self.budget_service.add_to_budget(amount, month, year)
+
+        QMessageBox.information(self, "Deleted", "Transaction successfully deleted!")
+
+        self.load_data()
             
-            msg = QMessageBox()
-            msg.setWindowTitle("Confirm Delete")
-            msg.setText("Are you sure you want to delete this transaction?")
-            msg.setIcon(QMessageBox.Icon.Warning)
-            delete_btn = msg.addButton("Delete", QMessageBox.ButtonRole.AcceptRole)
-            cancel_btn = msg.addButton("Cancel", QMessageBox.ButtonRole.RejectRole)
-            msg.setDefaultButton(cancel_btn)
-            msg.exec()
-            if msg.clickedButton() != delete_btn:
-                return
-  
-            confirm = QMessageBox.question(
-                self,
-                "Confirm Delete",
-                "Deleting this transaction cannot be undone.\nProceed with delete?",
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                QMessageBox.StandardButton.No
-            )
-
-            if confirm == QMessageBox.StandardButton.Yes:
-                self.delete_transaction(transaction_id)
-
-                self.budget_service.add_to_budget(amount_item, int(self.tableWidgetTransaction.item(row, 3).text()), int(self.tableWidgetTransaction.item(row, 4).text()))
-                self.load_data()
-
-
 
     def edit_transaction(self, tid, old_amount, month, year):
         new_amount, ok = QInputDialog.getDouble(self, "Edit", "New amount:", old_amount)
         if not ok:
             return
         try:
-            self.service.edit_transaction(tid, new_amount, month, year)
+            self.transaction_service.edit_transaction(tid, new_amount, month, year)
             QMessageBox.information(self, "Success", "Transaction updated!")
             self.load_data()
         except ValueError as e:
             QMessageBox.warning(self, "Error", str(e))
-                    
+
     def load_data(self):
        
-        results = self.service.get_transactions()
+        results = self.transaction_service.get_transactions()
 
         self.tableWidgetTransaction.setRowCount(0)
         self.tableWidgetTransaction.setColumnCount(5)
@@ -119,8 +132,3 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
                 self.tableWidgetTransaction.setItem(row_num, col_num, item)
 
 
-    def delete_transaction(self, transaction_id):
-        from data.repositories.transaction_repo import TransactionRepo
-        repo = TransactionRepo()
-        repo.delete_transaction(transaction_id)
-        self.load_data()  

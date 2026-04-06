@@ -5,20 +5,24 @@ from PySide6.QtWidgets import QVBoxLayout
 from datetime import datetime
 import random
 from PySide6.QtWidgets import QMessageBox
-
 from Services.dashboard_service import DashBoardService
 from ui.ui_frmDashBoard import Ui_MainScreen
 
+from Services.models.permissions import has_permission, UserPermissions
+
 
 class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
-    def __init__(self, transactions=None):
+    def __init__(self, current_user=None, transactions=None):
         super().__init__()
         self.setupUi(self)
         self.transactions = transactions or []
         self.service = DashBoardService()
         self.setWindowTitle("Dashboard")
         self.setWindowIcon(QIcon("resources\\icons\\logo.png"))
-
+        
+        self.current_user = current_user
+        self.permissions = current_user["permissions"] if current_user else 0
+        
     # ------------------ Connect buttons and actions ------------------------------------------
         self.btnSpending.clicked.connect(lambda: self.stackedWidgetChart.setCurrentIndex(0))
         self.btnLineGraphinDate.clicked.connect(lambda: self.stackedWidgetChart.setCurrentIndex(1))
@@ -40,6 +44,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
         self.load_dashboard()
     # ---- ------------------------------------------------------------- ----
+        
     def load_dashboard(self):
         self.update_balance_labels()
         self.draw_charts(self.transactions)
@@ -72,18 +77,33 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.cmbMonths.setCurrentIndex(month_index)
 
     # ---- Add Forms ----------------------------------------------------------
+    def message_error_permissions(self, text):
+        msg = QMessageBox()
+        msg.setWindowTitle("Permission Denied")
+        msg.setText(text)
+        msg.setIcon(QMessageBox.Icon.Warning)
+        msg.exec()
+        
     def open_add_budget(self):
+        if not has_permission(self.permissions, UserPermissions.ADD_BUDGET):
+            self.message_error_permissions("You do not have permission to add budgets.")
+            return
         from ui.frmAddBudget import AddBudget
         open = AddBudget()
         open.exec()
 
     def open_add_transaction(self):
-        
+        if not has_permission(self.permissions, UserPermissions.ADD_TRANSACTION):
+            self.message_error_permissions("You do not have permission to add transactions.")
+            return
         from ui.frmAddTransaction import AddTransaction
         open = AddTransaction()
         open.exec()
 
     def open_list_transaction(self):
+        if not has_permission(self.permissions, UserPermissions.LIST_TRANSACTION):
+            self.message_error_permissions("You do not have permission to view transactions.")
+            return
         from ui.frmListTransaction import ListTransaction
         open = ListTransaction()
         open.exec()

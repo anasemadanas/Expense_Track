@@ -12,11 +12,12 @@ class TransactionRepo(ITransactionRepo):
         params = (transaction.amount, transaction.category, transaction.month, transaction.year)
         return self.db.execute(query, params)
 
-    # ----------------------- get transactions from list ------------------------------------------- ----
+    # ----------------------- get transactions from list -------------------------------------------
     def get_transactions(self):
         query = "SELECT id, amount, category, month, year FROM transactions ORDER BY year, month"
         return self.db.execute(query, fetch="all")
     
+    # ---------------------- List transaction to edit -----------------------------------------------------
     def get_transaction_by_id(self, transaction_id: int):
         query = "SELECT * FROM transactions WHERE id = ?"
         row = self.db.execute(query, (transaction_id), fetch="one") 
@@ -40,6 +41,8 @@ class TransactionRepo(ITransactionRepo):
     def delete_transaction(self, transaction_id: int):
         query = "DELETE FROM transactions WHERE id = ?"
         return self.db.execute(query, (transaction_id,), fetch=None)   
+    # ---------------------- -------------------------------------------------------------------
+
     
     def get_transactions_by_month (self, month, year):
         query = "select * from  transactions where month = ?, year = ?"
