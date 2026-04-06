@@ -115,7 +115,6 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
             QMessageBox.warning(self, "Error", str(e))
 
     def load_data(self):
-       
         results = self.transaction_service.get_transactions()
 
         self.tableWidgetTransaction.setRowCount(0)
