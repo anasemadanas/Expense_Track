@@ -4,10 +4,11 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QVBoxLayout
 from datetime import datetime
 import random
-
+from PySide6.QtWidgets import QMessageBox
 
 from Services.dashboard_service import DashBoardService
 from ui.ui_frmDashBoard import Ui_MainScreen
+
 
 class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
     def __init__(self, transactions=None):
@@ -18,7 +19,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.setWindowTitle("Dashboard")
         self.setWindowIcon(QIcon("resources\\icons\\logo.png"))
 
-        # ------------------ Connect buttons and actions ------------------------------------------
+    # ------------------ Connect buttons and actions ------------------------------------------
         self.btnSpending.clicked.connect(lambda: self.stackedWidgetChart.setCurrentIndex(0))
         self.btnLineGraphinDate.clicked.connect(lambda: self.stackedWidgetChart.setCurrentIndex(1))
         self.btnBudgetProgress.clicked.connect(lambda: self.stackedWidgetChart.setCurrentIndex(2))
@@ -39,7 +40,6 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
         self.load_dashboard()
     # ---- ------------------------------------------------------------- ----
- 
     def load_dashboard(self):
         self.update_balance_labels()
         self.draw_charts(self.transactions)
@@ -52,12 +52,6 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.pbExpense.setValue(min(int(data["expense"] / income * 100), 100))
         self.pbSave.setValue(min(int(max(0, data["net"]) / income * 100), 100))
 
-    def draw_charts(self, transactions):
-        self.draw_pie_chart(transactions)
-        self.draw_bar_chart(transactions)
-        self.draw_line_chart(transactions)
-        self.stackedWidgetChart.setCurrentIndex(0)
-        
     # ----------------------------------------------------------------- ----    
     def on_month_changed(self):
         
@@ -73,7 +67,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
         if self.cmbMonths.count() == 0:
             for m in range(1, 13):
-                self.cmbMonths.addItem(datetime(2026, m, 1).strftime("%B"))  # السنة هنا مجرد placeholder
+                self.cmbMonths.addItem(datetime(2026, m, 1).strftime("%B"))
 
         self.cmbMonths.setCurrentIndex(month_index)
 
@@ -84,6 +78,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         open.exec()
 
     def open_add_transaction(self):
+        
         from ui.frmAddTransaction import AddTransaction
         open = AddTransaction()
         open.exec()
@@ -93,9 +88,13 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         open = ListTransaction()
         open.exec()
 
-
-
     # ---- Draw Charts ----------------------------------------------------------
+    def draw_charts(self, transactions):
+        self.draw_pie_chart(transactions)
+        self.draw_bar_chart(transactions)
+        self.draw_line_chart(transactions)
+        self.stackedWidgetChart.setCurrentIndex(0)
+        
     def _set_chart(self, graphics_view, chart: QtCharts.QChart):
         chart_view = QtCharts.QChartView(chart)
         chart_view.setRenderHint(QtGui.QPainter.Antialiasing)

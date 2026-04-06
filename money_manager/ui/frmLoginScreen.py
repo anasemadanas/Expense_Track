@@ -8,7 +8,7 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
         super().__init__()
         self.ui = Ui_LoginScreen()
         self.ui.setupUi(self)
-        self.service = UserService()
+        self.user_service = UserService()
         
         self.setWindowTitle("Login")
         self.setWindowIcon(QIcon("resources\\icons\\login.png"))
@@ -34,16 +34,22 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
             return
 
         try:
-            if self.service.login(username, password):
+            if self.user_service.login(username, password):
                 self.lblError.setText("")
+                
+                import data.app_state as app_state
+                user = self.user_service.login2(username, password)
+                app_state.current_user = user
+                
                 self.open_Dashboard()
             else:
-                remaining = self.service.max_attempts - self.service.login_attempts
+                remaining = self.user_service.max_attempts - self.user_service.login_attempts
                 self.lblError.setText(f"Invalid credentials! {remaining} attempts left.")
 
         except Exception as e:
                 print("Login error:", e)
                 self.lock_account()
+
                 
     def lock_account(self):
         self.ui.btnLogin.setEnabled(False)
@@ -61,3 +67,27 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
             self.dashboard = MainScreen()
             self.dashboard.show()
             self.close()
+            
+            
+    def try_login2(self):
+        username = self.ui.lneUsername.text().strip()
+        password = self.ui.lnePassword.text().strip()
+        
+        if not username or not password:
+            self.lblError.setText("Please enter username and password.")
+            return
+
+        try:
+            current_user = self.user_service.login2(username, password)
+            if current_user:
+                self.lblError.setText("")
+                self.user_perm = current_user["permissions"]
+                self.current_user = current_user
+                self.open_Dashboard()
+            else:
+                remaining = self.user_service.max_attempts - self.user_service.login_attempts
+                self.lblError.setText(f"Invalid credentials! {remaining} attempts left.")
+        except Exception as e:
+            print("Login error:", e)
+            self.lock_account()
+        

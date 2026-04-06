@@ -1,14 +1,21 @@
 
+from Services.models import budget
 from data.repositories.transaction_repo import TransactionRepo
 from Services.models.transaction import Transaction
 from Services.budget_service import BudgetService
 from data.repositories.budget_repo import BudgetRepo
+from PySide6.QtWidgets import QMessageBox
+from Services.en_permissions import UserPermissions, has_permission
+
+
+
 
 class TransactionService:
     def __init__(self):
         self.repo = TransactionRepo()
         self.budget_service = BudgetService()
         self.budget_repo = BudgetRepo()
+        
 
     # ----------------------- add transaction ------------------------------------------- ----
     def add_transaction(self, amount_trans, category, month, year):
@@ -21,6 +28,7 @@ class TransactionService:
         self.repo.add_transaction(transaction)
         # Deduct the transaction amount from the budget
         self.budget_service.deduct_from_budget(amount_trans, month, year)
+        
         return transaction
     
     def validate_transaction(self, amount_trans, month, year, budget):
@@ -33,13 +41,45 @@ class TransactionService:
         if amount_trans > budget.amount:
             raise ValueError(f"Amount exceeds the available budget ({budget.amount})!")
     
-    
-    # ----------------------- ------------------------------------------- ----
-    def get_transactions(self):
-        return self.repo.get_transactions()
-
     def get_budget_balance(self, month, year):
         row = self.budget_repo.get_budget_balance(month, year)
         if row:
             return row[0] 
         return 0
+        
+    # ----------------------- ------------------------------------------- ----
+    def get_transactions(self):
+        return self.repo.get_transactions()
+
+
+    def edit_transaction(self, tid, new_amount,month, year):
+
+        old_trans = self.repo.get_transaction_by_id(tid)
+        old_amount = old_trans.amount
+        budget = self.budget_service.check_budget(month, year)
+        self.validate_transaction(new_amount, month, year, budget)
+
+        difference = new_amount - old_amount
+
+        if difference > 0:
+            if difference > budget.amount:
+                raise ValueError(
+                    f"Not enough budget: Available={budget.amount}, Required={difference}"
+                )
+
+        if (month != old_trans.month) or (year != old_trans.year):
+            self.budget_repo.add_to_budget(old_amount, month, year)
+            if new_amount > 0:
+                self.budget_service.deduct_from_budget(new_amount, month, year)
+
+        else:
+            if difference > 0:
+                self.budget_service.deduct_from_budget(difference, month, year)
+            elif difference < 0:
+                self.budget_repo.add_to_budget(abs(difference), month, year)
+
+        self.repo.update_transaction(tid, new_amount, month, year)
+
+        return True
+
+    

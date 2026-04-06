@@ -7,8 +7,6 @@ class BudgetService:
     def __init__(self):
         self.repo = BudgetRepo()
         
-
-
     def create_budget(self, amount: float, month: int, year: int):
 
         self.validate_budget(amount, month, year)
@@ -60,14 +58,19 @@ class BudgetService:
         msg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         return msg.exec()
         
-    # ----------------------- check if budget exists ------------------------------------------- ----
+    # ----------------------- check if budget exists and update budgets after spending ------------------------------------------- ----
     def check_budget(self, month, year):
         return self.repo.check_budget(month, year)
-    # ----------------------- update budgets after spending ------------------------------------------- ----
+    
     def deduct_from_budget(self, amount: float, month, year):
         return self.repo.deduct_from_budget(amount, month, year)
-    # ----------------------- ------------------------------------------- ----
     
+    def add_to_budget(self, amount, month, year):
+        return self.repo.add_to_budget(amount, month, year)
 
+    # ----------------------- future --------------------------------- ----
     def delete_budget(self, budget_id):
         return self.repo.delete_budget(budget_id)
+    
+    def update_budget(self, budget_id, amount):
+        return self.repo.update_budget(budget_id, amount)

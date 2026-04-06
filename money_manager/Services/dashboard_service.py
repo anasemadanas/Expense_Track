@@ -1,10 +1,11 @@
 from PySide6 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 import csv
+from data.repositories.transaction_repo import TransactionRepo
 
 class DashBoardService:
     def __init__(self, transaction_repo=None):
-        self.transaction_repo = transaction_repo
+        self.transaction_repo = transaction_repo or TransactionRepo()
 
     # ------------------ Dashboard Actions ------------------------------------------
     def show_about(self):

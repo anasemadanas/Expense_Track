@@ -1,7 +1,6 @@
 
 from data.repositories.user_repo import UserRepo
 
-
 class UserService:
     def __init__(self, user_repo=None):
         self.user_repo = user_repo or UserRepo()
@@ -26,3 +25,15 @@ class UserService:
 
     def login(self, username, password):
         return self.CheckLogin(username, password)
+    
+
+    def login2(self, username, password):
+        user = self.user_repo.find_user(username, password)
+        if user:
+            self.login_attempts = 0
+            return user 
+        else:
+            self.login_attempts += 1
+            if self.login_attempts >= self.max_attempts:
+                raise Exception("Too many login attempts! Account locked.")
+            return None
