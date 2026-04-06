@@ -2,11 +2,11 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 import csv
 from data.repositories.transaction_repo import TransactionRepo
-
+from data.repositories.budget_repo import BudgetRepo
 class DashBoardService:
-    def __init__(self, transaction_repo=None):
-        self.transaction_repo = transaction_repo or TransactionRepo()
-
+    def __init__(self):
+        self.transaction_repo =  TransactionRepo()
+        self.budget_repo = BudgetRepo()
     # ------------------ Dashboard Actions ------------------------------------------
     def show_about(self):
         msg = QtWidgets.QMessageBox()
@@ -78,35 +78,27 @@ class DashBoardService:
             writer.writerows(transactions)
 
         print(f"Transactions exported to {file}")
-    # ----------------------------------------------------------------- ----
+
 
 
     # ------------------ Data Access Methods ------------------------------------------
     def get_all_transactions(self):
-        if self.transaction_repo:
-            return self.transaction_repo.get_transactions()
-        return []
+        return self.transaction_repo.get_transactions()
+
 
     def get_transactions_for_month(self, month, year):
-        if self.transaction_repo:
-            return self.transaction_repo.get_transactions_by_month(month, year)
-        return []
+        return self.transaction_repo.get_transactions_by_month(month, year)
+
 
     def get_current_month_balance(self):
-        income = 1200
-        expense = 750
+        now = datetime.now()
+        transactions = self.get_transactions_for_month(now.month, now.year)
+        income = sum(t['amount'] for t in transactions if t['amount'] > 0)
+        expense = sum(-t['amount'] for t in transactions if t['amount'] < 0)
         net = income - expense
         return {"income": income, "expense": expense, "net": net}
 
-    def get_available_months(self, transactions=None):
-        transactions = transactions or self.get_all_transactions()
-        months = set()
-        for t in transactions:
-            dt = datetime.strptime(t['date'], "%Y-%m-%d")
-            months.add(dt.month)
-        return sorted(list(months))
+    def get_budget_for_category(self, month, year):
+        return self.budget_repo.get_budget(month, year)
+        
 
-
-    def get_budget_for_category(self, category, year):
-        return 500
-    

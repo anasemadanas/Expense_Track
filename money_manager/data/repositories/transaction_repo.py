@@ -33,7 +33,8 @@ class TransactionRepo(ITransactionRepo):
             month=row[3],
             year=row[4]
         )
-    
+
+
     def update_transaction(self, transaction_id, new_amount, new_month, new_year):
         query = """ UPDATE transactions
                     SET amount = ?, month = ?, year = ?
@@ -45,9 +46,30 @@ class TransactionRepo(ITransactionRepo):
         query = "DELETE FROM transactions WHERE id = ?"
         return self.db.execute(query, (transaction_id,), fetch=None)   
     # ---------------------- -------------------------------------------------------------------
-
     
-    def get_transactions_by_month (self, month, year):
-        query = "select * from  transactions where month = ? AND  year = ?"
+
+    def get_transactions_by_month(self, month, year):
+        query = """
+        SELECT id, amount, category, month, year 
+        FROM transactions 
+        WHERE month = ? AND year = ?
+        """
+
         params = (month, year)
-        self.db.execute(query, params)
+
+        results = self.db.execute(query, params, fetch="all")
+
+        if not results:
+            return []
+
+        transactions = []
+        for row in results:
+            transactions.append({
+                "id": row[0],
+                "amount": row[1],
+                "category": row[2],
+                "month": row[3],
+                "year": row[4]
+            })
+
+        return transactions

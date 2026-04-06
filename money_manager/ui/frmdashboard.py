@@ -155,17 +155,25 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self._set_chart(self.gvPieChart, chart)
 
     def draw_bar_chart(self, transactions):
-        categories = list(set(t["category"] for t in transactions)) or ["No data"]
+        if not transactions:
+            transactions = [{"category": "No data", "amount": 0}]
+
+        categories = list(set(t["category"] for t in transactions))
+
         set_budget = QtCharts.QBarSet("Budget")
         set_actual = QtCharts.QBarSet("Actual")
-        set_budget.setColor(QColor("#36A2EB"))
-        set_actual.setColor(QColor("#FF6384"))
 
+        totals = {}
+        for t in transactions:
+            cat = t["category"]
+            amt = t["amount"] or 0
+            totals[cat] = totals.get(cat, 0) + amt
+
+  
         for cat in categories:
-            budget = self.service.get_budget_for_category(cat, 2026)
-            actual = sum(t["amount"] for t in transactions if t["category"] == cat)
-            set_budget.append(budget)
-            set_actual.append(actual)
+            value = float(totals.get(cat, 0))
+            set_actual.append(value)
+            set_budget.append(0) 
 
         series = QtCharts.QBarSeries()
         series.append(set_budget)
@@ -174,29 +182,25 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         chart = QtCharts.QChart()
         chart.addSeries(series)
         chart.setTitle("Budget vs Actual")
-        chart.setAnimationOptions(QtCharts.QChart.SeriesAnimations)
 
         axis_x = QtCharts.QBarCategoryAxis()
         axis_x.append(categories)
         chart.addAxis(axis_x, Qt.AlignBottom)
         series.attachAxis(axis_x)
 
-        max_val = max([set_budget.at(i) for i in range(set_budget.count())] +
-                      [set_actual.at(i) for i in range(set_actual.count())], default=100)
         axis_y = QtCharts.QValueAxis()
-        axis_y.setRange(0, max_val * 1.2)
-        axis_y.setTitleText("Amount ($)")
+        axis_y.setRange(0, max([sum(totals.values()), 100]))
         chart.addAxis(axis_y, Qt.AlignLeft)
         series.attachAxis(axis_y)
-        chart.legend().setAlignment(Qt.AlignBottom)
+
         self._set_chart(self.gvBarChart, chart)
 
     def draw_line_chart(self, transactions):
         months_labels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
         expense_by_month = {i:0 for i in range(1,13)}
+
         for t in transactions:
-            dt = datetime.strptime(t['date'], "%Y-%m-%d")
-            expense_by_month[dt.month] += t["amount"]
+            expense_by_month[t["month"]] += t["amount"]
 
         series_exp = QtCharts.QLineSeries()
         series_save = QtCharts.QLineSeries()

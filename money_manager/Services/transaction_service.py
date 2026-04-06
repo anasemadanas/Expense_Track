@@ -2,7 +2,6 @@
 from data.repositories.transaction_repo import TransactionRepo
 from Services.models.transaction import Transaction
 from Services.budget_service import BudgetService
-from data.repositories.budget_repo import BudgetRepo
 
 
 class TransactionService:
@@ -45,9 +44,11 @@ class TransactionService:
         return self.transaction_repo.get_transactions()
 
     def edit_transaction(self, tid, new_amount, month, year):
+        if new_amount <= 0:
+            return False
         old_transaction = self.transaction_repo.get_transaction_by_id(tid)
         old_amount = old_transaction.amount
-
+        
         difference = new_amount - old_amount  
         self.transaction_repo.update_transaction(tid, new_amount, month, year)
 
@@ -57,6 +58,7 @@ class TransactionService:
             self.budget_service.deduct_from_budget(difference, month, year)  
         elif difference < 0:
             self.budget_service.add_to_budget(abs(difference), month, year)
+        return True
 
     def delete_transaction(self, transaction_id):
         self.transaction_repo.delete_transaction(transaction_id)

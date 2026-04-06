@@ -53,10 +53,10 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
             user = self.user_service.login(username, password)
             if user:
                 self.lblError.setText("")
-    
                 import data.app_state as app_state
                 app_state.current_user = user  
                 self.current_user = user
+                
                 self.open_Dashboard()
             else:
                 remaining = self.user_service.max_attempts - self.user_service.login_attempts
