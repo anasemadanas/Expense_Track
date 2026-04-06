@@ -20,7 +20,8 @@ class TransactionRepo(ITransactionRepo):
     # ---------------------- List transaction to edit -----------------------------------------------------
     def get_transaction_by_id(self, transaction_id: int):
         query = "SELECT * FROM transactions WHERE id = ?"
-        row = self.db.execute(query, (transaction_id), fetch="one") 
+        row = self.db.execute(query, (transaction_id,), fetch="one")
+
         
         if row is None:
             return Transaction(id=None, amount=0, category="", month=0, year=0)
@@ -34,7 +35,9 @@ class TransactionRepo(ITransactionRepo):
         )
     
     def update_transaction(self, transaction_id, new_amount, new_month, new_year):
-        query = "UPDATE transactions SET amount = ?, month = ?, year = ? WHERE id = ?"
+        query = """ UPDATE transactions
+                    SET amount = ?, month = ?, year = ?
+                    WHERE id = ?"""
         params = (new_amount, new_month, new_year, transaction_id)
         self.db.execute(query, params)
         
@@ -45,6 +48,6 @@ class TransactionRepo(ITransactionRepo):
 
     
     def get_transactions_by_month (self, month, year):
-        query = "select * from  transactions where month = ?, year = ?"
+        query = "select * from  transactions where month = ? AND  year = ?"
         params = (month, year)
         self.db.execute(query, params)

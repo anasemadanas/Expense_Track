@@ -10,13 +10,11 @@ class DatabaseConnection:
         self.conn = sqlite3.connect(db_path)
         self.conn.row_factory = sqlite3.Row
 
-
     def __enter__(self):
         return self
     
     def __exit__(self, exc_type, exc_value, traceback):
         self.conn.close()
-        
         
     def execute(self, query, params=(), fetch=None):
         try:
@@ -35,5 +33,3 @@ class DatabaseConnection:
         except sqlite3.Error as e:
             print("Database error:", e)
             return None
-
-

@@ -10,7 +10,7 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
         super().__init__()
         self.setupUi(self)
 
-        self.service = BudgetService()
+        self.budget_service = BudgetService()
         self.btnCloseBudget.clicked.connect(self.close)
         self.btnSaveBudget.clicked.connect(self.save_budget)
 
@@ -37,7 +37,7 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
             selected_month = self.dateMonthBugdet.date().month()
             selected_year = self.dateYear.date().year()
             
-            if amount > 0 and self.service.create_budget(amount, selected_month, selected_year):
+            if amount > 0 and self.budget_service.create_budget(amount, selected_month, selected_year):
                 QtWidgets.QMessageBox.information(self, "Success", "Budget saved!")
                 self.close()
 

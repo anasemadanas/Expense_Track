@@ -3,7 +3,6 @@ from data.database import DatabaseConnection
 from data.interfaces.IBudgetRepo import IBudgetRepo
 
 class BudgetRepo(IBudgetRepo):
-
     def __init__(self):
         self.db = DatabaseConnection()
 
@@ -51,27 +50,24 @@ class BudgetRepo(IBudgetRepo):
     # ----------------------- update budgets after spending -----------------------
     def deduct_from_budget(self, amount_spent: float, month: int, year: int):
         query = "UPDATE budgets SET amount = amount - ? WHERE month=? AND year=?"
-        self.db.execute(query, (amount_spent, month, year))
+        return self.db.execute(query, (amount_spent, month, year))
 
     def add_to_budget(self, amount, month, year):
         query = "UPDATE budgets SET amount = amount + ? WHERE month=? AND year=?"
-        self.db.execute(query, (amount, month, year))
-    
-    # ----------------------- get budget -----------------------
+        return self.db.execute(query, (amount, month, year))
+
+    # ----------------------- return to transaction -----------------------
+    def get_budget_balance(self, month, year):
+        query = "SELECT amount FROM budgets WHERE month = ? AND year = ?"
+        return self.db.execute(query, (month, year), fetch="one")
+
+    # ----------------------- future -----------------------
     def get_budget(self, month: int, year: int):
         return self.db.execute(
             "SELECT * FROM budgets WHERE month=? AND year=?",
             (month, year),
             fetch="one"
         )  
-    # ----------------------- return to transaction -----------------------
-    def get_budget_balance(self, month, year):
-        query = "SELECT amount FROM budgets WHERE month = ? AND year = ?"
-        return self.db.execute(query, (month, year), fetch="one")
-
-
-
-    # ----------------------- future -----------------------
     def update_budget(self, budget_id: int, amount: float):
         query = "UPDATE Budgets SET Amount = ? WHERE Budget_ID = ?"
         return self.db.execute(query, (amount, budget_id), fetch=None)

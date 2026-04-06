@@ -24,7 +24,6 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
         self.ui.btnClose.clicked.connect(self.close)
     # ---- ------------------------------------------------------------- ----
             
-                
     def lock_account(self):
         self.ui.btnLogin.setEnabled(False)
         self.ui.lneUsername.setEnabled(False)
@@ -35,8 +34,7 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
         msg.setText("You have exceeded the maximum login attempts!")
         msg.setInformativeText("Please contact the administrator.")
         msg.exec()
-        
-            
+         
     def open_Dashboard(self):        
         from ui.frmdashboard import MainScreen
         self.dashboard = MainScreen(self.current_user) 
@@ -57,9 +55,8 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
                 self.lblError.setText("")
     
                 import data.app_state as app_state
-                app_state.current_user = user
+                app_state.current_user = user  
                 self.current_user = user
-
                 self.open_Dashboard()
             else:
                 remaining = self.user_service.max_attempts - self.user_service.login_attempts

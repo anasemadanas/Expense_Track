@@ -7,6 +7,7 @@ from Services.transaction_service import TransactionService
 from ui.ui_frmListTransaction import Ui_ListTransaction  
 from Services.budget_service import BudgetService
 
+
 class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
     def __init__(self):
         super().__init__()
@@ -44,33 +45,62 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         if action == edit_action:
             id_item = self.tableWidgetTransaction.item(row, 0)
             amount_item = self.tableWidgetTransaction.item(row, 1)
+            month_item = self.tableWidgetTransaction.item(row, 3)
+            year_item = self.tableWidgetTransaction.item(row, 4)
+            
+            if not all([id_item, amount_item, month_item, year_item]):
+                QMessageBox.warning(self, "Error", "Missing data in row!")
+                return
 
-            if id_item:
-                try:
-                    tid = int(id_item.text())
-                    old_amount = float(amount_item.text())
-                    month = int(self.tableWidgetTransaction.item(row, 3).text())
-                    year = int(self.tableWidgetTransaction.item(row, 4).text())
-                except ValueError:
+            try:
+                tid = int(id_item.text())
+                old_amount = float(amount_item.text())
+                month = int(month_item.text())
+                year = int(year_item.text())
+            except ValueError:
                     QMessageBox.warning(self, "Error", "Invalid data in selected row!")
                     return
 
-                self.edit_transaction(tid, old_amount, month, year)
-                self.load_data()
+            self.edit_transaction(tid, old_amount, month, year)
+            self.load_data()
 
         # ------------------- DELETE -------------------
         if action == delete_action:
             row = self.tableWidgetTransaction.currentRow()
             if row < 0:
                 return
-
-            transaction_id = int(self.tableWidgetTransaction.item(row, 0).text())
-            amount = float(self.tableWidgetTransaction.item(row, 1).text())
-            month = int(self.tableWidgetTransaction.item(row, 3).text())
-            year = int(self.tableWidgetTransaction.item(row, 4).text())
-
+            
+            id_item = self.tableWidgetTransaction.item(row, 0)
+            amount_item = self.tableWidgetTransaction.item(row, 1)
+            month_item = self.tableWidgetTransaction.item(row, 3)
+            year_item = self.tableWidgetTransaction.item(row, 4)
+            
+            if not all([id_item, amount_item, month_item, year_item]):
+                QMessageBox.warning(self, "Error", "Missing data in row!")
+                return
+            
+            transaction_id = int(id_item.text())
+            amount = float(amount_item.text())
+            month = int(month_item.text())
+            year = int(year_item.text())
+            
             self.delete_transaction(transaction_id, amount, month, year)
-
+            
+    # ------------------- Call -------------------
+    def edit_transaction(self, tid, old_amount, month, year):
+        new_amount, ok = QInputDialog.getDouble(self, "Edit", "New amount:", old_amount)
+        if not ok:
+            return
+        if new_amount == old_amount:
+                QMessageBox.information(self, "Info", "No Change")  
+                return
+        try:
+            self.transaction_service.edit_transaction(tid, new_amount, month, year)
+            QMessageBox.information(self, "Success", "Transaction updated!")
+            self.load_data()
+        except ValueError as e:
+            QMessageBox.warning(self, "Error", str(e))
+            
     def delete_transaction(self, transaction_id, amount, month, year):
         msg = QMessageBox()
         msg.setWindowTitle("Confirm Delete")
@@ -91,7 +121,6 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No
         )
-
         if confirm != QMessageBox.StandardButton.Yes:
             return
 
@@ -99,35 +128,19 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         self.budget_service.add_to_budget(amount, month, year)
 
         QMessageBox.information(self, "Deleted", "Transaction successfully deleted!")
-
         self.load_data()
             
-
-    def edit_transaction(self, tid, old_amount, month, year):
-        new_amount, ok = QInputDialog.getDouble(self, "Edit", "New amount:", old_amount)
-        if not ok:
-            return
-        try:
-            self.transaction_service.edit_transaction(tid, new_amount, month, year)
-            QMessageBox.information(self, "Success", "Transaction updated!")
-            self.load_data()
-        except ValueError as e:
-            QMessageBox.warning(self, "Error", str(e))
-
+    # ------------------------ Refresh ------------------------------------
     def load_data(self):
-        results = self.transaction_service.get_transactions()
+        results = self.transaction_service.get_transactions() or []
 
-        self.tableWidgetTransaction.setRowCount(0)
+        self.tableWidgetTransaction.setRowCount(len(results))
         self.tableWidgetTransaction.setColumnCount(5)
         self.tableWidgetTransaction.setHorizontalHeaderLabels([
-            "Transaction ID", "Amount", "Category",
-            "Month", "Year"
+            "Transaction ID", "Amount", "Category", "Month", "Year"
         ])
-        for row_num, row_data in enumerate(results):
-            self.tableWidgetTransaction.insertRow(row_num)
-            for col_num, data in enumerate(row_data):
-                item = QTableWidgetItem(str(data))
-                item.setFlags(item.flags() ^ Qt.ItemIsEditable)
-                self.tableWidgetTransaction.setItem(row_num, col_num, item)
-
-
+        for row, record in enumerate(results):
+            for col, value in enumerate(record):
+                item = QTableWidgetItem(str(value))
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                self.tableWidgetTransaction.setItem(row, col, item)

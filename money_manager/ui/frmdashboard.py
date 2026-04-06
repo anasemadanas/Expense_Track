@@ -231,4 +231,4 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
         chart.legend().setAlignment(Qt.AlignBottom)
         self._set_chart(self.gvLineGraph, chart)
-    # ---- ------------------------------------------------------------- ----        
+    # ---- ------------------------------------------------------------- ----   

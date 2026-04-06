@@ -1,12 +1,14 @@
 from data.repositories.budget_repo import BudgetRepo
+from data.repositories.transaction_repo import TransactionRepo
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from PySide6.QtWidgets import QMessageBox
 
 class BudgetService:
     def __init__(self):
-        self.repo = BudgetRepo()
-        
+        self.budget_repo  = BudgetRepo()
+        self.transaction_repo = TransactionRepo()
+
     def create_budget(self, amount: float, month: int, year: int):
 
         self.validate_budget(amount, month, year)
@@ -15,11 +17,11 @@ class BudgetService:
         if budget.id is not None:
             result = self.show_update_confirm(amount, budget)
             if result == QMessageBox.StandardButton.Yes:
-                return self.repo.create_budget(amount, month, year)
+                return self.budget_repo.create_budget(amount, month, year)
             else:
                 return None
 
-        return self.repo.create_budget(amount, month, year)
+        return self.budget_repo.create_budget(amount, month, year)
 
     def validate_budget(self, amount, month, year):
         if amount <= 0:
@@ -60,17 +62,21 @@ class BudgetService:
         
     # ----------------------- check if budget exists and update budgets after spending ------------------------------------------- ----
     def check_budget(self, month, year):
-        return self.repo.check_budget(month, year)
+        return self.budget_repo.check_budget(month, year)
     
     def deduct_from_budget(self, amount: float, month, year):
-        return self.repo.deduct_from_budget(amount, month, year)
+        return self.budget_repo.deduct_from_budget(amount, month, year)
     
     def add_to_budget(self, amount, month, year):
-        return self.repo.add_to_budget(amount, month, year)
+        return self.budget_repo.add_to_budget(amount, month, year)
+
 
     # ----------------------- future --------------------------------- ----
+    def get_budget_balance(self,  month, year):
+        return self.budget_repo.get_budget_balance( month, year)
+    
     def delete_budget(self, budget_id):
-        return self.repo.delete_budget(budget_id)
+        return self.budget_repo.delete_budget(budget_id)
     
     def update_budget(self, budget_id, amount):
-        return self.repo.update_budget(budget_id, amount)
+        return self.budget_repo.update_budget(budget_id, amount)
