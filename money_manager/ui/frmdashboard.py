@@ -39,43 +39,53 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.actExport.triggered.connect(self.service.export_data)
         self.actExit.triggered.connect(self.close)
         
+        self.init_month_year_combos()
+
         self.cmbMonths.currentIndexChanged.connect(self.on_month_changed)
         self.cmbYears.currentIndexChanged.connect(self.on_month_changed)
 
         self.load_dashboard()
     # ---- ------------------------------------------------------------- ----
-        
+
+    def init_month_year_combos(self):
+        now = datetime.now()
+        self.cmbMonths.blockSignals(True)
+        self.cmbYears.blockSignals(True)
+
+        for m in range(1, 13):
+            self.cmbMonths.addItem(datetime(2000, m, 1).strftime("%B"))
+        self.cmbMonths.setCurrentIndex(now.month - 1)
+
+        for y in range(2020, now.year + 2):
+            self.cmbYears.addItem(str(y))
+        self.cmbYears.setCurrentIndex(self.cmbYears.findText(str(now.year)))
+
+        self.cmbMonths.blockSignals(False)
+        self.cmbYears.blockSignals(False)
+
+    def get_selected_month_year(self):
+        month = self.cmbMonths.currentIndex() + 1
+        year = int(self.cmbYears.currentText())
+        return month, year
+
     def load_dashboard(self):
-        self.transactions = self.service.get_all_transactions()
+        month, year = self.get_selected_month_year()
+        self.transactions = self.service.get_transactions_for_month(month, year)
         self.update_balance_labels()
         self.draw_charts(self.transactions)
-        
+
     def update_balance_labels(self):
-        data = self.service.get_current_month_balance()
+        month, year = self.get_selected_month_year()
+        data = self.service.get_balance_for_month(month, year)
         self.lblTotalBalanceCalc.setText(f"${data['net']:,.2f}")
         self.lblCurrentBalanceCalc.setText(f"${data['net']:,.2f}")
         income = data["income"] or 1
         self.pbExpense.setValue(min(int(data["expense"] / income * 100), 100))
         self.pbSave.setValue(min(int(max(0, data["net"]) / income * 100), 100))
 
-    # ----------------------------------------------------------------- ----    
+    # ----------------------------------------------------------------- ----
     def on_month_changed(self):
-        
-        idx = self.cmbMonths.currentIndex()
-        month_index = datetime.now().month - 1
-        year_text = str(datetime.now().year)
-
-        if self.cmbYears.count() == 0 or self.cmbYears.findText(year_text) == -1:
-            self.cmbYears.addItem(year_text)
-            self.cmbYears.setCurrentIndex(0)
-        else:
-            self.cmbYears.setCurrentIndex(self.cmbYears.findText(year_text))
-
-        if self.cmbMonths.count() == 0:
-            for m in range(1, 13):
-                self.cmbMonths.addItem(datetime(2026, m, 1).strftime("%B"))
-
-        self.cmbMonths.setCurrentIndex(month_index)
+        self.load_dashboard()
 
     # ---- Add Forms ----------------------------------------------------------
     def message_error_permissions(self, text):

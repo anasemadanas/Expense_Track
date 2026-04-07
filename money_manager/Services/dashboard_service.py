@@ -92,7 +92,10 @@ class DashBoardService:
 
     def get_current_month_balance(self):
         now = datetime.now()
-        transactions = self.get_transactions_for_month(now.month, now.year)
+        return self.get_balance_for_month(now.month, now.year)
+
+    def get_balance_for_month(self, month, year):
+        transactions = self.get_transactions_for_month(month, year)
         income = sum(t['amount'] for t in transactions if t['amount'] > 0)
         expense = sum(-t['amount'] for t in transactions if t['amount'] < 0)
         net = income - expense
