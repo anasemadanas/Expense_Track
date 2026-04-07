@@ -6,6 +6,14 @@ from data.interfaces.IGoalRepo import IGoalRepo
 class GoalRepo(IGoalRepo):
     def __init__(self):
         self.db = DatabaseConnection()
+        self.db.execute("""
+            CREATE TABLE IF NOT EXISTS goals (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                target_amount REAL NOT NULL,
+                saved_amount REAL DEFAULT 0.0
+            )
+        """)
 
     def create_goal(self, name: str, target_amount: float, initial_saved: float = 0.0):
         self.db.execute(

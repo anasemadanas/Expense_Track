@@ -62,7 +62,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
             self.cmbMonths.addItem(datetime(2000, m, 1).strftime("%B"))
         self.cmbMonths.setCurrentIndex(now.month - 1)
 
-        for y in range(2020, now.year + 2):
+        for y in range(now.year - 2, now.year + 3):
             self.cmbYears.addItem(str(y))
         self.cmbYears.setCurrentIndex(self.cmbYears.findText(str(now.year)))
 
