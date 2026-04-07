@@ -1,5 +1,4 @@
 from data.repositories.budget_repo import BudgetRepo
-from data.repositories.transaction_repo import TransactionRepo
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from PySide6.QtWidgets import QMessageBox
@@ -7,7 +6,7 @@ from PySide6.QtWidgets import QMessageBox
 class BudgetService:
     def __init__(self):
         self.budget_repo  = BudgetRepo()
-        self.transaction_repo = TransactionRepo()
+
 
     def create_budget(self, amount: float, month: int, year: int):
 
