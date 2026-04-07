@@ -1,8 +1,2 @@
 PySide6
-sqlite3 
-pytest>=7.0.0
-bcrypt>=4.0.1
-openpyxl>=3.1.2   # Excel
-reportlab>=4.1.2  # PDF
-pandas>=2.1.0
-python-dateutil
+sqlite3
