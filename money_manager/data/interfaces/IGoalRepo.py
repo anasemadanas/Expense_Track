@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class IGoalRepo(ABC):
 
     @abstractmethod
-    def create_goal(self, name: str, target_amount: float):
+    def create_goal(self, name: str, target_amount: float, initial_saved: float = 0.0):
         pass
 
     @abstractmethod

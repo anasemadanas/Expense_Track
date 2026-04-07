@@ -18,10 +18,10 @@ class GoalRepo(IGoalRepo):
             )
         """)
 
-    def create_goal(self, name: str, target_amount: float):
+    def create_goal(self, name: str, target_amount: float, initial_saved: float = 0.0):
         self.db.execute(
-            "INSERT INTO goals (name, target_amount, saved_amount) VALUES (?, ?, 0.0)",
-            (name, target_amount)
+            "INSERT INTO goals (name, target_amount, saved_amount) VALUES (?, ?, ?)",
+            (name, target_amount, initial_saved)
         )
 
     def get_all_goals(self):

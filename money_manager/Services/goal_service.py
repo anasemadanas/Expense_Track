@@ -5,7 +5,7 @@ class GoalService:
     def __init__(self):
         self.goal_repo = GoalRepo()
 
-    def add_goal(self, name: str, target_amount: float):
+    def add_goal(self, name: str, target_amount: float, initial_saved: float = 0.0):
         name = name.strip()
         if not name:
             raise ValueError("Goal name cannot be empty.")
@@ -13,7 +13,11 @@ class GoalService:
             raise ValueError("Target amount must be greater than 0.")
         if target_amount > 1_000_000:
             raise ValueError("Target amount must be less than 1,000,000.")
-        self.goal_repo.create_goal(name, target_amount)
+        if initial_saved < 0:
+            raise ValueError("Initial savings cannot be negative.")
+        if initial_saved > target_amount:
+            raise ValueError("Initial savings cannot exceed the target amount.")
+        self.goal_repo.create_goal(name, target_amount, initial_saved)
 
     def get_all_goals(self):
         return self.goal_repo.get_all_goals()
