@@ -1,7 +1,7 @@
 from PySide6 import QtCore, QtGui, QtWidgets, QtCharts
 from PySide6.QtGui import QIcon, QColor
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QVBoxLayout
+from PySide6.QtWidgets import QVBoxLayout, QPushButton
 from datetime import datetime
 from PySide6.QtWidgets import QMessageBox
 from Services.dashboard_service import DashBoardService
@@ -31,6 +31,13 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.btnAddTransaction.clicked.connect(self.open_add_transaction)
         self.btnListTransaction.clicked.connect(self.open_list_transaction)
         self.btnLogout.clicked.connect(self.close)
+
+        self.btnGoals = QPushButton("Goals")
+        self.btnGoals.setFont(self.btnListTransaction.font())
+        self.btnGoals.setStyleSheet("font: 20pt \"Segoe UI\";\ncolor:rgb(0, 255, 0);")
+        logout_index = self.vlbtnAdd.indexOf(self.btnLogout)
+        self.vlbtnAdd.insertWidget(logout_index, self.btnGoals)
+        self.btnGoals.clicked.connect(self.open_goals)
 
         self.actAbout.triggered.connect(self.service.show_about)
         self.actGuide.triggered.connect(self.service.open_guide)
@@ -138,6 +145,11 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         open = ListTransaction()
         open.exec()
         self.load_dashboard()
+
+    def open_goals(self):
+        from ui.frmGoals import GoalsDialog
+        dialog = GoalsDialog(self)
+        dialog.exec()
 
     # ---- Draw Charts ----------------------------------------------------------
     def draw_charts(self, transactions):
