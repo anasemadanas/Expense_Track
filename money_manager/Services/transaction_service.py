@@ -61,5 +61,7 @@ class TransactionService:
         return True
 
     def delete_transaction(self, transaction_id):
+        transaction = self.transaction_repo.get_transaction_by_id(transaction_id)
         self.transaction_repo.delete_transaction(transaction_id)
+        self.budget_service.add_to_budget(transaction.amount, transaction.month, transaction.year)
         

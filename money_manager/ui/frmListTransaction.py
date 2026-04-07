@@ -4,8 +4,7 @@ from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import QInputDialog, QTableWidgetItem, QVBoxLayout, QMenu, QMessageBox
 from PySide6 import QtCore, QtGui, QtWidgets
 from Services.transaction_service import TransactionService
-from ui.ui_frmListTransaction import Ui_ListTransaction  
-from Services.budget_service import BudgetService
+from ui.ui_frmListTransaction import Ui_ListTransaction
 
 
 class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
@@ -13,7 +12,6 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         super().__init__()
         self.setupUi(self)
         self.transaction_service = TransactionService()
-        self.budget_service = BudgetService()
         
         self.setWindowTitle("List Transactions")
         self.setWindowIcon(QIcon("resources\\icons\\logo.png"))
@@ -125,7 +123,6 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
             return
 
         self.transaction_service.delete_transaction(transaction_id)
-        self.budget_service.add_to_budget(amount, month, year)
 
         QMessageBox.information(self, "Deleted", "Transaction successfully deleted!")
         self.load_data()
