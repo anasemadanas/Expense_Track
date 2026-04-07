@@ -46,6 +46,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
     # ---- ------------------------------------------------------------- ----
         
     def load_dashboard(self):
+        self.transactions = self.service.get_all_transactions()
         self.update_balance_labels()
         self.draw_charts(self.transactions)
         
@@ -91,6 +92,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         from ui.frmAddBudget import AddBudget
         open = AddBudget()
         open.exec()
+        self.load_dashboard()
 
     def open_add_transaction(self):
         if not has_permission(self.permissions, UserPermissions.ADD_TRANSACTION):
@@ -99,6 +101,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         from ui.frmAddTransaction import AddTransaction
         open = AddTransaction()
         open.exec()
+        self.load_dashboard()
 
     def open_list_transaction(self):
         if not has_permission(self.permissions, UserPermissions.LIST_TRANSACTION):
@@ -107,6 +110,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         from ui.frmListTransaction import ListTransaction
         open = ListTransaction()
         open.exec()
+        self.load_dashboard()
 
     # ---- Draw Charts ----------------------------------------------------------
     def draw_charts(self, transactions):
