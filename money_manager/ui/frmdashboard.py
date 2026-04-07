@@ -3,7 +3,6 @@ from PySide6.QtGui import QIcon, QColor
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QVBoxLayout
 from datetime import datetime
-import random
 from PySide6.QtWidgets import QMessageBox
 from Services.dashboard_service import DashBoardService
 from ui.ui_frmDashBoard import Ui_MainScreen
@@ -35,8 +34,8 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
         self.actAbout.triggered.connect(self.service.show_about)
         self.actGuide.triggered.connect(self.service.open_guide)
-        self.actSave.triggered.connect(self.service.save_data)
-        self.actExport.triggered.connect(self.service.export_data)
+        self.actSave.triggered.connect(self.on_save)
+        self.actExport.triggered.connect(self.on_export)
         self.actExit.triggered.connect(self.close)
         
         self.init_month_year_combos()
@@ -76,16 +75,34 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
     def update_balance_labels(self):
         month, year = self.get_selected_month_year()
-        data = self.service.get_balance_for_month(month, year)
-        self.lblTotalBalanceCalc.setText(f"${data['net']:,.2f}")
-        self.lblCurrentBalanceCalc.setText(f"${data['net']:,.2f}")
-        income = data["income"] or 1
-        self.pbExpense.setValue(min(int(data["expense"] / income * 100), 100))
-        self.pbSave.setValue(min(int(max(0, data["net"]) / income * 100), 100))
+        budget = self.service.get_budget_summary(month, year)
+
+        total = budget["total"]
+        remaining = budget["remaining"]
+        spent = budget["spent"]
+
+        self.lblTotalBalanceCalc.setText(f"${total:,.2f}")
+        self.lblCurrentBalanceCalc.setText(f"${remaining:,.2f}")
+        self.lblSave.setText(f"Saving: ${remaining:,.2f}")
+
+        if total > 0:
+            self.pbExpense.setValue(min(int(spent / total * 100), 100))
+            self.pbSave.setValue(min(int(remaining / total * 100), 100))
+        else:
+            self.pbExpense.setValue(0)
+            self.pbSave.setValue(0)
 
     # ----------------------------------------------------------------- ----
     def on_month_changed(self):
         self.load_dashboard()
+
+    def on_save(self):
+        month, year = self.get_selected_month_year()
+        self.service.save_data(month, year)
+
+    def on_export(self):
+        month, year = self.get_selected_month_year()
+        self.service.export_data(month, year)
 
     # ---- Add Forms ----------------------------------------------------------
     def message_error_permissions(self, text):
@@ -210,11 +227,19 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self._set_chart(self.gvBarChart, chart)
 
     def draw_line_chart(self, transactions):
+        _, year = self.get_selected_month_year()
         months_labels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-        expense_by_month = {i:0 for i in range(1,13)}
+        expense_by_month = {i: 0 for i in range(1, 13)}
+        saving_by_month = {i: 0 for i in range(1, 13)}
 
-        for t in transactions:
-            expense_by_month[t["month"]] += t["amount"]
+        all_transactions = self.service.get_all_transactions()
+        for t in all_transactions:
+            if t["year"] == year:
+                expense_by_month[t["month"]] += t["amount"]
+
+        for m in range(1, 13):
+            budget = self.service.get_budget_summary(m, year)
+            saving_by_month[m] = budget["remaining"]
 
         series_exp = QtCharts.QLineSeries()
         series_save = QtCharts.QLineSeries()
@@ -223,14 +248,14 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         series_exp.setColor(QColor("#FF6384"))
         series_save.setColor(QColor("#4BC0C0"))
 
-        for i in range(1,13):
-            series_exp.append(i-1, expense_by_month[i])
-            series_save.append(i-1, random.randint(50, 300))
+        for i in range(1, 13):
+            series_exp.append(i - 1, expense_by_month[i])
+            series_save.append(i - 1, saving_by_month[i])
 
         chart = QtCharts.QChart()
         chart.addSeries(series_exp)
         chart.addSeries(series_save)
-        chart.setTitle("Monthly Expense vs Saving")
+        chart.setTitle(f"Monthly Expense vs Saving ({year})")
         chart.setAnimationOptions(QtCharts.QChart.SeriesAnimations)
 
         axis_x = QtCharts.QBarCategoryAxis()
@@ -240,7 +265,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         series_save.attachAxis(axis_x)
 
         axis_y = QtCharts.QValueAxis()
-        max_val = max(expense_by_month.values()) + 50
+        max_val = max(max(expense_by_month.values()), max(saving_by_month.values()), 100) + 50
         axis_y.setRange(0, max_val)
         axis_y.setTitleText("Amount ($)")
         chart.addAxis(axis_y, Qt.AlignLeft)

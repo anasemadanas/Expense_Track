@@ -39,14 +39,14 @@ class DashBoardService:
                 QtCore.QUrl("https://github.com/anasemadanas/Expense_Track/blob/main/docs/project_document.md")
             )
 
-    def save_data(self):
-        transactions = self.get_all_transactions()
+    def save_data(self, month, year):
+        transactions = self.get_transactions_for_month(month, year)
         if not transactions:
-            print("No transactions to save.")
+            QtWidgets.QMessageBox.information(None, "Save", "No transactions found for the selected month.")
             return
 
         file, _ = QtWidgets.QFileDialog.getSaveFileName(
-            None, "Save Transactions", "Transactions.txt", "Text Files (*.txt);;All Files (*)"
+            None, "Save Transactions", f"Transactions_{month}_{year}.txt", "Text Files (*.txt);;All Files (*)"
         )
         if not file:
             return
@@ -56,17 +56,16 @@ class DashBoardService:
                 line = " | ".join(f"{k}: {v}" for k, v in t.items())
                 f.write(line + "\n")
 
-        print(f"Transactions saved to {file}")
+        QtWidgets.QMessageBox.information(None, "Saved", f"Transactions saved to:\n{file}")
 
-    def export_data(self):
-        """Export all transactions to CSV"""
-        transactions = self.get_all_transactions()
+    def export_data(self, month, year):
+        transactions = self.get_transactions_for_month(month, year)
         if not transactions:
-            print("No transactions to export.")
+            QtWidgets.QMessageBox.information(None, "Export", "No transactions found for the selected month.")
             return
 
         file, _ = QtWidgets.QFileDialog.getSaveFileName(
-            None, "Export Data", "Transactions.csv", "CSV Files (*.csv);;All Files (*)"
+            None, "Export to CSV", f"Transactions_{month}_{year}.csv", "CSV Files (*.csv);;All Files (*)"
         )
         if not file:
             return
@@ -77,7 +76,7 @@ class DashBoardService:
             writer.writeheader()
             writer.writerows(transactions)
 
-        print(f"Transactions exported to {file}")
+        QtWidgets.QMessageBox.information(None, "Exported", f"Transactions exported to:\n{file}")
 
 
 
@@ -100,6 +99,15 @@ class DashBoardService:
         expense = sum(-t['amount'] for t in transactions if t['amount'] < 0)
         net = income - expense
         return {"income": income, "expense": expense, "net": net}
+
+    def get_budget_summary(self, month, year):
+        row = self.budget_repo.get_budget(month, year)
+        if not row:
+            return {"total": 0.0, "remaining": 0.0, "spent": 0.0}
+        total = float(row["total_amount"])
+        remaining = float(row["amount"])
+        spent = total - remaining
+        return {"total": total, "remaining": remaining, "spent": max(spent, 0.0)}
 
     def get_budget_for_category(self, month, year):
         return self.budget_repo.get_budget(month, year)
