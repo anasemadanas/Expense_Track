@@ -267,16 +267,25 @@ class GoalsDialog(QDialog):
             return
 
         target, ok = QInputDialog.getDouble(
-            self, "Target Amount", f"How much do you want to save for '{name.strip()}'?",
-            min=0.01, max=1_000_000, decimals=2
+            self,
+            "Target Amount",
+            f"How much do you want to save for '{name.strip()}'?",
+            0.0,        # default value
+            0.01,       # min
+            1_000_000,  # max
+            2           # decimals
         )
         if not ok:
             return
 
         initial, ok = QInputDialog.getDouble(
-            self, "Initial Savings",
+            self,
+            "Initial Savings",
             f"How much are you putting in now toward '{name.strip()}'?\n(You can add more later)",
-            value=0.0, min=0.0, max=target, decimals=2
+            0.0,      # value
+            0.0,      # min
+            target,   # max
+            2         # decimals
         )
         if not ok:
             return
