@@ -135,54 +135,64 @@ All components are designed in strict adherence to SOLID principles:
 ## 📁 Folder Structure
 
 ```
-Expense_Track               
-├─.gitignore                
-├─LICENSE                   
-├─README.md                 
-└─money_manager             
-  ├─__init__.py             
-  ├─main.py                 
-  ├─requirements.txt        
-  ├─resources_rc.py         
-  ├─ui_frmdashboard.py      
-  ├─data                    
-  │ ├─__init__.py           
-  │ ├─database.py           
-  │ ├─interfaces            
-  │ │ ├─__init__.py         
-  │ │ ├─IBudgetRepo.py      
-  │ │ ├─ITransactionRepo.py 
-  │ │ └─IUserRepo.py        
-  │ └─repositories          
-  │   ├─__init__.py         
-  │   ├─budget_repo.py      
-  │   ├─transaction_repo.py 
-  │   └─user_repo.py        
-  ├─Database                
-  │ ├─create table basic.py 
-  │ ├─Data_Examples.csv     
-  │ └─Money_Manager_DB.db   
-  ├─Services                
-  │ ├─__init__.py           
-  │ ├─budget_service.py     
-  │ ├─dashboard_service.py  
-  │ ├─transaction_service.py
-  │ ├─user_service.py       
-  │ └─models                
-  │   ├─__init__.py         
-  │   ├─budget.py           
-  │   ├─transaction.py      
-  │   └─user.py             
-  └─ui                      
-    ├─__init__.py           
-    ├─frmAddBudget.py       
-    ├─frmAddTransaction.py  
-    ├─frmdashboard.py       
-    ├─frmLoginScreen.py     
-    ├─ui_frmBudget.py       
-    ├─ui_frmdashboard.py    
-    ├─ui_frmLogin.py        
-    └─ui_frmTransaction.py     
+Expense_Track                 
+├─.gitignore                  
+├─LICENSE                     
+├─README.md                   
+└─money_manager               
+  ├─__init__.py               
+  ├─main.exe                  
+  ├─main.py                   
+  ├─main.spec                 
+  ├─requirements.txt          
+  ├─Resources_rc.py           
+  ├─data                      
+  │ ├─__init__.py             
+  │ ├─app_state.py            
+  │ ├─database.py             
+  │ ├─interfaces              
+  │ │ ├─__init__.py           
+  │ │ ├─IBudgetRepo.py        
+  │ │ ├─IGoalRepo.py          
+  │ │ ├─ITransactionRepo.py   
+  │ │ └─IUserRepo.py          
+  │ └─repositories            
+  │   ├─__init__.py           
+  │   ├─budget_repo.py        
+  │   ├─goal_repo.py          
+  │   ├─transaction_repo.py   
+  │   └─user_repo.py          
+  ├─Database                  
+  │ └─Money_Manager_DB.db     
+  ├─Services                  
+  │ ├─__init__.py             
+  │ ├─budget_service.py       
+  │ ├─dashboard_service.py    
+  │ ├─goal_service.py         
+  │ ├─transaction_service.py  
+  │ ├─user_service.py         
+  │ └─models                  
+  │   ├─__init__.py           
+  │   ├─budget.py             
+  │   ├─goal.py               
+  │   ├─permissions.py        
+  │   ├─transaction.py        
+  │   └─user.py               
+  └─ui                        
+    ├─__init__.py             
+    ├─frmAddBudget.py         
+    ├─frmAddTransaction.py    
+    ├─frmdashboard.py         
+    ├─frmGoals.py             
+    ├─frmListTransaction.py   
+    ├─frmLoginScreen.py       
+    ├─ui_frmAddBudget.py      
+    ├─ui_frmAddTransaction.py 
+    ├─ui_frmdashboard.py      
+    ├─ui_frmGoals.py          
+    ├─ui_frmListTransaction.py
+    └─ui_frmLogin.py          
+
          
 ```
 
@@ -199,10 +209,11 @@ The application uses **SQLite** for local data persistence. All entities are lin
 │   User   │──1:N──│ Transaction  │
 │          │       └──────────────┘
 │  id (PK) │       ┌──────────────┐
-│ username │──1:N──│   Budget     │
+│ username │──1:N──│    Budget    │
 │ password │       └──────────────┘
-│          │  
-└──────────┘      
+│          │       ┌──────────────┐
+│          │──1:N──│    Goals     │
+└──────────┘       └──────────────┘
 ```
 
 ### Tables
