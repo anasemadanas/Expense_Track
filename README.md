@@ -60,9 +60,10 @@ Built using:
 
 ## 🖼️ Screenshots
 
-| Login | Dashboard | Transaction | Budget |
+| Login | Dashboard | Transaction | Budget | Goal | ListTransaction |
 |-------|-----------|------------|--------|
-| ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) | ![Transaction](screenshots/transaction.png) | ![Budget](screenshots/budget.png) |
+| ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) | ![Transaction](screenshots/transaction.png) | ![Budget](screenshots/budget.png) 
+| ![Goal](screenshots/goal.png) | ![listTransaction](screenshots/listTransaction.png) |
 
 ---
 
