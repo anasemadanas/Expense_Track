@@ -21,3 +21,7 @@ class ITransactionRepo(ABC):
     @abstractmethod    
     def get_transaction_by_id(self, transaction_id: int):
         pass
+    
+    @abstractmethod
+    def get_transactions_by_month(self, month, year):
+        pass

@@ -31,15 +31,42 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
         if not amount_text:
             QtWidgets.QMessageBox.warning(self, "Error", "Please enter amount")
             return
-        
+
         try:
             amount = float(amount_text)
             selected_month = self.dateMonthBugdet.date().month()
             selected_year = self.dateYear.date().year()
-            
-            if amount > 0 and self.budget_service.create_budget(amount, selected_month, selected_year):
+
+            result = self.budget_service.create_budget(amount, selected_month, selected_year)
+
+  
+            if result["exists"]:
+                budget = result["budget"]
+                new_total = budget.amount + amount
+
+                msg = QtWidgets.QMessageBox(self)
+                msg.setWindowTitle("Budget Already Exists")
+                msg.setText(
+                    f"Budget for {budget.month}/{budget.year} already exists.\n"
+                    f"Do you want to update it?\n"
+                    f"Current: {budget.amount:.2f}\n"
+                    f"Add: {amount:.2f}\n"
+                    f"New: {new_total:.2f}"
+                )
+                msg.setStandardButtons(
+                    QtWidgets.QMessageBox.StandardButton.Yes |
+                    QtWidgets.QMessageBox.StandardButton.No
+                )
+
+                if msg.exec() == QtWidgets.QMessageBox.StandardButton.Yes:
+                    self.budget_service.add_to_budget(amount, selected_month, selected_year)
+                    QtWidgets.QMessageBox.information(self, "Updated", "Budget updated!")
+                    self.close()
+
+            else:
                 QtWidgets.QMessageBox.information(self, "Success", "Budget saved!")
                 self.close()
 
         except Exception as e:
             QtWidgets.QMessageBox.critical(self, "Error", str(e))
+            

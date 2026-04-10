@@ -1,7 +1,6 @@
 from data.repositories.budget_repo import BudgetRepo
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from PySide6.QtWidgets import QMessageBox
 
 class BudgetService:
     def __init__(self):
@@ -9,18 +8,22 @@ class BudgetService:
 
 
     def create_budget(self, amount: float, month: int, year: int):
+            self.validate_budget(amount, month, year)
+            budget = self.check_budget(month, year)
 
-        self.validate_budget(amount, month, year)
-        budget = self.check_budget(month, year)
-            
-        if budget.id is not None:
-            result = self.show_update_confirm(amount, budget)
-            if result == QMessageBox.StandardButton.Yes:
-                return self.budget_repo.create_budget(amount, month, year)
-            else:
-                return None
+            if budget and budget.id is not None:
+                return {
+                    "exists": True,
+                    "budget": budget
+                }
 
-        return self.budget_repo.create_budget(amount, month, year)
+            new_budget = self.budget_repo.create_budget(amount, month, year)
+
+            return {
+                "exists": False,
+                "budget": new_budget
+            }
+  
 
     def validate_budget(self, amount, month, year):
         if amount <= 0:
@@ -43,22 +46,7 @@ class BudgetService:
         if selected < min_date or selected > max_date:
             raise ValueError("Date must be within 6 months in the past and 2 years in the future")
     
-    def show_update_confirm(self, amount, budget):
-        msg = QMessageBox()
-        msg.setWindowTitle("Budget Already Exists")
 
-        new_total = budget.amount + amount
-
-        msg.setText(
-            f"Budget for {budget.month}/{budget.year} already exists.\n"
-            f"Do you want to update it?\n"
-            f"Current amount: {budget.amount:.2f} and add amount: {amount:.2f}\n"
-            f"New amount: {new_total:.2f}"
-        )
-        msg.setIcon(QMessageBox.Icon.Warning)
-        msg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-        return msg.exec()
-        
     # ----------------------- check if budget exists and update budgets after spending ------------------------------------------- ----
     def check_budget(self, month, year):
         return self.budget_repo.check_budget(month, year)
