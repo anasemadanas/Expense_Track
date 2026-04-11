@@ -218,11 +218,13 @@ The application uses **SQLite** for local data persistence. All entities are lin
 
 ### Tables
 
-**`users`** — `id`, `username`, `password`, 
+**`users`** — `id`, `username`, `password`, `Permissions`
 
-**`transactions`** — `id`, `amount`, `category`, `date`
+**`transactions`** — `id`, `amount`, `category`, `month`, `Year`
 
-**`budgets`** — `id`,  `amount`, `date`
+**`budgets`** — `id`,  `amount`, `month`, `Year`, `Total_amount`
+
+**`Goals`** — `id`,  `target_amount`, `saving_amount`
 
 ---
 
