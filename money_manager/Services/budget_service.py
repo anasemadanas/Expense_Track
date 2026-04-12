@@ -1,8 +1,9 @@
-from data.repositories.budget_repo import BudgetRepo
+from repository.budget_repo import BudgetRepo
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from services.IBudgetService import IBudgetService
 
-class BudgetService:
+class BudgetService(IBudgetService):
     def __init__(self):
         self.budget_repo  = BudgetRepo()
 

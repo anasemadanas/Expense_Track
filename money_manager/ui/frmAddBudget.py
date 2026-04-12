@@ -1,6 +1,8 @@
 from PySide6 import QtCore, QtGui, QtWidgets
+from services.activity_logger import ActivityLogger
 from PySide6.QtGui import QIcon
-from Services.budget_service import BudgetService
+from services.budget_service import BudgetService
+
 from ui.ui_frmAddBudget import Ui_AddBudget
 from PySide6.QtCore import QDate
 
@@ -60,10 +62,12 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
 
                 if msg.exec() == QtWidgets.QMessageBox.StandardButton.Yes:
                     self.budget_service.add_to_budget(amount, selected_month, selected_year)
+                    ActivityLogger.log_budget(amount, selected_month, selected_year, "budget_updated")
                     QtWidgets.QMessageBox.information(self, "Updated", "Budget updated!")
                     self.close()
 
             else:
+                ActivityLogger.log_budget(amount, selected_month, selected_year, "budget_created")
                 QtWidgets.QMessageBox.information(self, "Success", "Budget saved!")
                 self.close()
 

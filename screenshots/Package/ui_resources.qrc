@@ -1,0 +1,11 @@
+<RCC>
+  <qresource>
+    <file>icons/barchart_black.png</file>
+    <file>icons/barchart_white.png</file>
+    <file>icons/linegraph_black.png</file>
+    <file>icons/linegraph_white.png</file>
+    <file>icons/logo.png</file>
+    <file>icons/piechart_black.png</file>
+    <file>icons/piechart_white.png</file>
+  </qresource>
+</RCC>

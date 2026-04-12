@@ -3,7 +3,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWidgets import QFrame, QLabel, QProgressBar
 
-from Services.goal_service import GoalService
+from services.goal_service import GoalService
 from ui.ui_frmGoals import Ui_GoalsDialog
 
 

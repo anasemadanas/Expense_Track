@@ -4,10 +4,12 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QVBoxLayout, QPushButton
 from datetime import datetime
 from PySide6.QtWidgets import QMessageBox
-from Services.dashboard_service import DashBoardService
-from ui.ui_frmDashBoard import Ui_MainScreen
+from services.activity_logger import ActivityLogger
+from services.dashboard_service import DashBoardService
 
-from Services.models.permissions import has_permission, UserPermissions
+from ui.ui_frmdashboard import Ui_MainScreen
+
+from models.permissions import has_permission, UserPermissions
 
 
 class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
@@ -150,6 +152,17 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         from ui.frmGoals import GoalsDialog
         dialog = GoalsDialog(self)
         dialog.exec()
+
+    def closeEvent(self, event):
+        if self.current_user:
+            ActivityLogger.log_exit(self.current_user.get("username"))
+            try:
+                import database.app_state as app_state
+
+                app_state.current_user = None
+            except Exception:
+                pass
+        super().closeEvent(event)
 
     # ---- Draw Charts ----------------------------------------------------------
     def draw_charts(self, transactions):

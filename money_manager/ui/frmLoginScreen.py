@@ -1,5 +1,6 @@
 from PySide6 import QtCore, QtGui, QtWidgets
-from Services.user_service import UserService
+from services.user_service import UserService
+from services.activity_logger import ActivityLogger
 from PySide6.QtGui import Qt, QIcon
 from ui.ui_frmLogin import Ui_LoginScreen
 
@@ -53,9 +54,10 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
             user = self.user_service.login(username, password)
             if user:
                 self.lblError.setText("")
-                import data.app_state as app_state
+                import database.app_state as app_state
                 app_state.current_user = user  
                 self.current_user = user
+                ActivityLogger.log_login(user["username"])
                 
                 self.open_Dashboard()
             else:

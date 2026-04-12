@@ -1,2 +1,2 @@
 PySide6
-sqlite3
+pytest

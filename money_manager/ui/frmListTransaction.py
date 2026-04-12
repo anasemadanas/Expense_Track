@@ -3,7 +3,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import QInputDialog, QTableWidgetItem, QVBoxLayout, QMenu, QMessageBox
 from PySide6 import QtCore, QtGui, QtWidgets
-from Services.transaction_service import TransactionService
+from services.transaction_service import TransactionService
 from ui.ui_frmListTransaction import Ui_ListTransaction
 
 
@@ -14,7 +14,7 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         self.transaction_service = TransactionService()
         
         self.setWindowTitle("List Transactions")
-        self.setWindowIcon(QIcon("resources\\icons\\logo.png"))
+        self.setWindowIcon(QIcon("resources\\icons\\transaction.png"))
         self.btnSaveList.setText("Export")
         self.btnSaveList.clicked.connect(self.save_list)
         self.btnCloseList.clicked.connect(self.close)

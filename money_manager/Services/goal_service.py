@@ -1,7 +1,8 @@
-from data.repositories.goal_repo import GoalRepo
+from repository.goal_repo import GoalRepo
+from services.IGoalService import IGoalService
 
 
-class GoalService:
+class GoalService(IGoalService):
     def __init__(self):
         self.goal_repo = GoalRepo()
 

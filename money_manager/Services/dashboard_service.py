@@ -1,9 +1,11 @@
 from PySide6 import QtCore, QtGui, QtWidgets
 from datetime import datetime
 import csv
-from data.repositories.transaction_repo import TransactionRepo
-from data.repositories.budget_repo import BudgetRepo
-class DashBoardService:
+from repository.transaction_repo import TransactionRepo
+from repository.budget_repo import BudgetRepo
+from services.IDashboardService import IDashboardService
+
+class DashBoardService(IDashboardService):
     def __init__(self):
         self.transaction_repo =  TransactionRepo()
         self.budget_repo = BudgetRepo()

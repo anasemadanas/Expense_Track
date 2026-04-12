@@ -1,7 +1,8 @@
 
-from data.repositories.user_repo import UserRepo
+from repository.user_repo import UserRepo
+from services.IUserService import IUserService
 
-class UserService:
+class UserService(IUserService):
     def __init__(self, user_repo=None):
         self.user_repo = user_repo or UserRepo()
         self.login_attempts = 0

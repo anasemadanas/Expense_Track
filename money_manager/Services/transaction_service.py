@@ -1,13 +1,34 @@
 
-from data.repositories.transaction_repo import TransactionRepo
-from Services.models.transaction import Transaction
-from Services.budget_service import BudgetService
+from repository.transaction_repo import TransactionRepo
+from services.ITransactionService import ITransactionService
+from models.transaction import Transaction
+from services.budget_service import BudgetService
 
 
-class TransactionService:
+class TransactionService(ITransactionService):
     def __init__(self):
         self.transaction_repo = TransactionRepo()
         self.budget_service = BudgetService()
+
+    def get_budget_warning(self, amount_trans, month, year):
+        budget = self.budget_service.check_budget(month, year)
+        self.validate_transaction(amount_trans, month, year, budget)
+
+        if budget.totalamount <= 0:
+            return None
+
+        remaining_after = budget.amount - amount_trans
+        spent_after = budget.totalamount - remaining_after
+        spent_percentage = (spent_after / budget.totalamount) * 100
+
+        if spent_percentage >= 80:
+            return (
+                f"If you continue, you will use {spent_percentage:.1f}% "
+                f"of your budget for {month}/{year}.\n"
+                "Do you want to continue?"
+            )
+
+        return None
    
     # ----------------------- add transaction ------------------------------------------- ----
     def add_transaction(self, amount_trans, category, month, year):
@@ -30,8 +51,10 @@ class TransactionService:
             raise ValueError("Year must be between 2000 and 2100")
         if month < 1 or month > 12:
             raise ValueError("Month must be between 1 and 12")
+        if budget is None or budget.id is None or budget.totalamount <= 0:
+            raise ValueError("No budget found")
         if amount_trans > budget.amount:
-            raise ValueError(f"Amount exceeds the available budget ({budget.amount})!")
+            raise ValueError("Amount exceeds the available budget")
     
     def get_budget_balance(self, month, year):
         row = self.budget_service.get_budget_balance(month, year)
