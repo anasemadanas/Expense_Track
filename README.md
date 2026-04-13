@@ -138,8 +138,6 @@ git clone https://github.com/anasemadanas/Expense_Track.git
 cd Expense_Track/money_manager
 
 # 3. Install requirements
-python -m venv .venv
-.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
