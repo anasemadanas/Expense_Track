@@ -107,8 +107,8 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
             QMessageBox.StandardButton.No
             )
 
-        if reply != QMessageBox.StandardButton.Yes:
-            return
+            if reply != QMessageBox.StandardButton.Yes:
+                return
         try:
             self.transaction_service.edit_transaction(tid, new_amount, month, year)
             

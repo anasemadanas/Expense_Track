@@ -85,14 +85,25 @@ class TransactionService(ITransactionService):
             return False
         old_transaction = self.transaction_repo.get_transaction_by_id(tid)
         old_amount = old_transaction.amount
-        
-        difference = new_amount - old_amount  
+
+        difference = new_amount - old_amount
+
+        if difference > 0:
+            budget = self.budget_service.check_budget(month, year)
+            if budget is None or budget.id is None or budget.amount < difference:
+                remaining = budget.amount if (budget and budget.id) else 0
+                raise ValueError(
+                    f"This edit would put your balance in the negative.\n"
+                    f"Current remaining balance: {remaining:.2f}\n"
+                    f"Additional amount needed: {difference:.2f}"
+                )
+
         self.transaction_repo.update_transaction(tid, new_amount, month, year)
 
         if difference == 0:
             return True
         if difference > 0:
-            self.budget_service.deduct_from_budget(difference, month, year)  
+            self.budget_service.deduct_from_budget(difference, month, year)
         elif difference < 0:
             self.budget_service.add_to_budget(abs(difference), month, year)
         return True
