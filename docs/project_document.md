@@ -360,7 +360,7 @@ pyinstaller --onefile --noconsole money_manager/main.py
 
 ## 🎬 Preview
 
-![App Screenshot](screenshots/Dashboard.png)
+![App Screenshot](./screenshots/Dashboard.png)
 
 ---
 
