@@ -272,49 +272,105 @@ The application uses **SQLite** for local data persistence. All entities are lin
 
 ---
 
-### Prerequisites
+## 📌 Prerequisites
 
-- Python 3.10+
-- pip package manager
+Before you start, make sure you have:
+
+* Python 3.10 or higher
+* pip (Python package manager)
+
+---
 
 ## 🚀 How to Run
 
-1. **Clone the repository:**
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/anasemadanas/Expense_Track.git
 cd Expense_Track
 ```
 
-2. **Install dependencies:**
+---
+
+### 2. Create Virtual Environment & Install Dependencies
 
 ```bash
 python -m venv .venv
+```
+
+#### Activate the environment:
+
+* On Windows:
+
+```bash
 .venv\Scripts\activate
+```
+
+* On macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+#### Install dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
-3. **Run the application:**
+---
+
+### 3. Run the Application
 
 ```bash
 python money_manager/main.py
 ```
-> Make sure you're inside the `money_manager/` folder before running.
 
-4. **Testing & Build Project:**
+> ⚠️ Make sure you're in the root project folder (`Expense_Track`)
 
-### Install Development Dependencies:
+---
+
+## 🧪 Testing & Development
+
+### Install Dev Dependencies
+
 ```bash
 pip install -r requirements-dev.txt
 ```
-### Run Tests:
+
+---
+
+### Run Tests
+
 ```bash
 pytest
 ```
-### Build Executable:
+
+---
+
+## 📦 Build Executable
+
 ```bash
-pyinstaller --onefile --noconsole main.py
+pyinstaller --onefile --noconsole money_manager/main.py
 ```
+
+> 📌 The executable will be generated inside the `dist/` folder.
+
+---
+
+## 🎬 Preview
+
+![App Screenshot](screenshot.png)
+
+---
+
+## 🧰 Features
+
+* Add expenses
+* Track income
+* Simple and clean UI
+* Local data storage
+
 
 
 
