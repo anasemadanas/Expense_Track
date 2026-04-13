@@ -32,20 +32,24 @@ class TransactionService(ITransactionService):
    
     # ----------------------- add transaction ------------------------------------------- ----
     def add_transaction(self, amount_trans, category, month, year):
+        # Adjust sign: positive for income, negative for expenses
+        amount_signed = amount_trans if category.lower() == "income" else -amount_trans
+
         # Check if budget exists for the month and year
         budget = self.budget_service.check_budget(month, year)
         # Validate transaction against the budget
-        self.validate_transaction(amount_trans, month, year, budget)
+        self.validate_transaction(amount_signed, month, year, budget)
         # Create and add the transaction
-        transaction = Transaction(amount_trans, category, month, year)
+        transaction = Transaction(amount_signed, category, month, year)
         self.transaction_repo.add_transaction(transaction)
-        # Deduct the transaction amount from the budget
-        self.budget_service.deduct_from_budget(amount_trans, month, year)
+        # Deduct the transaction amount from the budget (only for expenses)
+        if amount_signed < 0:
+            self.budget_service.deduct_from_budget(-amount_signed, month, year)
         
         return transaction
     
     def validate_transaction(self, amount_trans, month, year, budget):
-        if amount_trans <= 0:
+        if abs(amount_trans) <= 0:
             raise ValueError("Amount must be greater than 0")
         if year < 2000 or year > 2100:
             raise ValueError("Year must be between 2000 and 2100")
