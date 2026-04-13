@@ -30,3 +30,7 @@ class ITransactionService(ABC):
     @abstractmethod
     def delete_transaction(self, transaction_id):
         pass
+
+    @abstractmethod
+    def get_transaction_warning(self, old_amount, new_amount):
+        pass

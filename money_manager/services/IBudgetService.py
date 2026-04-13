@@ -34,3 +34,7 @@ class IBudgetService(ABC):
     @abstractmethod
     def update_budget(self, budget_id, amount):
         pass
+
+    @abstractmethod
+    def increase_budget_total(self, amount, month, year):
+        pass
