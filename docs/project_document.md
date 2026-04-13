@@ -272,6 +272,11 @@ The application uses **SQLite** for local data persistence. All entities are lin
 
 ---
 
+### Prerequisites
+
+- Python 3.10+
+- pip package manager
+- 
 ## 🚀 How to Run
 
 1. **Clone the repository:**
@@ -296,9 +301,9 @@ python money_manager/main.py
 ```
 > Make sure you're inside the `money_manager/` folder before running.
 
-4. **Testing & Build Project
+4. **Testing & Build Project:**
 
-Install Development Dependencies
+### Install Development Dependencies
 ```bash
 pip install -r requirements-dev.txt
 ```
@@ -311,10 +316,7 @@ pytest
 pyinstaller --onefile --noconsole main.py
 ```
 
-### Prerequisites
 
-- Python 3.10+
-- pip package manager
 
 ---
 
