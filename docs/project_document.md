@@ -276,7 +276,7 @@ The application uses **SQLite** for local data persistence. All entities are lin
 
 - Python 3.10+
 - pip package manager
-- 
+
 ## 🚀 How to Run
 
 1. **Clone the repository:**
