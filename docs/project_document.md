@@ -303,15 +303,15 @@ python money_manager/main.py
 
 4. **Testing & Build Project:**
 
-### Install Development Dependencies
+### Install Development Dependencies:
 ```bash
 pip install -r requirements-dev.txt
 ```
-### Run Tests
+### Run Tests:
 ```bash
 pytest
 ```
-### Build Executable
+### Build Executable:
 ```bash
 pyinstaller --onefile --noconsole main.py
 ```
