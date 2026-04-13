@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS budgets (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     amount REAL NOT NULL,
     month INTEGER NOT NULL CHECK(month BETWEEN 1 AND 12),
-	total_amount REAL NOT NULL,
     year INTEGER NOT NULL CHECK(year >= 2020),
+	total_amount REAL NOT NULL,
     UNIQUE(month, year)
 
 );
