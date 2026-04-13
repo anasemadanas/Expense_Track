@@ -8,7 +8,7 @@ class UserRepo(IUserRepo):
         pass
         
     def find_user(self, username: str, password: str):
-        query = "SELECT * FROM Users WHERE Username = ? AND Password = ?;"
+        query = "SELECT * FROM users WHERE username = ? AND password = ?;"
         params = (username, password)
 
 

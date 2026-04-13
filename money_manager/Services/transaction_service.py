@@ -32,21 +32,18 @@ class TransactionService(ITransactionService):
    
     # ----------------------- add transaction ------------------------------------------- ----
     def add_transaction(self, amount_trans, category, month, year):
-        # Adjust sign: positive for income, negative for expenses
-        amount_signed = amount_trans if category.lower() == "income" else -amount_trans
-
         # Check if budget exists for the month and year
         budget = self.budget_service.check_budget(month, year)
         # Validate transaction against the budget
-        self.validate_transaction(amount_signed, month, year, budget)
+        self.validate_transaction(amount_trans, month, year, budget)
         # Create and add the transaction
-        transaction = Transaction(amount_signed, category, month, year)
+        transaction = Transaction(amount_trans, category, month, year)
         self.transaction_repo.add_transaction(transaction)
-        # Deduct the transaction amount from the budget (only for expenses)
-        if amount_signed < 0:
-            self.budget_service.deduct_from_budget(-amount_signed, month, year)
+        # Deduct the transaction amount from the budget
+        self.budget_service.deduct_from_budget(amount_trans, month, year)
         
         return transaction
+    
     
     def validate_transaction(self, amount_trans, month, year, budget):
         if abs(amount_trans) <= 0:
@@ -65,6 +62,19 @@ class TransactionService(ITransactionService):
         if row:
             return row[0] 
         return 0
+    
+    def get_transaction_warning(self, old_amount, new_amount):
+        diff = new_amount - old_amount
+
+        if diff == 0:
+            return None
+
+        if diff > 0:
+            impact_text = f"This will increase the amount by {diff}"
+        else:
+            impact_text = f"This will decrease the amount by {abs(diff)}"
+
+        return f"{impact_text}\nDo you want to continue?"
         
     # ----------------------- ------------------------------------------- ----
     def get_transactions(self):

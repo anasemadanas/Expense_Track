@@ -96,8 +96,22 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         if new_amount == old_amount:
                 QMessageBox.information(self, "Info", "No Change")  
                 return
+        warning = self.transaction_service.get_transaction_warning(old_amount, new_amount)
+
+        if warning:
+            reply = QMessageBox.question(
+            self,
+            "Confirm Change",
+            warning,
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No
+            )
+
+        if reply != QMessageBox.StandardButton.Yes:
+            return
         try:
             self.transaction_service.edit_transaction(tid, new_amount, month, year)
+            
             QMessageBox.information(self, "Success", "Transaction updated!")
             self.load_data()
         except ValueError as e:
