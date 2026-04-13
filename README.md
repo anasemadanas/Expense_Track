@@ -83,63 +83,99 @@ Built using:
 ## 📂 Project Structure
 
 ```bash
-Expense_Track                                      
-└─money_manager                  
-  ├─__init__.py                  
-  ├─main.exe                     
-  ├─main.py                      
-  ├─main.spec                    
-  ├─pytest.ini                   
-  ├─requirements.txt             
-  ├─resources_rc.py              
-  ├─database                     
-  │ ├─__init__.py                
-  │ ├─app_state.py               
-  │ ├─database.py                
-  │ └─Money_Manager_DB.db        
-  ├─resources                    
-  │ └─icons                      
-  │   ├─barchart_black.png       
-  │   ├─barchart_white.png       
-  │   ├─budget.png               
-  │   ├─linegraph_black.png      
-  │   ├─linegraph_white.png      
-  │   ├─login.png                
-  │   ├─logo.png                 
-  │   ├─piechart_black.png       
-  │   ├─piechart_white.png       
-  │   └─transaction.png          
-  ├─services                     
-  │ ├─__init__.py                
-  │ ├─activity_logger.py         
-  │ ├─budget_service.py          
-  │ ├─dashboard_service.py       
-  │ ├─goal_service.py            
-  │ ├─IBudgetService.py          
-  │ ├─IDashboardService.py       
-  │ ├─IGoalService.py            
-  │ ├─ITransactionService.py     
-  │ ├─IUserService.py            
-  │ ├─transaction_service.py     
-  │ └─user_service.py            
-  ├─tests                        
-  │ ├─test_goal_service.py       
-  │ ├─test_transaction_service.py
-  │ └─test_user_service.py       
-  └─ui                           
-    ├─__init__.py                
-    ├─frmAddBudget.py            
-    ├─frmAddTransaction.py       
-    ├─frmdashboard.py            
-    ├─frmGoals.py                
-    ├─frmListTransaction.py      
-    ├─frmLoginScreen.py          
-    ├─ui_frmAddBudget.py         
-    ├─ui_frmAddTransaction.py    
-    ├─ui_frmdashboard.py         
-    ├─ui_frmGoals.py             
-    ├─ui_frmListTransaction.py   
-    └─ui_frmLogin.py             
+Expense_Track                    
+├─.gitignore                     
+├─LICENSE                        
+├─README.md                      
+├─money_manager                  
+│ ├─__init__.py                  
+│ ├─main.exe                     
+│ ├─main.py                      
+│ ├─main.spec                    
+│ ├─pytest.ini                   
+│ ├─requirements.txt             
+│ ├─resources_rc.py              
+│ ├─database                     
+│ │ ├─__init__.py                
+│ │ ├─app_state.py               
+│ │ ├─database.py                
+│ │ └─Money_Manager_DB.db        
+│ ├─models                       
+│ │ ├─__init__.py                
+│ │ ├─budget.py                  
+│ │ ├─goal.py                    
+│ │ ├─permissions.py             
+│ │ ├─transaction.py             
+│ │ └─user.py                    
+│ ├─repository                   
+│ │ ├─__init__.py                
+│ │ ├─budget_repo.py             
+│ │ ├─goal_repo.py               
+│ │ ├─IBudgetRepo.py             
+│ │ ├─IGoalRepo.py               
+│ │ ├─ITransactionRepo.py        
+│ │ ├─IUserRepo.py               
+│ │ ├─transaction_repo.py        
+│ │ └─user_repo.py               
+│ ├─resources                    
+│ │ └─icons                      
+│ │   ├─barchart_black.png       
+│ │   ├─barchart_white.png       
+│ │   ├─budget.png               
+│ │   ├─linegraph_black.png      
+│ │   ├─linegraph_white.png      
+│ │   ├─login.png                
+│ │   ├─logo.png                 
+│ │   ├─piechart_black.png       
+│ │   ├─piechart_white.png       
+│ │   └─transaction.png          
+│ ├─services                     
+│ │ ├─__init__.py                
+│ │ ├─activity_logger.py         
+│ │ ├─budget_service.py          
+│ │ ├─dashboard_service.py       
+│ │ ├─goal_service.py            
+│ │ ├─IBudgetService.py          
+│ │ ├─IDashboardService.py       
+│ │ ├─IGoalService.py            
+│ │ ├─ITransactionService.py     
+│ │ ├─IUserService.py            
+│ │ ├─transaction_service.py     
+│ │ └─user_service.py            
+│ ├─tests                        
+│ │ ├─test_goal_service.py       
+│ │ ├─test_transaction_service.py
+│ │ └─test_user_service.py       
+│ └─ui                           
+│   ├─__init__.py                
+│   ├─frmAddBudget.py            
+│   ├─frmAddTransaction.py       
+│   ├─frmdashboard.py            
+│   ├─frmGoals.py                
+│   ├─frmListTransaction.py      
+│   ├─frmLoginScreen.py          
+│   ├─ui_frmAddBudget.py         
+│   ├─ui_frmAddTransaction.py    
+│   ├─ui_frmdashboard.py         
+│   ├─ui_frmGoals.py             
+│   ├─ui_frmListTransaction.py   
+│   └─ui_frmLogin.py             
+└─screenshots                    
+  ├─budget.png                   
+  ├─Dashboard.png                
+  ├─export.png                   
+  ├─goal.png                     
+  ├─listTransaction.png          
+  ├─Login.png                    
+  ├─transaction.png              
+  └─Package                      
+    ├─ui_frmAddBudget.ui         
+    ├─ui_frmAddTransaction.ui    
+    ├─ui_frmDashBoard.ui         
+    ├─ui_frmListTransaction.ui   
+    ├─ui_frmLogin.ui             
+    └─ui_resources.qrc           
+
 
 
 ```
