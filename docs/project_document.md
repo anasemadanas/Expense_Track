@@ -284,6 +284,8 @@ cd Expense_Track
 2. **Install dependencies:**
 
 ```bash
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
