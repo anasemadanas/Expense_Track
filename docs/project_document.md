@@ -296,6 +296,20 @@ python money_manager/main.py
 ```
 > Make sure you're inside the `money_manager/` folder before running.
 
+4. **Testing & Build Project
+
+Install Development Dependencies
+```bash
+pip install -r requirements-dev.txt
+```
+### Run Tests
+```bash
+pytest
+```
+### Build Executable
+```bash
+pyinstaller --onefile --noconsole main.py
+```
 
 ### Prerequisites
 
