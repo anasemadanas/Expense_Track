@@ -94,8 +94,10 @@ Expense_Track
 │ ├─main.py   
 │ ├─main.spec     
 │ ├─pytest.ini    
-│ ├─requirements.txt 
-│ ├─resources_rc.py  
+│ ├─requirements.txt
+│ ├─requirements-dev.txt 
+│ ├─resources_rc.py
+| ├─common
 │ ├─database
 │ ├─models 
 │ ├─repository   
