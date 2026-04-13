@@ -58,6 +58,9 @@ class BudgetService(IBudgetService):
     def add_to_budget(self, amount, month, year):
         return self.budget_repo.add_to_budget(amount, month, year)
 
+    def increase_budget_total(self, amount, month, year):
+        return self.budget_repo.increase_budget_total(amount, month, year)
+
 
     # ----------------------- future --------------------------------- ----
     def get_budget_balance(self,  month, year):

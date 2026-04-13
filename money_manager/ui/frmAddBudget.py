@@ -44,16 +44,16 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
   
             if result["exists"]:
                 budget = result["budget"]
-                new_total = budget.amount + amount
+                new_total = budget.totalamount + amount
 
                 msg = QtWidgets.QMessageBox(self)
                 msg.setWindowTitle("Budget Already Exists")
                 msg.setText(
                     f"Budget for {budget.month}/{budget.year} already exists.\n"
                     f"Do you want to update it?\n"
-                    f"Current: {budget.amount:.2f}\n"
+                    f"Current Total: {budget.totalamount:.2f}\n"
                     f"Add: {amount:.2f}\n"
-                    f"New: {new_total:.2f}"
+                    f"New Total: {new_total:.2f}"
                 )
                 msg.setStandardButtons(
                     QtWidgets.QMessageBox.StandardButton.Yes |
@@ -61,7 +61,7 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
                 )
 
                 if msg.exec() == QtWidgets.QMessageBox.StandardButton.Yes:
-                    self.budget_service.add_to_budget(amount, selected_month, selected_year)
+                    self.budget_service.increase_budget_total(amount, selected_month, selected_year)
                     ActivityLogger.log_budget(amount, selected_month, selected_year, "budget_updated")
                     QtWidgets.QMessageBox.information(self, "Updated", "Budget updated!")
                     self.close()

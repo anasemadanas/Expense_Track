@@ -56,6 +56,10 @@ class BudgetRepo(IBudgetRepo):
         query = "UPDATE budgets SET amount = amount + ? WHERE month=? AND year=?"
         return self.db.execute(query, (amount, month, year))
 
+    def increase_budget_total(self, amount, month, year):
+        query = "UPDATE budgets SET amount = amount + ?, total_amount = total_amount + ? WHERE month=? AND year=?"
+        return self.db.execute(query, (amount, amount, month, year))
+
     # ----------------------- return to transaction -----------------------
     def get_budget_balance(self, month, year):
         query = "SELECT amount FROM budgets WHERE month = ? AND year = ?"
