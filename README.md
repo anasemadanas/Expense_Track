@@ -83,22 +83,65 @@ Built using:
 ## 📂 Project Structure
 
 ```bash
-Expense_Track/
-├── .gitignore
-├── LICENSE
-├── README.md
-│── money_manager/
-│   ├── data/
-│   │   ├── database.py
-│   │   └── repositories/
-│   │   └── interfaces/
-│   ├── services/
-│   ├── database/
-│   ├── resources/
-│   │   └── Icon/
-│   ├── ui/
-│   ├── main.py
-│── └──requirements.txt
+Expense_Track                                      
+└─money_manager                  
+  ├─__init__.py                  
+  ├─main.exe                     
+  ├─main.py                      
+  ├─main.spec                    
+  ├─pytest.ini                   
+  ├─requirements.txt             
+  ├─resources_rc.py              
+  ├─database                     
+  │ ├─__init__.py                
+  │ ├─app_state.py               
+  │ ├─database.py                
+  │ └─Money_Manager_DB.db        
+  ├─resources                    
+  │ └─icons                      
+  │   ├─barchart_black.png       
+  │   ├─barchart_white.png       
+  │   ├─budget.png               
+  │   ├─linegraph_black.png      
+  │   ├─linegraph_white.png      
+  │   ├─login.png                
+  │   ├─logo.png                 
+  │   ├─piechart_black.png       
+  │   ├─piechart_white.png       
+  │   └─transaction.png          
+  ├─services                     
+  │ ├─__init__.py                
+  │ ├─activity_logger.py         
+  │ ├─budget_service.py          
+  │ ├─dashboard_service.py       
+  │ ├─goal_service.py            
+  │ ├─IBudgetService.py          
+  │ ├─IDashboardService.py       
+  │ ├─IGoalService.py            
+  │ ├─ITransactionService.py     
+  │ ├─IUserService.py            
+  │ ├─transaction_service.py     
+  │ └─user_service.py            
+  ├─tests                        
+  │ ├─test_goal_service.py       
+  │ ├─test_transaction_service.py
+  │ └─test_user_service.py       
+  └─ui                           
+    ├─__init__.py                
+    ├─frmAddBudget.py            
+    ├─frmAddTransaction.py       
+    ├─frmdashboard.py            
+    ├─frmGoals.py                
+    ├─frmListTransaction.py      
+    ├─frmLoginScreen.py          
+    ├─ui_frmAddBudget.py         
+    ├─ui_frmAddTransaction.py    
+    ├─ui_frmdashboard.py         
+    ├─ui_frmGoals.py             
+    ├─ui_frmListTransaction.py   
+    └─ui_frmLogin.py             
+
+
 ```
 
 ---
@@ -129,6 +172,8 @@ git clone https://github.com/anasemadanas/Expense_Track.git
 cd Expense_Track/money_manager
 
 # 3. Install requirements
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
