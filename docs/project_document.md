@@ -294,7 +294,8 @@ pip install -r requirements.txt
 ```bash
 python money_manager/main.py
 ```
-
+> Make sure you're inside the `money_manager/` folder before running.
+> 
 ### Prerequisites
 
 - Python 3.10+
