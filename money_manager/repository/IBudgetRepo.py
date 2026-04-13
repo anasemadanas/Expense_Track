@@ -34,3 +34,7 @@ class IBudgetRepo(ABC):
     @abstractmethod
     def delete_budget(self, budget_id: int):
         pass
+
+    @abstractmethod
+    def increase_budget_total(self, amount, month, year):
+        pass
