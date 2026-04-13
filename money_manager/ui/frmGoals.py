@@ -26,11 +26,11 @@ class GoalDetailDialog(QtWidgets.QDialog):
         name_font.setPointSize(16)
         name_font.setBold(True)
         self.lbl_name.setFont(name_font)
-        self.lbl_name.setAlignment(Qt.AlignCenter)
+        self.lbl_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout_.addWidget(self.lbl_name)
 
         self.lbl_amounts = QLabel()
-        self.lbl_amounts.setAlignment(Qt.AlignCenter)
+        self.lbl_amounts.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.lbl_amounts.setStyleSheet("font-size: 13px;")
         self.layout_.addWidget(self.lbl_amounts)
 
@@ -57,7 +57,7 @@ class GoalDetailDialog(QtWidgets.QDialog):
         self.layout_.addWidget(self.bar)
 
         self.lbl_remaining = QLabel()
-        self.lbl_remaining.setAlignment(Qt.AlignCenter)
+        self.lbl_remaining.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.lbl_remaining.setStyleSheet("color: grey; font-size: 11px;")
         self.layout_.addWidget(self.lbl_remaining)
 
@@ -115,8 +115,13 @@ class GoalDetailDialog(QtWidgets.QDialog):
         if not ok:
             return
 
+        goal_id = self.goal.id
+        if goal_id is None:
+            QtWidgets.QMessageBox.warning(self, "Error", "Goal ID is missing")
+            return
+
         try:
-            self.service.add_savings(self.goal.id, amount)
+            self.service.add_savings(goal_id, amount)
             self.refresh()
         except ValueError as e:
             QtWidgets.QMessageBox.warning(self, "Error", str(e))
@@ -130,7 +135,7 @@ class GoalCard(QFrame):
         self.parent_dialog = parent_dialog
         self.setFrameShape(QFrame.Shape.StyledPanel)
         self.setStyleSheet("QFrame { background-color: #1e1e2e; border-radius: 8px; padding: 4px; }")
-        self.setCursor(Qt.PointingHandCursor)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         layout = QtWidgets.QVBoxLayout(self)
         layout.setSpacing(6)
@@ -170,11 +175,11 @@ class GoalCard(QFrame):
 
         hint = QLabel("Click to view details")
         hint.setStyleSheet("color: #555; font-size: 10px;")
-        hint.setAlignment(Qt.AlignRight)
+        hint.setAlignment(Qt.AlignmentFlag.AlignRight)
         layout.addWidget(hint)
 
     def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
+        if event.button() == Qt.MouseButton.LeftButton:
             detail = GoalDetailDialog(self.goal, self.service, self.parent_dialog)
             detail.exec()
             self.parent_dialog.load_goals()
@@ -198,14 +203,16 @@ class GoalsDialog(QtWidgets.QDialog, Ui_GoalsDialog):
     def load_goals(self):
         while self.goals_layout.count() > 1:
             item = self.goals_layout.takeAt(0)
-            if item.widget():
-                item.widget().deleteLater()
+            if item:
+                widget = item.widget()
+                if widget:
+                    widget.deleteLater()
 
         goals = self.service.get_all_goals()
 
         if not goals:
             empty = QLabel("No goals yet. Add one to get started!")
-            empty.setAlignment(Qt.AlignCenter)
+            empty.setAlignment(Qt.AlignmentFlag.AlignCenter)
             empty.setStyleSheet("color: grey; font-size: 12px;")
             self.goals_layout.insertWidget(0, empty)
             return

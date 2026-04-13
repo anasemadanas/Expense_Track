@@ -1,6 +1,6 @@
 
 from PySide6 import QtCore, QtGui, QtWidgets
-from services.activity_logger import ActivityLogger
+from common.activity_logger import ActivityLogger
 from services.transaction_service import TransactionService
 
 from ui.ui_frmAddTransaction import Ui_AddTransaction
@@ -118,7 +118,6 @@ class AddTransaction(QtWidgets.QDialog,Ui_AddTransaction):
         except ValueError as e:
             self.show_error(str(e))
             return
-
 
     def show_error(self, text):
         msg = QMessageBox()

@@ -1,5 +1,5 @@
 from PySide6 import QtCore, QtGui, QtWidgets
-from services.activity_logger import ActivityLogger
+from common.activity_logger import ActivityLogger
 from PySide6.QtGui import QIcon
 from services.budget_service import BudgetService
 

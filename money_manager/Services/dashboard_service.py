@@ -106,8 +106,8 @@ class DashBoardService(IDashboardService):
         row = self.budget_repo.get_budget(month, year)
         if not row:
             return {"total": 0.0, "remaining": 0.0, "spent": 0.0}
-        total = float(row["total_amount"])
-        remaining = float(row["amount"])
+        total = float(row["total_amount"])  # type: ignore
+        remaining = float(row["amount"])  # type: ignore
         spent = total - remaining
         return {"total": total, "remaining": remaining, "spent": max(spent, 0.0)}
 

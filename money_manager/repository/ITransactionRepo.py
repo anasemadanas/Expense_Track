@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from models.transaction import Transaction
 
 class ITransactionRepo(ABC):
 

@@ -37,7 +37,7 @@ class BudgetRepo(IBudgetRepo):
         )
 
         if row is None:
-            return Budget(id=None, amount=0, month=month, year=year, totalamount=0)
+            return Budget(amount=0,totalamount=0, month=month, year=year,  id=None)
 
         return Budget(
             id=row[0],

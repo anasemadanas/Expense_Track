@@ -1,6 +1,5 @@
 from enum import Enum, unique
 
-
 @unique
 class UserPermissions(Enum):
     ADD_TRANSACTION   = 0b0001

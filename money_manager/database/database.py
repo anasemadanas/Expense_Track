@@ -1,8 +1,6 @@
 import os
 import sqlite3
 
-
-
 class DatabaseConnection:
     def __init__(self):
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

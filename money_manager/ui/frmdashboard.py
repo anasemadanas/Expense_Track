@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QVBoxLayout, QPushButton
 from datetime import datetime
 from PySide6.QtWidgets import QMessageBox
-from services.activity_logger import ActivityLogger
+from common.activity_logger import ActivityLogger
 from services.dashboard_service import DashBoardService
 
 from ui.ui_frmdashboard import Ui_MainScreen
@@ -157,9 +157,9 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         if self.current_user:
             ActivityLogger.log_exit(self.current_user.get("username"))
             try:
-                import database.app_state as app_state
+                import common.global_user as global_user
 
-                app_state.current_user = None
+                global_user.current_user = None
             except Exception:
                 pass
         super().closeEvent(event)
@@ -173,7 +173,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         
     def _set_chart(self, graphics_view, chart: QtCharts.QChart):
         chart_view = QtCharts.QChartView(chart)
-        chart_view.setRenderHint(QtGui.QPainter.Antialiasing)
+        chart_view.setRenderHint(QtGui.QPainter.RenderHint.Antialiasing)
         old_layout = graphics_view.layout()
         if old_layout:
             while old_layout.count():
@@ -206,8 +206,8 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         chart = QtCharts.QChart()
         chart.addSeries(series)
         chart.setTitle("Spending by Category")
-        chart.legend().setAlignment(Qt.AlignBottom)
-        chart.setAnimationOptions(QtCharts.QChart.SeriesAnimations)
+        chart.legend().setAlignment(Qt.AlignmentFlag.AlignBottom)
+        chart.setAnimationOptions(QtCharts.QChart.AnimationOption.SeriesAnimations)
         self._set_chart(self.gvPieChart, chart)
 
     def draw_bar_chart(self, transactions):
@@ -241,12 +241,12 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
         axis_x = QtCharts.QBarCategoryAxis()
         axis_x.append(categories)
-        chart.addAxis(axis_x, Qt.AlignBottom)
+        chart.addAxis(axis_x, Qt.AlignmentFlag.AlignBottom)
         series.attachAxis(axis_x)
 
         axis_y = QtCharts.QValueAxis()
         axis_y.setRange(0, max([sum(totals.values()), 100]))
-        chart.addAxis(axis_y, Qt.AlignLeft)
+        chart.addAxis(axis_y, Qt.AlignmentFlag.AlignLeft)
         series.attachAxis(axis_y)
 
         self._set_chart(self.gvBarChart, chart)
@@ -254,13 +254,14 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
     def draw_line_chart(self, transactions):
         _, year = self.get_selected_month_year()
         months_labels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-        expense_by_month = {i: 0 for i in range(1, 13)}
-        saving_by_month = {i: 0 for i in range(1, 13)}
+        expense_by_month = {i: 0.0 for i in range(1, 13)}
+        saving_by_month = {i: 0.0 for i in range(1, 13)}
 
         all_transactions = self.service.get_all_transactions()
-        for t in all_transactions:
-            if t["year"] == year:
-                expense_by_month[t["month"]] += t["amount"]
+        if all_transactions:
+            for t in all_transactions:
+                if t["year"] == year:
+                    expense_by_month[t["month"]] += t["amount"]
 
         for m in range(1, 13):
             budget = self.service.get_budget_summary(m, year)
@@ -281,11 +282,11 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         chart.addSeries(series_exp)
         chart.addSeries(series_save)
         chart.setTitle(f"Monthly Expense vs Saving ({year})")
-        chart.setAnimationOptions(QtCharts.QChart.SeriesAnimations)
+        chart.setAnimationOptions(QtCharts.QChart.AnimationOption.SeriesAnimations)
 
         axis_x = QtCharts.QBarCategoryAxis()
         axis_x.append(months_labels)
-        chart.addAxis(axis_x, Qt.AlignBottom)
+        chart.addAxis(axis_x, Qt.AlignmentFlag.AlignBottom)
         series_exp.attachAxis(axis_x)
         series_save.attachAxis(axis_x)
 
@@ -293,10 +294,10 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         max_val = max(max(expense_by_month.values()), max(saving_by_month.values()), 100) + 50
         axis_y.setRange(0, max_val)
         axis_y.setTitleText("Amount ($)")
-        chart.addAxis(axis_y, Qt.AlignLeft)
+        chart.addAxis(axis_y, Qt.AlignmentFlag.AlignLeft)
         series_exp.attachAxis(axis_y)
         series_save.attachAxis(axis_y)
 
-        chart.legend().setAlignment(Qt.AlignBottom)
+        chart.legend().setAlignment(Qt.AlignmentFlag.AlignBottom)
         self._set_chart(self.gvLineGraph, chart)
     # ---- ------------------------------------------------------------- ----   

@@ -19,7 +19,7 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         self.btnSaveList.clicked.connect(self.save_list)
         self.btnCloseList.clicked.connect(self.close)
         self.tableWidgetTransaction.customContextMenuRequested.connect(self.show_menu)
-        self.tableWidgetTransaction.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.tableWidgetTransaction.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.load_data()
     # ---- ------------------------------------------------------------- ----
 
@@ -46,9 +46,11 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
             month_item = self.tableWidgetTransaction.item(row, 3)
             year_item = self.tableWidgetTransaction.item(row, 4)
             
-            if not all([id_item, amount_item, month_item, year_item]):
+            if any(x is None for x in [id_item, amount_item, month_item, year_item]):
                 QMessageBox.warning(self, "Error", "Missing data in row!")
                 return
+
+            assert id_item is not None and amount_item is not None and month_item is not None and year_item is not None
 
             try:
                 tid = int(id_item.text())
@@ -73,9 +75,11 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
             month_item = self.tableWidgetTransaction.item(row, 3)
             year_item = self.tableWidgetTransaction.item(row, 4)
             
-            if not all([id_item, amount_item, month_item, year_item]):
+            if any(x is None for x in [id_item, amount_item, month_item, year_item]):
                 QMessageBox.warning(self, "Error", "Missing data in row!")
                 return
+            
+            assert id_item is not None and amount_item is not None and month_item is not None and year_item is not None
             
             transaction_id = int(id_item.text())
             amount = float(amount_item.text())
@@ -139,5 +143,5 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         for row, record in enumerate(results):
             for col, value in enumerate(record):
                 item = QTableWidgetItem(str(value))
-                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
                 self.tableWidgetTransaction.setItem(row, col, item)
