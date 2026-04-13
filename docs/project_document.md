@@ -351,7 +351,7 @@ pytest
 ## 📦 Build Executable
 
 ```bash
-pyinstaller --onefile --noconsole money_manager/main.py
+pyinstaller main.spec
 ```
 
 > 📌 The executable will be generated inside the `dist/` folder.
