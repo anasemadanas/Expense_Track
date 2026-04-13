@@ -360,7 +360,7 @@ pyinstaller --onefile --noconsole money_manager/main.py
 
 ## 🎬 Preview
 
-![App Screenshot](./screenshots/Dashboard.png)
+![App Screenshot](https://raw.githubusercontent.com/anasemadanas/Expense_Track/main/screenshots/Dashboard.png)
 
 ---
 
