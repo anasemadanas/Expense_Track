@@ -224,7 +224,7 @@ The application uses **SQLite** for local data persistence. All entities are lin
 
 **`budgets`** — `id`,  `amount`, `month`, `Year`, `Total_amount`
 
-**`Goals`** — `id`,  `target_amount`, `saving_amount`
+**`Goals`** — `id`, `name`  `target_amount`, `saving_amount`
 
 ---
 
