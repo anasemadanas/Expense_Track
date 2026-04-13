@@ -40,11 +40,11 @@ class BudgetRepo(IBudgetRepo):
             return Budget(amount=0,totalamount=0, month=month, year=year,  id=None)
 
         return Budget(
-            id=row[0],
-            amount=row[1],
-            month=row[2],
-            year=row[3],
-            totalamount=row[4]
+            id=row["id"],
+            amount=row["amount"],
+            month=row["month"],
+            year=row["year"],
+            totalamount=row["total_amount"]
         )
 
     # ----------------------- update budgets after spending -----------------------
