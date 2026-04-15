@@ -21,4 +21,8 @@ jobs:
 
     - name: Build
       run: |
-        pyinstaller --onefile --name MoneyManager --add-data "resources:resources" --add-data "database:database" --paths=. main.py
+        pyinstaller --onefile --name MoneyManager \
+        --add-data "resources:resources" \
+        --add-data "database:database" \
+        --paths=. \
+        money_manager/main.py
