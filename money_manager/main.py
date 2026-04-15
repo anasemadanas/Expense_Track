@@ -2,7 +2,7 @@ import sys
 from PySide6 import QtWidgets
 from ui.frmLoginScreen import LoginScreen
 from database.database_setup import initialize_database 
-from theme_manager import ThemeManager
+from common.theme_manager import ThemeManager
 
 if __name__ == "__main__":
     initialize_database()

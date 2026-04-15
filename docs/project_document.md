@@ -149,11 +149,14 @@ money_manager
 │ ├─__init__.py                  
 │ ├─activity_logger.py           
 │ ├─global_user.py               
+│ ├─theme_manager.py             
 │ └─utils.py                     
 ├─database                       
 │ ├─__init__.py                  
 │ ├─database.py                  
 │ ├─database_setup.py            
+│ ├─Money_Manager_DB.db          
+│ ├─paths.py                     
 │ └─schema.sql                   
 ├─models                         
 │ ├─__init__.py                  
@@ -185,6 +188,7 @@ money_manager
 │   ├─piechart_white.png         
 │   └─transaction.png            
 ├─services                       
+│ ├─__init__.py                  
 │ ├─budget_service.py            
 │ ├─dashboard_service.py         
 │ ├─goal_service.py              

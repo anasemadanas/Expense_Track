@@ -23,7 +23,6 @@ class ThemeManager:
             self.apply_theme()
 
 
-
     def get_text_color(self, bg):
         bg = bg.lstrip("#")
         r = int(bg[0:2], 16)
