@@ -393,8 +393,8 @@ pyinstaller --onedir --windowed --name MoneyManager --add-data "resources;resour
 or Write
 
 ```bash
-pyinstaller MoneyManager.spec
 pyinstaller main.spec
+pyinstaller MoneyManager.spec
 ```
 > 📌 The executable will be generated inside the `dist/` folder.
 

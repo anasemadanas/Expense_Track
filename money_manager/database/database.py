@@ -1,13 +1,12 @@
 import os
 import sqlite3
+from database.paths import get_db_path
 
 
 class DatabaseConnection:
-    def __init__(self):
-        self.db_dir = r"C:\Users\Public"
-        os.makedirs(self.db_dir, exist_ok=True)
 
-        self.db_path = os.path.join(self.db_dir, "Money_Manager_DB.db")
+    def __init__(self):
+        self.db_path = get_db_path()
 
         self.conn = sqlite3.connect(self.db_path)
         self.conn.row_factory = sqlite3.Row
@@ -21,25 +20,19 @@ class DatabaseConnection:
             cursor.execute(query, params)
 
             if fetch == "one":
-                result = cursor.fetchone()
-                return result
+                return cursor.fetchone()
 
             if fetch == "all":
-                result = cursor.fetchall()
-                return result
+                return cursor.fetchall()
 
             self.conn.commit()
-            return None
 
         finally:
             cursor.close()
 
     def executescript(self, script):
-        try:
-            self.conn.executescript(script)
-            self.conn.commit()
-        finally:
-            pass
+        self.conn.executescript(script)
+        self.conn.commit()
 
     def __enter__(self):
         return self

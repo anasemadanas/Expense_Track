@@ -23,6 +23,13 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
         
         self.ui.btnLogin.clicked.connect(self.try_login)
         self.ui.btnClose.clicked.connect(self.close)
+        
+        self.btnTheme = QtWidgets.QPushButton("Theme", self)
+        self.btnTheme.setGeometry(10, 10, 80, 30)
+
+        self.btnDefault = QtWidgets.QPushButton("Default", self)
+        self.btnDefault.setGeometry(10, 50, 80, 30)
+
     # ---- ------------------------------------------------------------- ----
             
     def try_login(self):

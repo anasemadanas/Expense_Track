@@ -92,7 +92,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
         self.lblTotalBalanceCalc.setText(f"${total:,.2f}")
         self.lblCurrentBalanceCalc.setText(f"${remaining:,.2f}")
-        self.lblSave.setText(f"Saving: ${remaining:,.2f}")
+        self.lblSave.setText(f"Saving  ")
 
         if total > 0:
             self.pbExpense.setValue(min(int(spent / total * 100), 100))
