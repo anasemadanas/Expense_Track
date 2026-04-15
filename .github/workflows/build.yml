@@ -1,42 +1,98 @@
-name: Build App
+name: Build App (Linux + Windows + macOS)
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  build:
+
+  linux:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-    - name: Install PyInstaller
-      run: pip install pyinstaller
+      - name: Install PyInstaller
+        run: pip install pyinstaller
 
-    - name: Debug files
-      run: ls -R
+      - name: Build Linux
+        working-directory: money_manager
+        run: |
+          pyinstaller --onefile --name MoneyManager \
+          --add-data "resources:resources" \
+          --add-data "database:database" \
+          main.py
 
-    - name: Build
-      working-directory: money_manager
-      run: |
-        pyinstaller --onefile --name MoneyManager \
-        --add-data "resources:resources" \
-        --add-data "database:database" \
-        main.py
+      - name: Upload Linux Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-build
+          path: money_manager/dist/
 
-    - name: Find output (IMPORTANT)
-      run: find . -type f -name "MoneyManager*"
 
-    - name: Upload build
-      uses: actions/upload-artifact@v4
-      with:
-        name: MoneyManager-build
-        path: |
-          money_manager/dist/
-          money_manager/build/
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Build Windows
+        working-directory: money_manager
+        run: |
+          pyinstaller --onefile --name MoneyManager ^
+          --add-data "resources;resources" ^
+          --add-data "database;database" ^
+          main.py
+
+      - name: Upload Windows Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: money_manager/dist/
+    
+  mac:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Build Mac
+        working-directory: money_manager
+        run: |
+          pyinstaller --onefile --name MoneyManager \
+          --add-data "resources:resources" \
+          --add-data "database:database" \
+          main.py
+
+      - name: Create DMG
+        run: |
+          mkdir -p dmg
+          cp -r money_manager/dist/MoneyManager dmg/
+          hdiutil create -volname MoneyManager -srcfolder dmg -ov -format UDZO MoneyManager.dmg
+
+      - name: Upload Mac Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: mac-build
+          path: MoneyManager.dmg
