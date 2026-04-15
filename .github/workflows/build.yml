@@ -29,3 +29,9 @@ jobs:
         --add-data "resources:resources" \
         --add-data "database:database" \
         main.py
+        
+    - name: Upload build
+      uses: actions/upload-artifact@v4
+      with:
+        name: MoneyManager-build
+        path: money_manager/dist/
