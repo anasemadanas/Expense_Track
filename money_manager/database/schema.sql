@@ -7,12 +7,12 @@ CREATE TABLE IF NOT EXISTS users (
     permissions INTEGER NOT NULL DEFAULT 0
 );
 
-INSERT OR IGNORE INTO users (id, username, password, permissions)
+INSERT OR IGNORE INTO users (username, password, permissions)
 VALUES
-(1, 'admin', '1234', -1),
-(2, 'user', 'user', 1),
-(3, 'zaid', 'zaid', 3),
-(4, 'hamza', '9999', 4);
+('admin', '1234', -1),
+('user', 'user', 1),
+('zaid', 'zaid', 3),
+('hamza', '9999', 4);
 
 CREATE TABLE IF NOT EXISTS transactions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
