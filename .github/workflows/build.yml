@@ -19,8 +19,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          PySide6
-          python-dateutil
+          pip install PySide6
+          pip install python-dateutil
           pip install pyinstaller
 
       - name: Build Linux
@@ -51,8 +51,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          PySide6
-          python-dateutil
+          pip install PySide6
+          pip install python-dateutil
           pip install pyinstaller
 
       - name: Build Windows
@@ -80,8 +80,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          PySide6
-          python-dateutil
+          pip install PySide6
+          pip install python-dateutil
           pip install pyinstaller
 
       - name: Build Mac
