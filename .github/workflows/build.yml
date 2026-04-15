@@ -27,7 +27,6 @@ jobs:
           pip install -r money_manager/requirements.txt
           pip install pyinstaller
 
-
       - name: Build (Linux/macOS)
         if: runner.os != 'Windows'
         run: |
@@ -39,7 +38,6 @@ jobs:
           --hidden-import PySide6.QtGui \
           --hidden-import PySide6.QtWidgets \
           money_manager/main.py
-
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
@@ -53,14 +51,12 @@ jobs:
           --hidden-import PySide6.QtWidgets ^
           money_manager/main.py
 
-
       - name: Create DMG (macOS only)
         if: runner.os == 'macOS'
         run: |
           mkdir -p dmg
           cp -r dist/* dmg/
           hdiutil create -volname MoneyManager -srcfolder dmg -ov -format UDZO MoneyManager.dmg
-
 
       - name: Upload Build
         uses: actions/upload-artifact@v4
