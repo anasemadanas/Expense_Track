@@ -19,14 +19,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install PySide6
-          pip install python-dateutil
+          pip install -r money_manager/requirements.txt
           pip install pyinstaller
 
       - name: Build Linux
         working-directory: money_manager
         run: |
           pyinstaller --onefile --name MoneyManager \
+          --paths=. \
           --add-data "resources:resources" \
           --add-data "database:database" \
           main.py
@@ -51,14 +51,17 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install PySide6
-          pip install python-dateutil
+          pip install -r money_manager/requirements.txt
           pip install pyinstaller
 
       - name: Build Windows
         working-directory: money_manager
         run: |
-          pyinstaller --onefile --name MoneyManager --add-data "resources;resources" --add-data "database;database" main.py
+          pyinstaller --onefile --name MoneyManager ^
+          --paths=. ^
+          --add-data "resources;resources" ^
+          --add-data "database;database" ^
+          main.py
 
       - name: Upload Windows Build
         uses: actions/upload-artifact@v4
@@ -80,14 +83,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install PySide6
-          pip install python-dateutil
+          pip install -r money_manager/requirements.txt
           pip install pyinstaller
 
       - name: Build Mac
         working-directory: money_manager
         run: |
           pyinstaller --onefile --name MoneyManager \
+          --paths=. \
           --add-data "resources:resources" \
           --add-data "database:database" \
           main.py
@@ -95,7 +98,7 @@ jobs:
       - name: Create DMG
         run: |
           mkdir -p dmg
-          cp -r money_manager/dist/MoneyManager dmg/
+          cp -r money_manager/dist/* dmg/
           hdiutil create -volname MoneyManager -srcfolder dmg -ov -format UDZO MoneyManager.dmg
 
       - name: Upload Mac Build
