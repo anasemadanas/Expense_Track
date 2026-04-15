@@ -31,7 +31,7 @@ jobs:
       - name: Build App
         shell: bash
         run: |
-          pyinstaller --onefile --name MoneyManager \
+          python -m PyInstaller --onefile --windowed --name MoneyManager \
           --paths=money_manager \
           --add-data "money_manager/resources:resources" \
           --add-data "money_manager/database:database" \
@@ -39,7 +39,7 @@ jobs:
           --hidden-import PySide6.QtGui \
           --hidden-import PySide6.QtWidgets \
           money_manager/main.py
-
+          
       - name: Create DMG (macOS only)
         if: runner.os == 'macOS'
         shell: bash
