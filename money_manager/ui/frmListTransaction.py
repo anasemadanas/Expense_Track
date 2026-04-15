@@ -5,14 +5,14 @@ from PySide6.QtWidgets import QInputDialog, QTableWidgetItem, QVBoxLayout, QMenu
 from PySide6 import QtCore, QtGui, QtWidgets
 from services.transaction_service import TransactionService
 from ui.ui_frmListTransaction import Ui_ListTransaction
-
+from services.dashboard_service import DashBoardService
 
 class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.transaction_service = TransactionService()
-        
+        self.dashboard_service = DashBoardService()
         self.setWindowTitle("List Transactions")
         self.setWindowIcon(QIcon("resources\\icons\\transaction.png"))
         self.btnSaveList.setText("Export")
@@ -24,10 +24,38 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
     # ---- ------------------------------------------------------------- ----
 
     def save_list(self):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Icon.Information)
-        msg.setText("Transactions exported successfully!")
-        msg.exec()
+        file_path, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self,
+            "Export Transactions",
+            "Transactions.csv",
+            "CSV Files (*.csv)"
+        )
+
+        if not file_path:
+            return
+
+        import csv
+
+        with open(file_path, "w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+
+    
+            headers = []
+            for col in range(self.tableWidgetTransaction.columnCount()):
+                headers.append(self.tableWidgetTransaction.horizontalHeaderItem(col).text())
+
+            writer.writerow(headers)
+
+
+            for row in range(self.tableWidgetTransaction.rowCount()):
+                row_data = []
+                for col in range(self.tableWidgetTransaction.columnCount()):
+                    item = self.tableWidgetTransaction.item(row, col)
+                    row_data.append(item.text() if item else "")
+                writer.writerow(row_data)
+
+        QMessageBox.information(self, "Success", "Transactions exported successfully!")
+
 
 
     def show_menu(self, position):
