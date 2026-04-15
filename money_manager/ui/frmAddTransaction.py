@@ -7,7 +7,7 @@ from ui.ui_frmAddTransaction import Ui_AddTransaction
 from PySide6.QtGui import QDoubleValidator, Qt, QIcon
 from PySide6.QtWidgets import QMessageBox
 from PySide6.QtCore import QDate
-
+from common.utils import resource_path
 
 class AddTransaction(QtWidgets.QDialog,Ui_AddTransaction):
     def __init__(self):
@@ -16,8 +16,8 @@ class AddTransaction(QtWidgets.QDialog,Ui_AddTransaction):
         self.transaction_service = TransactionService()
         
         self.setWindowTitle("Transaction")
-        self.setWindowIcon(QIcon("resources\\icons\\transaction.png"))
 
+        self.setWindowIcon(QIcon(resource_path("resources/icons/transaction.png")))
         now = QDate.currentDate()
         self.dateMonthTransaction.setDate(now)
         self.dateYearTransaction.setDate(now)

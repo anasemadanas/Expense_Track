@@ -6,6 +6,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from services.transaction_service import TransactionService
 from ui.ui_frmListTransaction import Ui_ListTransaction
 from services.dashboard_service import DashBoardService
+from common.utils import resource_path
 
 class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
     def __init__(self):
@@ -14,7 +15,7 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         self.transaction_service = TransactionService()
         self.dashboard_service = DashBoardService()
         self.setWindowTitle("List Transactions")
-        self.setWindowIcon(QIcon("resources\\icons\\transaction.png"))
+        self.setWindowIcon(QIcon(resource_path("resources/icons/transaction.png")))
         self.btnSaveList.setText("Export")
         self.btnSaveList.clicked.connect(self.save_list)
         self.btnCloseList.clicked.connect(self.close)
@@ -39,7 +40,6 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         with open(file_path, "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
 
-    
             headers = []
             for col in range(self.tableWidgetTransaction.columnCount()):
                 headers.append(self.tableWidgetTransaction.horizontalHeaderItem(col).text())

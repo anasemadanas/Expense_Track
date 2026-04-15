@@ -140,6 +140,7 @@ money_manager
 ├─main.exe                       
 ├─main.py                        
 ├─main.spec                      
+├─MoneyManager.spec              
 ├─pytest.ini                     
 ├─requirements.txt               
 ├─requirements-dev.txt           
@@ -147,11 +148,13 @@ money_manager
 ├─common                         
 │ ├─__init__.py                  
 │ ├─activity_logger.py           
-│ └─global_user.py               
+│ ├─global_user.py               
+│ └─utils.py                     
 ├─database                       
 │ ├─__init__.py                  
 │ ├─database.py                  
-│ └─Money_Manager_DB.db          
+│ ├─database_setup.py            
+│ └─schema.sql                   
 ├─models                         
 │ ├─__init__.py                  
 │ ├─budget.py                    
@@ -182,7 +185,6 @@ money_manager
 │   ├─piechart_white.png         
 │   └─transaction.png            
 ├─services                       
-│ ├─__init__.py                  
 │ ├─budget_service.py            
 │ ├─dashboard_service.py         
 │ ├─goal_service.py              
@@ -195,6 +197,7 @@ money_manager
 │ └─user_service.py              
 ├─tests                          
 │ ├─__init__.py                  
+│ ├─test_database_singleton.py   
 │ └─services                     
 │   ├─__init__.py                
 │   ├─test_goal_service.py       
@@ -228,9 +231,8 @@ screenshots
   ├─ui_frmDashBoard.ui           
   ├─ui_frmListTransaction.ui     
   ├─ui_frmLogin.ui               
-  └─ui_resources.qrc                                  
+  └─ui_resources.qrc             
 
-         
 ```
 
 ---
@@ -375,22 +377,25 @@ python money_manager/main.py
 pip install -r requirements-dev.txt
 ```
 
----
-
 ### Run Tests
 
 ```bash
 pytest
 ```
 
----
-
 ## 📦 Build Executable
 
 ```bash
+pyinstaller --onefile --windowed --name main --add-data "resources;resources" --add-data "database;database" --paths=. main.py         #exe file
+pyinstaller --onedir --windowed --name MoneyManager --add-data "resources;resources" --add-data "database;database" --paths=. main.py  #dir file
+
+```
+or Write
+
+```bash
+pyinstaller MoneyManager.spec
 pyinstaller main.spec
 ```
-
 > 📌 The executable will be generated inside the `dist/` folder.
 
 ---

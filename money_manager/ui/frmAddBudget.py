@@ -5,6 +5,7 @@ from services.budget_service import BudgetService
 
 from ui.ui_frmAddBudget import Ui_AddBudget
 from PySide6.QtCore import QDate
+from common.utils import resource_path
 
 class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
 
@@ -17,8 +18,8 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
         self.btnSaveBudget.clicked.connect(self.save_budget)
 
         self.setWindowTitle("Add Budget")
-        self.setWindowIcon(QIcon("resources\\icons\\budget.png"))
 
+        self.setWindowIcon(QIcon(resource_path("resources/icons/budget.png")))
         self.txtAmountBugdet.setValidator(QtGui.QDoubleValidator(0.00, 999999.99, 2))
         self.txtAmountBugdet.setPlaceholderText("0000.00")
         

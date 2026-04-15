@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QFrame, QLabel, QProgressBar
 
 from services.goal_service import GoalService
 from ui.ui_frmGoals import Ui_GoalsDialog
-
+from common.utils import resource_path
 
 class GoalDetailDialog(QtWidgets.QDialog):
     def __init__(self, goal, service: GoalService, parent=None):
@@ -13,7 +13,7 @@ class GoalDetailDialog(QtWidgets.QDialog):
         self.goal = goal
         self.service = service
         self.setWindowTitle(goal.name)
-        self.setWindowIcon(QIcon("resources\\icons\\logo.png"))
+        self.setWindowIcon(QIcon(resource_path("resources/icons/logo.png")))
         self.setMinimumWidth(400)
         self.resize(420, 320)
 
@@ -193,7 +193,7 @@ class GoalsDialog(QtWidgets.QDialog, Ui_GoalsDialog):
         self.service = GoalService()
 
         self.setWindowTitle("Savings Goals")
-        self.setWindowIcon(QIcon("resources\\icons\\logo.png"))
+        self.setWindowIcon(QIcon(resource_path("resources/icons/logo.png")))
 
         self.btnAddGoal.clicked.connect(self.add_goal)
         self.btnCloseGoals.clicked.connect(self.close)

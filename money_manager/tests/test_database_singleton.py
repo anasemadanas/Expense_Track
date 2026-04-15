@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 
-def test_get_default_db_reuses_single_connection(monkeypatch):
+def test_database_connection_creates_new_connection_per_instance(monkeypatch):
     import database.database as dbmod
 
     connect_calls = {"count": 0}
@@ -45,14 +45,8 @@ def test_get_default_db_reuses_single_connection(monkeypatch):
     monkeypatch.setattr(dbmod.os, "makedirs", lambda *_args, **_kwargs: None)
     monkeypatch.setattr(dbmod.sqlite3, "connect", fake_connect)
 
-    dbmod.close_default_db()
-    db1 = dbmod.get_default_db()
-    db2 = dbmod.get_default_db()
+    db1 = dbmod.DatabaseConnection()
+    db2 = dbmod.DatabaseConnection()
 
-    assert db1 is db2
-    assert connect_calls["count"] == 1
-
-    dbmod.close_default_db()
-    _db3 = dbmod.get_default_db()
     assert connect_calls["count"] == 2
-
+    assert db1.conn is not db2.conn

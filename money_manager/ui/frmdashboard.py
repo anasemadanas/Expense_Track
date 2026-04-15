@@ -6,7 +6,7 @@ from datetime import datetime
 from PySide6.QtWidgets import QMessageBox
 from common.activity_logger import ActivityLogger
 from services.dashboard_service import DashBoardService
-
+from common.utils import resource_path
 from ui.ui_frmdashboard import Ui_MainScreen
 
 from models.permissions import has_permission, UserPermissions
@@ -19,7 +19,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.transactions = transactions or []
         self.service = DashBoardService()
         self.setWindowTitle("Dashboard")
-        self.setWindowIcon(QIcon("resources\\icons\\logo.png"))
+        self.setWindowIcon(QIcon(resource_path("resources/icons/logo.png")))
         
         self.current_user = current_user
         self.permissions = current_user["permissions"] if current_user else 0
