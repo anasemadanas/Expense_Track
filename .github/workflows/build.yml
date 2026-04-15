@@ -19,10 +19,13 @@ jobs:
     - name: Install PyInstaller
       run: pip install pyinstaller
 
+    - name: Debug files
+      run: ls -R
+
     - name: Build
+      working-directory: money_manager
       run: |
         pyinstaller --onefile --name MoneyManager \
         --add-data "resources:resources" \
         --add-data "database:database" \
-        --paths=. \
-        money_manager/main.py
+        main.py
