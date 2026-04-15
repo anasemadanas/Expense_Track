@@ -84,19 +84,14 @@ Built using:
 
 ```bash
 Expense_Track 
-├─.gitignore  
+├─.gitignore
+├─.github    
 ├─LICENSE     
 ├─README.md
 ├─docs
 ├─money_manager
-│ ├─__init__.py   
-│ ├─main.exe      
+│ ├─__init__.py     
 │ ├─main.py   
-│ ├─main.spec
-│ ├─MoneyManager.spec  
-│ ├─pytest.ini    
-│ ├─requirements.txt
-│ ├─requirements-dev.txt 
 │ ├─resources_rc.py
 | ├─common
 │ ├─database
@@ -107,9 +102,6 @@ Expense_Track
 │ ├─tests 
 │ └─ui 
 └─screenshots  
- 
-
-
 
 ```
 
