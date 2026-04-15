@@ -5,7 +5,6 @@ on:
     branches: ["main"]
 
 jobs:
-
   build:
     strategy:
       matrix:
@@ -24,51 +23,49 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip setuptools wheel
           pip install -r money_manager/requirements.txt
           pip install pyinstaller
 
-      - name: Build App
-        working-directory: money_manager
+
+      - name: Build (Linux/macOS)
+        if: runner.os != 'Windows'
         run: |
           pyinstaller --onefile --name MoneyManager \
-          --paths=. \
-          --add-data "resources:resources" \
-          --add-data "database:database" \
+          --paths=money_manager \
+          --add-data "money_manager/resources:resources" \
+          --add-data "money_manager/database:database" \
           --hidden-import PySide6.QtCore \
           --hidden-import PySide6.QtGui \
           --hidden-import PySide6.QtWidgets \
-          main.py
+          money_manager/main.py
 
-      - name: Fix Windows Paths
+
+      - name: Build (Windows)
         if: runner.os == 'Windows'
-        working-directory: money_manager
         run: |
           pyinstaller --onefile --name MoneyManager ^
-          --paths=. ^
-          --add-data "resources;resources" ^
-          --add-data "database;database" ^
+          --paths=money_manager ^
+          --add-data "money_manager/resources;resources" ^
+          --add-data "money_manager/database;database" ^
           --hidden-import PySide6.QtCore ^
           --hidden-import PySide6.QtGui ^
           --hidden-import PySide6.QtWidgets ^
-          main.py
+          money_manager/main.py
+
 
       - name: Create DMG (macOS only)
         if: runner.os == 'macOS'
         run: |
-          pyinstaller --onefile --name MoneyManager \
-          --paths=. \
-          --add-data "resources:resources" \
-          --add-data "database:database" \
-          --hidden-import PySide6.QtCore \
-          --hidden-import PySide6.QtGui \
-          --hidden-import PySide6.QtWidgets \
-          main.py
+          mkdir -p dmg
+          cp -r dist/* dmg/
+          hdiutil create -volname MoneyManager -srcfolder dmg -ov -format UDZO MoneyManager.dmg
+
 
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}-build
           path: |
-            money_manager/dist/*
+            dist/*
             MoneyManager.dmg
