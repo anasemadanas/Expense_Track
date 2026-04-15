@@ -92,7 +92,8 @@ Expense_Track
 │ ├─__init__.py   
 │ ├─main.exe      
 │ ├─main.py   
-│ ├─main.spec     
+│ ├─main.spec
+│ ├─MoneyManager.spec  
 │ ├─pytest.ini    
 │ ├─requirements.txt
 │ ├─requirements-dev.txt 
