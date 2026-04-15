@@ -20,10 +20,12 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.service = DashBoardService()
         self.setWindowTitle("Dashboard")
         self.setWindowIcon(QIcon(resource_path("resources/icons/logo.png")))
+        self.lblTitleDashBoard.setMinimumWidth(400) 
+        self.lblTitleDashBoard.setMinimumHeight(100)  
         
         self.current_user = current_user
         self.permissions = current_user["permissions"] if current_user else 0
-        
+
     # ------------------ Connect buttons and actions ------------------------------------------
         self.btnSpending.clicked.connect(lambda: self.stackedWidgetChart.setCurrentIndex(0))
         self.btnLineGraphinDate.clicked.connect(lambda: self.stackedWidgetChart.setCurrentIndex(1))

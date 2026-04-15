@@ -30,6 +30,7 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
         self.btnDefault = QtWidgets.QPushButton("Default", self)
         self.btnDefault.setGeometry(10, 50, 80, 30)
 
+        self.ui.lblManagerMoney.setMinimumWidth(300)
     # ---- ------------------------------------------------------------- ----
             
     def try_login(self):
