@@ -55,8 +55,8 @@ Thumbs.db
 # ============================
 # Build / Distribution
 # ============================
-.Build
-.dist
+build/
+dist/
 
 # ============================
 # Test & Coverage
