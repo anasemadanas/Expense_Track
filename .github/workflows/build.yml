@@ -40,13 +40,19 @@ jobs:
           --hidden-import PySide6.QtWidgets \
           money_manager/main.py
           
-      - name: Create DMG (macOS only)
-        if: runner.os == 'macOS'
+      - name: Build App
         shell: bash
         run: |
-          mkdir -p dmg
-          cp -r dist/* dmg/
-          hdiutil create -volname MoneyManager -srcfolder dmg -ov -format UDZO MoneyManager.dmg
+          python -m PyInstaller \
+          --windowed \
+          --name MoneyManager \
+          --paths=money_manager \
+          --add-data "money_manager/resources:resources" \
+          --add-data "money_manager/database:database" \
+          --hidden-import PySide6.QtCore \
+          --hidden-import PySide6.QtGui \
+          --hidden-import PySide6.QtWidgets \
+          money_manager/main.py
 
       - name: Upload Build
         uses: actions/upload-artifact@v4
