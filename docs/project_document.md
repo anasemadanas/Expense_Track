@@ -390,14 +390,18 @@ pytest
 ## 📦 Build Executable
 
 ```bash
-pyinstaller --onefile --windowed --name main --add-data "resources;resources" --add-data "database;database" --paths=. main.py         #exe file
-pyinstaller --onedir --windowed --name MoneyManager --add-data "resources;resources" --add-data "database;database" --paths=. main.py  #dir file
+#exe file
+pyinstaller --onefile --windowed --name main --add-data "resources;resources" --add-data "database;database" --paths=. main.py
+#dir file      
+pyinstaller --onedir --windowed --name MoneyManager --add-data "resources;resources" --add-data "database;database" --paths=. main.py 
 
 ```
 or Write
 
 ```bash
+#exe file
 pyinstaller main.spec
+#dir file    
 pyinstaller MoneyManager.spec
 ```
 > 📌 The executable will be generated inside the `dist/` folder.
