@@ -2,10 +2,9 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from common.activity_logger import ActivityLogger
 from PySide6.QtGui import QIcon
 from services.budget_service import BudgetService
-
 from ui.ui_frmAddBudget import Ui_AddBudget
-from PySide6.QtCore import QDate
 from common.utils import resource_path
+from PySide6.QtCore import QDate
 
 class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
 
@@ -22,6 +21,11 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
         self.setWindowIcon(QIcon(resource_path("resources/icons/budget.png")))
         self.txtAmountBugdet.setValidator(QtGui.QDoubleValidator(0.00, 999999.99, 2))
         self.txtAmountBugdet.setPlaceholderText("0000.00")
+    
+        self.setTabOrder(self.dateYear, self.dateMonthBugdet)
+        self.setTabOrder(self.dateMonthBugdet, self.txtAmountBugdet)
+        self.setTabOrder(self.txtAmountBugdet, self.btnSaveBudget)
+        self.setTabOrder(self.btnSaveBudget, self.btnCloseBudget)
         
         now = QDate.currentDate()
         self.dateMonthBugdet.setDate(now)

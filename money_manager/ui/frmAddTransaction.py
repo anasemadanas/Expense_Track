@@ -35,7 +35,13 @@ class AddTransaction(QtWidgets.QDialog,Ui_AddTransaction):
         
         self.update_budget_balance_label()
         self.prompt_for_missing_budget()
-
+        
+        self.setTabOrder(self.txtAmountTransaction, self.cmbboxCatagory)
+        self.setTabOrder(self.cmbboxCatagory, self.dateMonthTransaction)
+        self.setTabOrder(self.dateMonthTransaction, self.dateYearTransaction)
+        self.setTabOrder(self.dateYearTransaction, self.btnSaveTransaction)
+        self.setTabOrder(self.btnSaveTransaction, self.btnCloseTransaction)
+        
     # ---- ------------------------------------------------------------- ----
     def selected_month_year(self):
         return (

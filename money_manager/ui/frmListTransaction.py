@@ -22,6 +22,8 @@ class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
         self.tableWidgetTransaction.customContextMenuRequested.connect(self.show_menu)
         self.tableWidgetTransaction.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.load_data()
+        self.setTabOrder(self.btnSaveList, self.btnCloseList)
+
     # ---- ------------------------------------------------------------- ----
 
     def save_list(self):

@@ -31,6 +31,13 @@ class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
         self.btnDefault.setGeometry(10, 50, 80, 30)
 
         self.ui.lblManagerMoney.setMinimumWidth(300)
+        
+        self.setTabOrder(self.ui.lneUsername, self.ui.lnePassword)
+        self.setTabOrder(self.ui.lnePassword, self.ui.btnLogin)
+        self.setTabOrder(self.ui.btnLogin, self.ui.btnClose)
+        self.setTabOrder(self.ui.btnClose, self.btnTheme)
+        self.setTabOrder(self.btnTheme, self.btnDefault)
+        
     # ---- ------------------------------------------------------------- ----
             
     def try_login(self):

@@ -55,6 +55,16 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.cmbYears.currentIndexChanged.connect(self.on_month_changed)
 
         self.load_dashboard()
+        
+        self.btnAddTransaction.setFocus()
+        self.btnAddTransaction.repaint()
+        self.setTabOrder(self.btnAddTransaction, self.btnAddBudget)
+        self.setTabOrder(self.btnAddBudget, self.btnListTransaction)
+        self.setTabOrder(self.btnListTransaction, self.btnGoals)
+        self.setTabOrder(self.btnGoals, self.btnLogout)
+        self.setTabOrder(self.gvPieChart, self.cmbYears)
+        self.setTabOrder(self.cmbYears, self.cmbMonths)
+
     # ---- ------------------------------------------------------------- ----
 
     def init_month_year_combos(self):
