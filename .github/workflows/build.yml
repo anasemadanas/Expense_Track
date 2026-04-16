@@ -12,8 +12,8 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          - macos-latest     # Apple Silicon (ARM64)
-          - macos-15-intel
+          - macos-latest      # Apple Silicon ARM64
+          - macos-15-intel    # Intel x64
 
     runs-on: ${{ matrix.os }}
 
@@ -93,7 +93,7 @@ jobs:
 
       # ---------------- MAC INTEL x64 ----------------
       - name: Build macOS x64 App
-        if: matrix.os == 'macos-13'
+        if: matrix.os == 'macos-15-intel'
         shell: bash
         run: |
           python -m PyInstaller --noconfirm --windowed \
@@ -107,7 +107,7 @@ jobs:
           money_manager/main.py
 
       - name: Create x64 DMG
-        if: matrix.os == 'macos-13'
+        if: matrix.os == 'macos-15-intel'
         shell: bash
         run: |
           mkdir dmg
@@ -143,7 +143,7 @@ jobs:
             MoneyManager-ARM64.dmg
 
       - name: Upload macOS x64 Build
-        if: matrix.os == 'macos-13'
+        if: matrix.os == 'macos-15-intel'
         uses: actions/upload-artifact@v4
         with:
           name: macOS-x64-Build
