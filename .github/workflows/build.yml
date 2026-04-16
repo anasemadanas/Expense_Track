@@ -9,7 +9,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest     # Apple Silicon (ARM64)
+          - macos-13         # Intel x64
 
     runs-on: ${{ matrix.os }}
 
@@ -60,13 +64,13 @@ jobs:
           --hidden-import PySide6.QtWidgets \
           money_manager/main.py
 
-      # ---------------- MACOS ----------------
-      - name: Build macOS App
-        if: runner.os == 'macOS'
+      # ---------------- MAC ARM64 ----------------
+      - name: Build macOS ARM64 App
+        if: matrix.os == 'macos-latest'
         shell: bash
         run: |
           python -m PyInstaller --noconfirm --windowed \
-          --name MoneyManager \
+          --name MoneyManager-ARM64 \
           --paths=money_manager \
           --add-data "money_manager/resources:resources" \
           --add-data "money_manager/database:database" \
@@ -75,17 +79,44 @@ jobs:
           --hidden-import PySide6.QtWidgets \
           money_manager/main.py
 
-      - name: Create DMG
-        if: runner.os == 'macOS'
+      - name: Create ARM64 DMG
+        if: matrix.os == 'macos-latest'
         shell: bash
         run: |
           mkdir dmg
-          cp -R dist/MoneyManager.app dmg/
-          hdiutil create -volname MoneyManager \
+          cp -R dist/MoneyManager-ARM64.app dmg/
+          hdiutil create -volname MoneyManager-ARM64 \
           -srcfolder dmg \
           -ov \
           -format UDZO \
-          MoneyManager.dmg
+          MoneyManager-ARM64.dmg
+
+      # ---------------- MAC INTEL x64 ----------------
+      - name: Build macOS x64 App
+        if: matrix.os == 'macos-13'
+        shell: bash
+        run: |
+          python -m PyInstaller --noconfirm --windowed \
+          --name MoneyManager-x64 \
+          --paths=money_manager \
+          --add-data "money_manager/resources:resources" \
+          --add-data "money_manager/database:database" \
+          --hidden-import PySide6.QtCore \
+          --hidden-import PySide6.QtGui \
+          --hidden-import PySide6.QtWidgets \
+          money_manager/main.py
+
+      - name: Create x64 DMG
+        if: matrix.os == 'macos-13'
+        shell: bash
+        run: |
+          mkdir dmg
+          cp -R dist/MoneyManager-x64.app dmg/
+          hdiutil create -volname MoneyManager-x64 \
+          -srcfolder dmg \
+          -ov \
+          -format UDZO \
+          MoneyManager-x64.dmg
 
       # ---------------- UPLOAD ----------------
       - name: Upload Windows Build
@@ -102,11 +133,20 @@ jobs:
           name: Linux-Build
           path: dist/*
 
-      - name: Upload macOS Build
-        if: runner.os == 'macOS'
+      - name: Upload macOS ARM64 Build
+        if: matrix.os == 'macos-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: macOS-Build
+          name: macOS-ARM64-Build
           path: |
             dist/*
-            MoneyManager.dmg
+            MoneyManager-ARM64.dmg
+
+      - name: Upload macOS x64 Build
+        if: matrix.os == 'macos-13'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS-x64-Build
+          path: |
+            dist/*
+            MoneyManager-x64.dmg
