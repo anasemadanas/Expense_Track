@@ -1,0 +1,50 @@
+@startuml
+title ERD (SQLite schema.sql)
+hide circle
+skinparam linetype ortho
+
+entity "users" as users {
+  * id : INTEGER <<PK>>
+  --
+  username : TEXT <<UNIQUE>>
+  password : TEXT
+  permissions : INTEGER
+}
+
+entity "transactions" as transactions {
+  * id : INTEGER <<PK>>
+  --
+  amount : REAL
+  category : TEXT
+  month : INTEGER
+  year : INTEGER
+  .. index ..
+  idx_transactions_month_year(month, year)
+}
+
+entity "budgets" as budgets {
+  * id : INTEGER <<PK>>
+  --
+  amount : REAL
+  total_amount : REAL
+  month : INTEGER
+  year : INTEGER
+  .. unique ..
+  UNIQUE(month, year)
+  .. index ..
+  idx_budgets_month_year(month, year)
+}
+
+entity "goals" as goals {
+  * id : INTEGER <<PK>>
+  --
+  name : TEXT
+  target_amount : REAL
+  saved_amount : REAL
+}
+
+' Note: the current schema has no foreign keys between these tables.
+' Logical (non-enforced) association: budgets(month,year) relates to transactions(month,year)
+' (shown as 1 budget -> many transactions for the same month/year)
+budgets ||--o{ transactions : "month/year (logical)"
+@enduml

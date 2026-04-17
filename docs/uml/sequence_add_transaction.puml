@@ -1,0 +1,45 @@
+@startuml
+title Add Transaction (save_transaction)
+
+actor User
+participant "AddTransaction (ui/frmAddTransaction.py)" as UI
+participant "TransactionService" as TS
+participant "BudgetService" as BS
+participant "BudgetRepo" as BR
+participant "TransactionRepo" as TR
+database "SQLite (DatabaseConnection)" as DB
+
+User -> UI : Click "Save"
+UI -> UI : validate input / ensure budget exists
+UI -> TS : get_budget_warning(amount, month, year)
+TS -> BS : check_budget(month, year)
+BS -> BR : check_budget(month, year)
+BR -> DB : execute(SELECT budgets...)
+DB --> BR : Budget row
+BR --> BS : Budget
+BS --> TS : Budget
+TS -> TS : validate_transaction(...)
+TS --> UI : warning_message? (optional)
+
+alt user cancels after warning
+  UI --> User : stop
+else continue
+  UI -> TS : add_transaction(amount, category, month, year)
+  TS -> BS : check_budget(month, year)
+  BS -> BR : check_budget(month, year)
+  BR -> DB : execute(SELECT budgets...)
+  DB --> BR : Budget row
+  BR --> BS : Budget
+  BS --> TS : Budget
+  TS -> TS : validate_transaction(...)
+  TS -> TR : add_transaction(Transaction)
+  TR -> DB : execute(INSERT transactions...)
+  TS -> BS : deduct_from_budget(amount, month, year)
+  BS -> BR : deduct_from_budget(amount, month, year)
+  BR -> DB : execute(UPDATE budgets...)
+  TS --> UI : Transaction
+  UI --> User : "Transaction saved!"
+end
+
+@enduml
+

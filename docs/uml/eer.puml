@@ -1,0 +1,73 @@
+@startuml
+title EER (Enhanced ER) - logical model
+hide circle
+skinparam linetype ortho
+
+' This is an *enhanced* / logical view derived from the current SQLite schema and code.
+' Your actual `database/schema.sql` does not define foreign keys between these tables.
+
+entity "users" as users {
+  * id : INTEGER <<PK>>
+  --
+  username : TEXT <<UNIQUE>>
+  password : TEXT
+  permissions : INTEGER
+}
+
+entity "goals" as goals {
+  * id : INTEGER <<PK>>
+  --
+  name : TEXT
+  target_amount : REAL
+  saved_amount : REAL
+  / progress_percent : INTEGER <<derived>>
+  / is_complete : BOOLEAN <<derived>>
+}
+
+entity "period_entry" as period_entry <<supertype>> {
+  --
+  month : INTEGER
+  year : INTEGER
+}
+
+entity "transactions" as transactions <<subtype>> {
+  * id : INTEGER <<PK>>
+  --
+  amount : REAL
+  category : TEXT
+  month : INTEGER
+  year : INTEGER
+  / type : TEXT <<derived>>  ' income/expense from amount sign
+}
+
+entity "budgets" as budgets <<subtype>> {
+  * id : INTEGER <<PK>>
+  --
+  amount : REAL            ' remaining
+  total_amount : REAL      ' total set
+  month : INTEGER
+  year : INTEGER
+  / spent : REAL <<derived>>  ' total_amount - amount
+  .. constraint ..
+  UNIQUE(month, year)
+}
+
+' --- EER: generalization/specialization (logical)
+period_entry <|-- transactions
+period_entry <|-- budgets
+
+' --- Logical associations used by services/dashboard (not enforced by DB)
+budgets ||--o{ transactions : same month/year
+
+note right of users
+  Permissions bitmask used in code (models/permissions.py).
+  Current DB tables do not link users to transactions/budgets/goals.
+end note
+
+note right of budgets
+  BudgetService + TransactionService treat budgets as
+  the "remaining balance" for a (month,year) period.
+end note
+
+@enduml
+

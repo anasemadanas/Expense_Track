@@ -1,0 +1,42 @@
+@startuml
+title Object diagram (snapshot): AddTransaction open
+
+object ui as "AddTransaction\\n(ui/frmAddTransaction.py)" {
+  txtAmountTransaction = "50.00"
+  cmbboxCatagory = "Food"
+  selected_month = 4
+  selected_year = 2026
+}
+
+object ts as "TransactionService" {
+  transaction_repo = TransactionRepo
+  budget_service = BudgetService
+}
+
+object tr as "TransactionRepo" {
+  db = DatabaseConnection
+}
+
+object bs as "BudgetService" {
+  budget_repo = BudgetRepo
+}
+
+object br as "BudgetRepo" {
+  db = DatabaseConnection
+}
+
+object budget as "Budget" {
+  id = 1
+  totalamount = 500.00
+  amount = 250.00
+  month = 4
+  year = 2026
+}
+
+ui --> ts : transaction_service
+ts --> tr
+ts --> bs
+bs --> br
+br --> budget
+@enduml
+

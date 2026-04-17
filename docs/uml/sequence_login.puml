@@ -1,0 +1,28 @@
+@startuml
+title Login (try_login)
+
+actor User
+participant "LoginScreen (ui/frmLoginScreen.py)" as UI
+participant "UserService" as US
+participant "UserRepo" as UR
+database "SQLite (DatabaseConnection)" as DB
+participant "MainScreen (ui/frmdashboard.py)" as DASH
+
+User -> UI : Click "Login"
+UI -> US : login(username, password)
+US -> UR : find_user(username, password)
+UR -> DB : execute(SELECT users...)
+DB --> UR : row/None
+UR --> US : user dict/None
+
+alt valid user
+  US --> UI : user dict
+  UI -> DASH : show()
+  UI -> UI : close()
+else invalid user
+  US --> UI : None / error
+  UI --> User : show error / attempts left
+end
+
+@enduml
+

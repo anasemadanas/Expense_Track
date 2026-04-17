@@ -1,0 +1,47 @@
+@startuml
+title Edit Transaction (ListTransaction -> TransactionService.edit_transaction)
+
+actor User
+participant "ListTransaction (ui/frmListTransaction.py)" as UI
+participant "TransactionService" as TS
+participant "TransactionRepo" as TR
+participant "BudgetService" as BS
+participant "BudgetRepo" as BR
+database "SQLite (DatabaseConnection)" as DB
+
+User -> UI : Context menu "Edit"
+UI -> UI : prompt new amount
+UI -> TS : get_transaction_warning(old_amount, new_amount)
+TS --> UI : warning? (optional)
+alt user cancels
+  UI --> User : stop
+else continue
+  UI -> TS : edit_transaction(tid, new_amount, month, year)
+  TS -> TR : get_transaction_by_id(tid)
+  TR -> DB : execute(SELECT transactions...)
+  DB --> TR : row
+  TR --> TS : Transaction
+
+  TS -> TR : update_transaction(tid, new_amount, month, year)
+  TR -> DB : execute(UPDATE transactions...)
+
+  alt amount increased
+    TS -> BS : check_budget(month, year)
+    BS -> BR : check_budget(month, year)
+    BR -> DB : execute(SELECT budgets...)
+    DB --> BR : row
+    BR --> BS : Budget
+    BS --> TS : Budget
+    TS -> BS : deduct_from_budget(difference, month, year)
+    BS -> BR : deduct_from_budget(...)
+    BR -> DB : execute(UPDATE budgets...)
+  else amount decreased
+    TS -> BS : add_to_budget(abs(difference), month, year)
+    BS -> BR : add_to_budget(...)
+    BR -> DB : execute(UPDATE budgets...)
+  end
+  UI --> User : "Transaction updated!"
+end
+
+@enduml
+
