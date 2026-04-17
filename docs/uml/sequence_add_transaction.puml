@@ -1,4 +1,4 @@
-@startuml
+@startuml AddTransaction
 title Add Transaction (save_transaction)
 
 actor User
