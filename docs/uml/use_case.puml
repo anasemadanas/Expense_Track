@@ -1,0 +1,83 @@
+@startuml
+title Money Manager - Use Case Diagram
+left to right direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #F7F7FF
+  BorderColor #3B82F6
+}
+skinparam actor {
+  BorderColor #111827
+  BackgroundColor #FFFFFF
+}
+
+actor "User" as User
+actor "Admin" as Admin
+Admin --|> User
+
+rectangle "Money Manager (PySide6 App)" {
+  (Login) as UC_Login
+  (View Dashboard) as UC_Dashboard
+  (Change Theme) as UC_Theme
+
+  (Add Budget) as UC_AddBudget
+  (Update Monthly Budget) as UC_UpdateBudget
+
+  (Add Transaction) as UC_AddTx
+  (List Transactions) as UC_ListTx
+  (Edit Transaction) as UC_EditTx
+  (Delete Transaction) as UC_DeleteTx
+  (Export Transactions) as UC_ExportTx
+
+  (Manage Goals) as UC_Goals
+  (Add Goal) as UC_AddGoal
+  (Add Savings) as UC_AddSavings
+  (Delete Goal) as UC_DeleteGoal
+
+  (View About) as UC_About
+  (Open Guide) as UC_Guide
+  (Save Data) as UC_Save
+  (Export Data (CSV)) as UC_Export
+}
+
+User --> UC_Login
+User --> UC_Dashboard
+User --> UC_Theme
+
+User --> UC_AddBudget
+User --> UC_AddTx
+User --> UC_ListTx
+User --> UC_Goals
+
+User --> UC_About
+User --> UC_Guide
+User --> UC_Save
+User --> UC_Export
+
+UC_AddBudget .> UC_UpdateBudget : <<extend>>\n(budget exists)
+
+UC_ListTx .> UC_EditTx : <<include>>
+UC_ListTx .> UC_DeleteTx : <<include>>
+UC_ListTx .> UC_ExportTx : <<include>>
+
+UC_Goals .> UC_AddGoal : <<include>>
+UC_Goals .> UC_AddSavings : <<include>>
+UC_Goals .> UC_DeleteGoal : <<include>>
+
+Admin --> UC_Dashboard
+Admin --> UC_AddBudget
+Admin --> UC_AddTx
+Admin --> UC_ListTx
+Admin --> UC_Goals
+
+note right of UC_AddTx
+  Add Transaction requires
+  a Budget for the selected
+  month/year and may show a
+  "budget 80% warning".
+end note
+
+@enduml
+

@@ -1,0 +1,56 @@
+@startuml
+title Money Manager - Sequence Diagram (Add Transaction)
+autonumber
+
+skinparam shadowing false
+skinparam sequence {
+  ParticipantBorderColor #111827
+  ParticipantBackgroundColor #FFFFFF
+  LifeLineBorderColor #6B7280
+  LifeLineBackgroundColor #FFFFFF
+}
+
+actor User
+participant "AddTransaction (UI)" as UI
+participant "TransactionService" as TxSvc
+participant "BudgetService" as BudSvc
+participant "TransactionRepo" as TxRepo
+participant "BudgetRepo" as BudRepo
+database "SQLite (Money_Manager_DB.db)" as DB
+participant "ActivityLogger" as Log
+participant "activity.log (file)" as LogFile
+
+User -> UI : Fill amount/category/month/year\nClick Save
+
+UI -> TxSvc : get_budget_warning(amount, month, year)
+TxSvc -> BudSvc : check_budget(month, year)
+BudSvc -> BudRepo : check_budget(month, year)
+BudRepo -> DB : SELECT budgets by month/year
+DB --> BudRepo : row
+BudRepo --> BudSvc : Budget
+BudSvc --> TxSvc : Budget
+TxSvc --> UI : warning? (>=80%) / None
+
+alt Warning and user cancels
+  UI --> User : Show warning dialog
+  User -> UI : Cancel
+  UI --> User : No changes
+else Continue
+  UI -> TxSvc : add_transaction(amount, category, month, year)
+  TxSvc -> BudSvc : check_budget(month, year)
+  BudSvc -> BudRepo : check_budget(month, year)
+  BudRepo -> DB : SELECT budgets by month/year
+  DB --> BudRepo : row
+  BudRepo --> BudSvc : Budget
+  BudSvc --> TxSvc : Budget
+  TxSvc -> TxRepo : add_transaction(Transaction)
+  TxRepo -> DB : INSERT INTO transactions(...)
+  TxSvc -> BudSvc : deduct_from_budget(amount, month, year)
+  BudSvc -> BudRepo : deduct_from_budget(amount, month, year)
+  BudRepo -> DB : UPDATE budgets SET amount = amount - ...
+  UI -> Log : log_transaction(amount, category, month, year)
+  Log -> LogFile : append line
+  UI --> User : "Transaction saved!"
+end
+
+@enduml
