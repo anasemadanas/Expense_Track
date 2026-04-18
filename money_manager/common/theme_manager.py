@@ -1,10 +1,8 @@
-# theme_manager.py
 import json
 import os
 from PySide6.QtWidgets import QColorDialog, QFontDialog
 
 THEME_FILE = "theme.json"
-
 
 class ThemeManager:
 
@@ -21,8 +19,15 @@ class ThemeManager:
             self.save_theme()
             self.app.setStyleSheet("")
             self.apply_theme()
-
-
+            
+    def reset_theme(self):
+        self.theme["mode"] = "default"
+        self.save_theme()
+        self.app.setStyleSheet("")
+        self.apply_theme()
+        
+        
+    #Fonts Color
     def get_text_color(self, bg):
         bg = bg.lstrip("#")
         r = int(bg[0:2], 16)
@@ -42,8 +47,9 @@ class ThemeManager:
             self.app.setStyleSheet("")
             return
 
+        #Set Fonts Color
         bg = self.theme.get("bg", "#f5f5f5")
-        accent = self.theme.get("accent", "#2d89ef")
+        accent = self.theme.get("accent", "#2d89ef")    #button
 
         if not bg or bg == "#000000":
             bg = "#f5f5f5"
@@ -86,10 +92,3 @@ class ThemeManager:
         return {
             "mode": "default"
         }
-
-    def reset_theme(self):
-        self.theme["mode"] = "default"
-        self.save_theme()
-        self.app.setStyleSheet("")
-        self.apply_theme()
-        

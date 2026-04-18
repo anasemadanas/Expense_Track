@@ -15,7 +15,7 @@ class DatabaseConnection:
     def execute(self, query, params=None, fetch=None):
         params = params or ()
 
-        cursor = self.conn.cursor()
+        cursor = self.conn.cursor()     #Commands
         try:
             cursor.execute(query, params)
 
@@ -25,7 +25,7 @@ class DatabaseConnection:
             if fetch == "all":
                 return cursor.fetchall()
 
-            self.conn.commit()
+            self.conn.commit()   #Save
 
         finally:
             cursor.close()

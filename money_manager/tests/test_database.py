@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-
-def test_database_connection_creates_new_connection_per_instance(monkeypatch):
+def test_database_connection(monkeypatch):
     import database.database as dbmod
 
     connect_calls = {"count": 0}
