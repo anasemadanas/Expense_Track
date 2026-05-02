@@ -1,0 +1,22 @@
+name: Local Setup
+version: 1.0.0
+schema: v1
+
+models:
+  - name: qwen local
+    provider: ollama
+    model: qwen2.5-coder:7b
+
+  - name: deepseek local
+    provider: ollama
+    model: deepseek-r1:latest
+
+  - name: qwen2.5-1.5b local
+    provider: ollama
+    model: qwen2.5-coder:1.5b
+
+  - name: qwen2.5-coder:14b
+    provider: ollama
+    model: qwen2.5-coder:7b
+
+defaultModel: qwen local
