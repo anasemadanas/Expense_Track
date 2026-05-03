@@ -193,8 +193,7 @@ Pull Requests are welcome! Follow these steps:
 
 ## 🌐 Live Demo
 
-🔗 [Visit Live Website](https://anasemad.pythonanywhere.com/)
-
+🔗 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Expense%20Track-green?style=for-the-badge&logo=django)](https://anasemad.pythonanywhere.com/)
 ---
 
 ## 🔗 Contact
