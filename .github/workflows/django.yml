@@ -22,5 +22,6 @@ jobs:
         pip install -r money_manager_web/requirements.txt
 
     - name: Run Django checks
+      working-directory: money_manager_web
       run: |
         python manage.py check
