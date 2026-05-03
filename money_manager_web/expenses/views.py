@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
 
 
 def home(request):
@@ -14,9 +13,60 @@ def home(request):
             login(request, user)
             return redirect("dashboard")
         else:
-            return render(request, "login.html", {"error": "Invalid credentials"})
+            return render(request, "login.html", {
+                "error": "Invalid username or password"
+            })
 
     return render(request, "login.html")
 
+
+def logout_view(request):
+    logout(request)
+    return redirect("login")
+
+
+
+
+
+
 def dashboard(request):
-    return HttpResponse("Welcome to Dashboard 🔥")
+    if not request.user.is_authenticated:
+        return redirect("login")
+
+    context = {
+        "username": request.user.username,
+
+        "month": 5,
+        "year": 2026,
+        "month_name": "May",
+
+        "balance": {
+            "income": 1200,
+            "expense": 800,
+            "net": 400
+        },
+
+        "budget": {
+            "total": 1000,
+            "spent": 700,
+            "remaining": 300,
+            "percent": 70
+        },
+
+        "transactions": [
+            {"category": "Food", "amount": -50},
+            {"category": "Salary", "amount": 1000},
+        ],
+
+        "goals": [
+            {
+                "name": "Buy Laptop",
+                "saved_amount": 300,
+                "target_amount": 1000,
+                "progress_percent": 30,
+                "is_complete": False
+            }
+        ],
+    }
+
+    return render(request, "dashboard.html", context)

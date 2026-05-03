@@ -1,29 +1,81 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<title>Login</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f5f7fb;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 320px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #4338ca;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+</style>
+
 </head>
 <body>
-    
 
-<h1>Expense Track Login</h1>
+<div class="card">
 
-<form method="POST">
-    {% csrf_token %}
-    
-    <input type="text" name="username" placeholder="Username"><br><br>
-    
-    <input type="password" name="password" placeholder="Password"><br><br>
+    <h1>Login</h1>
 
-    <button type="submit">Login</button>
-</form>
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="username" placeholder="Username">
+        <input type="password" name="password" placeholder="Password">
+
+        <button type="submit">Login</button>
+    </form>
 
     {% if error %}
-    <p style="color:red">{{ error }}</p>
+        <p class="error">{{ error }}</p>
     {% endif %}
+
+</div>
 
 </body>
 </html>
