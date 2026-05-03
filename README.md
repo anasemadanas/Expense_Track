@@ -181,9 +181,8 @@ Pull Requests are welcome! Follow these steps:
 
 ---
 
-## 📝 License
-
-MIT License — see the [LICENSE](LICENSE) file for details.
+📊 Example Live Stats
+![Repo Size](https://img.shields.io/github/repo-size/anasemadanas/Expense_Track?style=for-the-badge)
 
 ---
 
@@ -194,7 +193,5 @@ MIT License — see the [LICENSE](LICENSE) file for details.
 | 🐙 GitHub | [GitHub](https://github.com/anasemadanas/) |
 | 💼 LinkedIn | [LinkedIn](https://www.linkedin.com/in/eng-anasemad/) |
 | 📧 Email | [Email](mailto:anaspython3@gmail.com) |
-
-[![CI](https://img.shields.io/github/actions/workflow/status/anasemadanas/Expense_Track/django.yml?style=for-the-badge)]
 
 [↩️ Back to Table of Contents](#-table-of-contents)
