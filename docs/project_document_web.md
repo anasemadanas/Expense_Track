@@ -1,103 +1,84 @@
 # 💰 Money Manager Web Application
 
-> A full-stack personal finance management system built with Django, following **3-Tier Architecture**, **SOLID principles**, and scalable clean architecture design.
+> A full-stack personal finance management system built with Django, following 3-Tier Architecture, SOLID principles, and clean scalable design.
 
 ---
 
-## 📌 Project Overview
+# 📌 Project Overview
 
-**Project Name:** Money Manager Web App  
-**Type:** Web Application (Django)  
-**Backend:** Django 6+  
-**Database:** SQLite (development) → PostgreSQL (future)  
-**Architecture:** 3-Tier + Clean Architecture Principles  
-**Status:** In Development  
-**Author:** Team Student  
+Project Name: Money Manager Web App  
+Type: Web Application (Django)  
+Backend: Django 6+  
+Database: SQLite (dev) → PostgreSQL (future)  
+Architecture: 3-Tier + Clean Architecture  
+Status: In Development  
+Author: Team Student  
 
 ---
 
-## 🎯 Objective
+# 🎯 Objective
 
-The goal of this system is to provide a **simple yet powerful financial management platform** that allows users to:
+This system helps users manage personal finances:
 
 - Track income and expenses
-- Manage budgets per category
-- Set financial goals
-- View dashboard analytics
-- Store and retrieve financial history securely
+- Category-based transactions
+- Budget management
+- Financial goals tracking
+- Dashboard analytics
 
-The system is designed to be **scalable**, allowing future expansion into:
-- Mobile App (Flutter / Kivy)
-- REST API backend
-- Cloud-based multi-user system
+Designed for future scaling:
+- REST API
+- Mobile apps
+- Cloud multi-user system
 
 ---
 
-## ✨ Features
+# ✨ Features
 
-### 👤 Authentication
-- Login / Logout system
-- Session-based authentication (temporary testing mode)
-- Future: Django auth + JWT support
+## 👤 Authentication
+- Login / Logout
+- Django session authentication
+- Admin panel
 
-### 💰 Transactions
-- Add income and expenses
-- Categorization (Food, Salary, etc.)
-- Monthly filtering
+## 💰 Transactions
+- Income & expenses
+- Categories
 - CRUD operations
+- Monthly filtering
 
-### 📊 Dashboard
+## 📊 Dashboard
 - Total income
 - Total expenses
 - Net balance
-- Budget summary
+- Budget overview
 - Goals progress
-- Transaction overview
 
-### 🎯 Goals System
-- Create savings goals
-- Track progress percentage
-- Completion tracking
+## 🎯 Goals
+- Savings goals
+- Progress tracking
+- Completion status
 
-### 💳 Budget System
-- Monthly budgets per category
+## 💳 Budget
+- Monthly category budgets
 - Spending tracking
-- Limit alerts (future enhancement)
 
 ---
 
-## 🏗 System Architecture (3-Tier)
+# 🏗 Architecture
 
-```text id="arch_01"
-┌──────────────────────────────┐
-│   Presentation Layer (UI)    │
-│   Django Templates / Views   │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│ Business Logic Layer         │
-│ services/                    │
-│ - user_service               │
-│ - dashboard_service          │
-│ - transaction_service        │
-│ - budget_service             │
-│ - goal_service               │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│ Data Access Layer            │
-│ repository/                  │
-│ - user_repo                 │
-│ - transaction_repo          │
-│ - budget_repo               │
-│ - goal_repo                 │
-└──────────────┬───────────────┘
-               │
-               ▼
-        SQLite Database
-📁 Project Structure
+Presentation Layer (UI)
+↓
+Business Logic Layer (services/)
+↓
+Data Layer (repository/)
+↓
+SQLite Database
+
+---
+
+# 📁 Project Structure
+
+```text
 money_manager_web/
 │
 ├── manage.py
@@ -110,116 +91,133 @@ money_manager_web/
 │   ├── wsgi.py
 │   └── asgi.py
 │
-├── expenses/                 # Main app (views layer)
+├── expenses/
 │   ├── views.py
 │   ├── models.py
 │   ├── admin.py
 │
-├── services/                 # Business logic layer
+├── services/
 │   ├── user_service.py
 │   ├── dashboard_service.py
 │   ├── transaction_service.py
 │   ├── budget_service.py
-│   ├── goal_service.py
+│   └── goal_service.py
 │
-├── repository/               # Data access layer
+├── repository/
 │   ├── user_repo.py
 │   ├── transaction_repo.py
 │   ├── budget_repo.py
-│   ├── goal_repo.py
+│   └── goal_repo.py
 │
-├── models/                   # Domain models
+├── models/
 │   ├── user.py
 │   ├── transaction.py
 │   ├── budget.py
-│   ├── goal.py
+│   └── goal.py
 │
-├── common/                   # Utilities
+├── common/
 │   ├── utils.py
-│   ├── activity_logger.py
+│   └── activity_logger.py
 │
 ├── templates/
 │   ├── login.html
-│   ├── dashboard.html
+│   └── dashboard.html
 │
 ├── database/
 │   ├── schema.sql
-│   ├── database.py
+│   └── database.py
 │
 └── resources/
-    ├── icons/
-⚙️ Installation & Setup
-1️⃣ Clone Project
+    └── icons/
+
+```
+
+# ⚙️ Money Manager Web - Setup Guide
+
+## 1. 📥 Clone Project
+
+```bash
 git clone https://github.com/your-repo/Expense_Track.git
 cd Expense_Track/money_manager_web
-2️⃣ Create Virtual Environment
+```
+
+## ⚙️ Setup Guide
+
+### 1. 📥 Clone Project
+```bash
+git clone https://github.com/your-repo/Expense_Track.git
+cd Expense_Track/money_manager_web
+```
+
+### 2. 🐍 Create Virtual Environment
+
+```bash
 python -m venv .venv
-
-Activate:
-
 .venv\Scripts\activate   # Windows
-3️⃣ Install Dependencies
+```
+
+### 3. 📦 Install Dependencies
+```bash
 pip install -r requirements.txt
-4️⃣ Run Database Migrations
+```
+
+### 4. 🗄️ Run Migrations
+```bash
 python manage.py migrate
-5️⃣ Create Admin User (Optional)
+```
+
+### 5. 👤 Create Admin User
+```bash
 python manage.py createsuperuser
+```
 
 Example:
+```text
+username: admin
+password: 1234
+```
 
-username: admin
-password: 1234
-6️⃣ Run Server
+### 6. 🚀 Run Server
+```bash
 python manage.py runserver
-🌐 Access Application
+```
+
+---
+
+### 🌐 Access Application
+```text
 http://127.0.0.1:8000/login/
-🔐 Login Credentials (Testing Mode)
+```
+
+---
+
+### 🔐 Test Login
+```text
 username: admin
 password: 1234
-⚠️ Common Issues
-❌ Error: no such table: auth_user
+```
+
+---
+
+### ⚠️ Common Errors & Fixes
+
+❌ no such table: auth_user
+```bash
 python manage.py migrate
-❌ Login not working
-Ensure migrations are applied
-Check session middleware enabled
-Verify views logic
-🚀 Future Enhancements
+```
+
+❌ no such table: django_session
+```bash
+python manage.py migrate
+```
+
+---
+
+### 🚀 Future Improvements
 - REST API (Django REST Framework)
 - JWT Authentication
-- Mobile App (Flutter)
+- Mobile App Integration
 - AI Spending Analysis
-- Cloud Sync (PostgreSQL)
-- Multi-user system
-- Real-time notifications
-- Charts (Chart.js)
-🧠 Architecture Principles
-
-This project strictly follows:
-
-✔ Single Responsibility Principle
-✔ Open/Closed Principle
-✔ Liskov Substitution Principle
-✔ Interface Segregation Principle
-✔ Dependency Inversion Principle
-📊 Database Design
-User
- ├── Transactions (1:M)
- ├── Budgets (1:M)
- └── Goals (1:M)
-🤝 Contribution Guide
-1. Fork repository
-2. Create feature branch
-3. Commit changes
-4. Push branch
-5. Open Pull Request
-📄 License
-MIT License
-❤️ Author Note
-
-This project is built for learning real-world software architecture, not just CRUD.
-
-Focus areas:
-
-Clean architecture
-Separation of concerns
-Scalable backend design
+- PostgreSQL Migration
+- Real-time Updates
+```
