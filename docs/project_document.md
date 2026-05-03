@@ -220,22 +220,7 @@ money_manager
   ├─ui_frmdashboard.py           
   ├─ui_frmGoals.py               
   ├─ui_frmListTransaction.py     
-  └─ui_frmLogin.py               
-screenshots                      
-├─budget.png                     
-├─Dashboard.png                  
-├─export.png                     
-├─goal.png                       
-├─listTransaction.png            
-├─Login.png                      
-├─transaction.png                
-└─Package                        
-  ├─ui_frmAddBudget.ui           
-  ├─ui_frmAddTransaction.ui      
-  ├─ui_frmDashBoard.ui           
-  ├─ui_frmListTransaction.ui     
-  ├─ui_frmLogin.ui               
-  └─ui_resources.qrc             
+  └─ui_frmLogin.py                     
 
 ```
 
@@ -436,6 +421,24 @@ pyinstaller MoneyManager.spec
 | **PDF/Excel Reports** | Scheduled report generation with embedded charts |
 | **AI-based Insights** | Automatic transaction classification and spending suggestions |
 | **Multi-User / Family Mode** | Role-based access (admin/viewer) for household budgets |
+
+---
+
+## 📊 UML Diagrams
+
+| Diagram | Preview |
+|--------|--------|
+| Use Case | ![Use Case](screenshots/uml/usecase.svg) |
+| ERD | ![ERD](screenshots/uml/erd.svg) |
+| EER | ![EER](screenshots/uml/eer.svg) |
+| Dashboard ERD | ![Dashboard](screenshots/uml/erd_dashboard.svg) |
+| Login Sequence | ![Login](screenshots/uml/sequence_login.svg) |
+| Add Budget | ![Budget](screenshots/uml/sequence_add_budget.svg) |
+| Add Transaction | ![Transaction](screenshots/uml/activity_add_transaction.png) |
+| Edit Transaction | ![Edit](screenshots/uml/sequence_edit_transaction.svg) |
+| Dashboard Flow | ![Dashboard Flow](screenshots/uml/sequence_dashboard.svg) |
+| Object Snapshot | ![Object](screenshots/uml/object_add_transaction_snapshot.svg) |
+| System ERD | ![System](screenshots/uml/MoneyManagerERD.svg) |
 
 ---
 
