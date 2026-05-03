@@ -3,6 +3,16 @@
 
 A modern and scalable financial management tool built in Python using a clean **3-Tier Architecture** and **SOLID principles**.
 
+
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Expense__Track-black?style=for-the-badge&logo=github)](https://github.com/anasemadanas/Expense_Track)
+[![Last Commit](https://img.shields.io/github/last-commit/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track)
+[![Issues](https://img.shields.io/github/issues/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track/issues)
+[![Forks](https://img.shields.io/github/forks/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track)
+[![Stars](https://img.shields.io/github/stars/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track)
+[![License](https://img.shields.io/github/license/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track)
+[![Python](https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-Web%20Framework-green?style=for-the-badge&logo=django)](https://www.djangoproject.com/)
+
 ---
 
 ## 📑 Table of Contents
