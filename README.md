@@ -187,6 +187,8 @@ Pull Requests are welcome! Follow these steps:
 
 ---
 
+[![CI](https://img.shields.io/github/actions/workflow/status/anasemadanas/Expense_Track/django.yml?style=for-the-badge)]
+
 ## 🔗 Contact
 
 | Platform | Link |
