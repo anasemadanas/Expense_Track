@@ -428,17 +428,17 @@ pyinstaller MoneyManager.spec
 
 | Diagram | Preview |
 |--------|--------|
-| Use Case | ![Use Case](screenshots/uml/usecase.svg) |
-| ERD | ![ERD](screenshots/uml/erd.svg) |
-| EER | ![EER](screenshots/uml/eer.svg) |
-| Dashboard ERD | ![Dashboard](screenshots/uml/erd_dashboard.svg) |
-| Login Sequence | ![Login](screenshots/uml/sequence_login.svg) |
-| Add Budget | ![Budget](screenshots/uml/sequence_add_budget.svg) |
-| Add Transaction | ![Transaction](screenshots/uml/activity_add_transaction.png) |
-| Edit Transaction | ![Edit](screenshots/uml/sequence_edit_transaction.svg) |
-| Dashboard Flow | ![Dashboard Flow](screenshots/uml/sequence_dashboard.svg) |
-| Object Snapshot | ![Object](screenshots/uml/object_add_transaction_snapshot.svg) |
-| System ERD | ![System](screenshots/uml/MoneyManagerERD.svg) |
+| Use Case | <img src="../screenshots/uml/usecase.svg" width="300"/> |
+| ERD | <img src="../screenshots/uml/erd.svg" width="300"/> |
+| EER | <img src="../screenshots/uml/eer.svg" width="300"/> |
+| Dashboard ERD | <img src="../screenshots/uml/erd_dashboard.svg" width="300"/> |
+| Login Sequence | <img src="../screenshots/uml/sequence_login.svg" width="300"/> |
+| Add Budget | <img src="../screenshots/uml/sequence_add_budget.svg" width="300"/> |
+| Add Transaction | <img src="../screenshots/uml/activity_add_transaction.png" width="300"/> |
+| Edit Transaction | <img src="../screenshots/uml/sequence_edit_transaction.svg" width="300"/> |
+| Dashboard Flow | <img src="../screenshots/uml/sequence_dashboard.svg" width="300"/> |
+| Object Snapshot | <img src="../screenshots/uml/object_add_transaction_snapshot.svg" width="300"/> |
+| System ERD | <img src="../screenshots/uml/MoneyManagerERD.svg" width="300"/> |
 
 ---
 
