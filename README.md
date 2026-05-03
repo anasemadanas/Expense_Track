@@ -182,6 +182,7 @@ Pull Requests are welcome! Follow these steps:
 ---
 
 📊 Example Live Stats
+
 ![Repo Size](https://img.shields.io/github/repo-size/anasemadanas/Expense_Track?style=for-the-badge)
 
 ---
