@@ -354,6 +354,13 @@ pip install -r requirements.txt
 python money_manager/main.py
 ```
 
+### 4. User Login
+
+```bash
+Username : admin
+Password : 1234
+```
+
 > ⚠️ Make sure you're in the root project folder (`Expense_Track`)
 
 ---
