@@ -290,11 +290,11 @@
         </div>
 
         <nav class="nav">
-            <a href="#" class="active">📊 Dashboard</a>
-            <a href="#">💸 Transactions</a>
-            <a href="#">💰 Budgets</a>
-            <a href="#">🎯 Goals</a>
-            <a href="#">⚙️ Settings</a>
+            <a href="{% url 'dashboard' %}" class="active">Dashboard</a>
+            <a href="{% url 'transactions' %}">Transactions</a>
+            <a href="{% url 'budgets' %}">Budgets</a>
+            <a href="{% url 'goals' %}">Goals</a>
+            <a href="{% url 'settings' %}">Settings</a>
         </nav>
 
         <div class="sidebar-footer">
@@ -305,7 +305,12 @@
                     <span>{{ role|default:"Member" }}</span>
                 </div>
             </div>
-            <a href="{% url 'logout' %}" class="logout-link">Sign out</a>
+            <form method="post" action="{% url 'logout' %}" style="margin-top:10px;">
+                {% csrf_token %}
+                <button type="submit" class="logout-link" style="width:100%; text-align:left;">
+                    Sign out
+                </button>
+            </form>
         </div>
     </aside>
 
@@ -317,19 +322,22 @@
                 <p>Here is your financial summary for {{ month_name }} {{ year }}.</p>
             </div>
 
-            <form method="GET" class="period-form">
-                <select name="month">
-                    {% for m in months %}
-                        <option value="{{ m.num }}" {% if m.num == month %}selected{% endif %}>{{ m.name }}</option>
-                    {% endfor %}
-                </select>
-                <select name="year">
-                    {% for y in years %}
-                        <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit" class="btn btn-secondary">Apply</button>
-            </form>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <form method="GET" class="period-form">
+                    <select name="month">
+                        {% for m in months %}
+                            <option value="{{ m.num }}" {% if m.num == month %}selected{% endif %}>{{ m.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="year">
+                        {% for y in years %}
+                            <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-secondary">Apply</button>
+                </form>
+                <a class="btn btn-primary" href="{% url 'transaction_new' %}">+ Add transaction</a>
+            </div>
         </div>
 
         <!-- Stats -->

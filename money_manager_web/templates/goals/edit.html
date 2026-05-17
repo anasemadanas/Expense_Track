@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Goal · Expense Track{% endblock %}
+
+{% block extra_style %}
+.wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px; }
+.card { background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow: var(--shadow); padding: 22px; }
+.muted { color: var(--text-muted); font-size: 13px; }
+.field { margin-top: 12px; }
+label { display:block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.errors { margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(239,68,68,0.25); background: rgba(239,68,68,0.08); color: var(--danger); font-size: 13px; }
+.actions { display:flex; gap:10px; margin-top: 16px; flex-wrap:wrap; }
+{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <div class="muted"><a href="{% url 'goals' %}">← Back to goals</a></div>
+  <h1 style="font-size:26px; margin:10px 0 14px;">Edit goal</h1>
+
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="field">
+        <label for="{{ form.name.id_for_label }}">Name</label>
+        {{ form.name }}
+      </div>
+      <div class="field">
+        <label for="{{ form.target_amount.id_for_label }}">Target</label>
+        {{ form.target_amount }}
+      </div>
+      <div class="field">
+        <label for="{{ form.saved_amount.id_for_label }}">Saved</label>
+        {{ form.saved_amount }}
+      </div>
+
+      {% if form.errors %}
+        <div class="errors">{{ form.errors }}</div>
+      {% endif %}
+
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-secondary" href="{% url 'goals' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+

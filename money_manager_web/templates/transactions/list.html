@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Transactions · Expense Track{% endblock %}
+
+{% block extra_style %}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 28px 20px; }
+.topbar { display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom: 18px; }
+.topbar h1 { font-size: 26px; }
+.muted { color: var(--text-muted); font-size: 13px; }
+.actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.card { background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow: var(--shadow); overflow:hidden; }
+.card-head { padding: 16px 18px; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center; }
+.card-body { padding: 0; }
+.period { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.period select { width:auto; }
+.kpis { display:flex; gap:14px; flex-wrap:wrap; font-size: 14px; }
+.kpi { padding: 6px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff; }
+.kpi b { margin-left: 6px; }
+.pos { color: var(--success); }
+.neg { color: var(--danger); }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 12px 18px; font-size: 14px; border-bottom: 1px solid var(--border); text-align:left; }
+.table th { color: var(--text-muted); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; background:#fafafa; }
+.amount { text-align:right; font-variant-numeric: tabular-nums; }
+.empty { padding: 22px 18px; color: var(--text-muted); }
+{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <div class="muted"><a href="{% url 'dashboard' %}">← Back to dashboard</a></div>
+      <h1>Transactions</h1>
+      <div class="muted">{{ month_name }} {{ year }}</div>
+    </div>
+
+    <div class="actions">
+      <form method="get" class="period">
+        <select name="month">
+          {% for m in months %}
+            <option value="{{ m.num }}" {% if m.num == month %}selected{% endif %}>{{ m.name }}</option>
+          {% endfor %}
+        </select>
+        <select name="year">
+          {% for y in years %}
+            <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-secondary">Apply</button>
+      </form>
+
+      <a class="btn btn-primary" href="{% url 'transaction_new' %}">+ Add transaction</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-head">
+      <div class="kpis">
+        <span class="kpi">Income <b class="pos">${{ income|floatformat:2 }}</b></span>
+        <span class="kpi">Expense <b class="neg">${{ expense|floatformat:2 }}</b></span>
+      </div>
+      <div class="muted">{{ transactions|length }} record{{ transactions|length|pluralize }}</div>
+    </div>
+  </div>
+
+  <div class="card">
+    {% if transactions %}
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Note</th>
+              <th class="amount">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for t in transactions %}
+              <tr>
+                <td>{{ t.occurred_at }}</td>
+                <td><b>{{ t.category }}</b></td>
+                <td class="muted">{{ t.note|default:"" }}</td>
+                <td class="amount {% if t.amount >= 0 %}pos{% else %}neg{% endif %}">
+                  {% if t.amount >= 0 %}+{% endif %}${{ t.amount|floatformat:2 }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty">No transactions found for this period.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
