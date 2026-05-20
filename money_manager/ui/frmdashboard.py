@@ -6,7 +6,7 @@ from datetime import datetime
 import random
 from PySide6.QtWidgets import QMessageBox
 from Services.dashboard_service import DashBoardService
-from ui.ui_frmDashBoard import Ui_MainScreen
+from ui.ui_frmdashboard import Ui_MainScreen
 
 from Services.models.permissions import has_permission, UserPermissions
 
