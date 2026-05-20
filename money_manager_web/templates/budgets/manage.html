@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Budget · Expense Track{% endblock %}
+
+{% block extra_style %}
+.wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px; }
+.topbar { display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom: 18px; }
+.topbar h1 { font-size: 26px; }
+.muted { color: var(--text-muted); font-size: 13px; }
+.card { background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow: var(--shadow); overflow:hidden; }
+.card-head { padding: 16px 18px; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center; }
+.card-body { padding: 18px; }
+.period { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.period select { width:auto; }
+.row { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 760px) { .row { grid-template-columns: 1fr; } }
+label { display:block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.help { font-size: 12px; margin-top: 6px; color: var(--text-muted); }
+.errors { margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(239,68,68,0.25); background: rgba(239,68,68,0.08); color: var(--danger); font-size: 13px; }
+.kpis { display:flex; gap:14px; flex-wrap:wrap; font-size: 14px; margin-top: 10px; }
+.kpi { padding: 6px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff; }
+.kpi b { margin-left: 6px; }
+.pos { color: var(--success); }
+.neg { color: var(--danger); }
+.progress { height: 10px; background: #eef2ff; border-radius: 999px; overflow:hidden; margin-top: 10px; border: 1px solid rgba(79,70,229,0.12); }
+.bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-light)); width: 0; }
+.bar.warn { background: linear-gradient(90deg, var(--warning), #fbbf24); }
+.bar.danger { background: linear-gradient(90deg, var(--danger), #fb7185); }
+.actions { display:flex; gap:10px; margin-top: 14px; flex-wrap:wrap; }
+{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <div class="muted"><a href="{% url 'dashboard' %}">← Back to dashboard</a></div>
+      <h1>Budget</h1>
+      <div class="muted">{{ month_name }} {{ year }}</div>
+    </div>
+
+    <form method="get" class="period">
+      <select name="month">
+        {% for m in months %}
+          <option value="{{ m.num }}" {% if m.num == month %}selected{% endif %}>{{ m.name }}</option>
+        {% endfor %}
+      </select>
+      <select name="year">
+        {% for y in years %}
+          <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn btn-secondary">Apply</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <b>{% if has_budget %}Update budget{% else %}Set budget{% endif %}</b>
+      <span class="muted">Tracks spend from your transactions</span>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="row">
+          <div>
+            <label for="{{ form.total_amount.id_for_label }}">Total monthly budget</label>
+            {{ form.total_amount }}
+            <div class="help">Example: 1000.00</div>
+          </div>
+
+          <div>
+            <label>Summary</label>
+            <div class="kpis">
+              <span class="kpi">Spent <b class="neg">${{ spent|floatformat:2 }}</b></span>
+              <span class="kpi">Remaining <b class="pos">${{ remaining|floatformat:2 }}</b></span>
+            </div>
+            <div class="progress">
+              <div class="bar {% if percent >= 90 %}danger{% elif percent >= 70 %}warn{% endif %}" style="width: {{ percent }}%;"></div>
+            </div>
+            <div class="help">{{ percent }}% used</div>
+          </div>
+        </div>
+
+        {% if form.errors %}
+          <div class="errors">{{ form.errors }}</div>
+        {% endif %}
+
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">Save</button>
+          <a class="btn btn-secondary" href="{% url 'dashboard' %}?month={{ month }}&year={{ year }}">Back</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

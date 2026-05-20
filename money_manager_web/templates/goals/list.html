@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Goals · Expense Track{% endblock %}
+
+{% block extra_style %}
+.wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px; }
+.topbar { display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom: 18px; }
+.topbar h1 { font-size: 26px; }
+.muted { color: var(--text-muted); font-size: 13px; }
+.card { background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow: var(--shadow); overflow:hidden; }
+.card-head { padding: 16px 18px; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center; }
+.card-body { padding: 18px; }
+.row { display:grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; }
+@media (max-width: 920px) { .row { grid-template-columns: 1fr; } }
+label { display:block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.help { font-size: 12px; margin-top: 6px; color: var(--text-muted); }
+.errors { margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(239,68,68,0.25); background: rgba(239,68,68,0.08); color: var(--danger); font-size: 13px; }
+.goal { border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-top: 10px; }
+.goal-head { display:flex; justify-content:space-between; gap: 10px; flex-wrap:wrap; }
+.progress { height: 10px; background: #eef2ff; border-radius: 999px; overflow:hidden; margin-top: 10px; border: 1px solid rgba(79,70,229,0.12); }
+.bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-light)); width: 0; }
+.badge { display:inline-flex; align-items:center; gap:6px; padding: 2px 8px; font-size: 12px; border-radius: 999px; background: rgba(16,185,129,0.12); color: var(--success); border: 1px solid rgba(16,185,129,0.22); }
+.actions { margin-top: 10px; display:flex; gap:10px; flex-wrap:wrap; }
+{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <div class="muted"><a href="{% url 'dashboard' %}">← Back to dashboard</a></div>
+      <h1>Goals</h1>
+      <div class="muted">Set targets and track progress.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-head">
+      <b>Create goal</b>
+      <span class="muted">You can edit later</span>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="row">
+          <div>
+            <label for="{{ form.name.id_for_label }}">Name</label>
+            {{ form.name }}
+          </div>
+          <div>
+            <label for="{{ form.target_amount.id_for_label }}">Target</label>
+            {{ form.target_amount }}
+          </div>
+          <div>
+            <label for="{{ form.saved_amount.id_for_label }}">Saved</label>
+            {{ form.saved_amount }}
+          </div>
+        </div>
+
+        {% if form.errors %}
+          <div class="errors">{{ form.errors }}</div>
+        {% endif %}
+
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <b>Your goals</b>
+      <span class="muted">{{ goals|length }} goal{{ goals|length|pluralize }}</span>
+    </div>
+    <div class="card-body">
+      {% if goals %}
+        {% for g in goals %}
+          <div class="goal">
+            <div class="goal-head">
+              <b>
+                {{ g.name }}
+                {% if g.is_complete %}<span class="badge">✓ Done</span>{% endif %}
+              </b>
+              <span class="muted">${{ g.saved_amount|floatformat:2 }} / ${{ g.target_amount|floatformat:2 }}</span>
+            </div>
+            <div class="progress">
+              <div class="bar" style="width: {{ g.progress_percent }}%;"></div>
+            </div>
+            <div class="actions">
+              <a class="btn btn-secondary" href="{% url 'goal_edit' g.id %}">Edit</a>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="muted">No goals yet.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

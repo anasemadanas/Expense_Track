@@ -1,0 +1,26 @@
+@startuml
+title Money Manager - State Diagram (User Session / Login Attempts)
+
+skinparam shadowing false
+skinparam state {
+  BackgroundColor #FFFFFF
+  BorderColor #111827
+}
+
+[*] --> LoggedOut
+
+LoggedOut --> Authenticating : submit credentials
+Authenticating --> LoggedIn : credentials valid
+Authenticating --> LoggedOut : invalid credentials\n(attempts < 4)
+Authenticating --> Locked : invalid credentials\n(attempts >= 4)
+
+LoggedIn --> LoggedOut : logout / close app
+Locked --> LoggedOut : (admin resets)\n(app restart)
+
+note right of Locked
+  In code: UserService.max_attempts = 4
+  When exceeded: LoginScreen disables inputs
+end note
+
+@enduml
+

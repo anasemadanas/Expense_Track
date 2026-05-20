@@ -1,0 +1,79 @@
+@startuml
+title ERD - Dashboard (logical views)
+hide circle
+skinparam linetype ortho
+
+' Dashboard uses transactions + budgets to compute summaries.
+' These "views" are conceptual (computed in services/dashboard_service.py).
+
+entity "transactions" as transactions {
+  * id : INTEGER <<PK>>
+  --
+  amount : REAL
+  category : TEXT
+  month : INTEGER
+  year : INTEGER
+  .. index ..
+  idx_transactions_month_year(month, year)
+}
+
+entity "budgets" as budgets {
+  * id : INTEGER <<PK>>
+  --
+  amount : REAL
+  total_amount : REAL
+  month : INTEGER
+  year : INTEGER
+  .. unique ..
+  UNIQUE(month, year)
+  .. index ..
+  idx_budgets_month_year(month, year)
+}
+
+entity "vw_dashboard_month_balance" as vw_balance <<VIEW>> {
+  * month : INTEGER
+  * year : INTEGER
+  --
+  income : REAL <<derived>>
+  expense : REAL <<derived>>
+  net : REAL <<derived>>
+}
+
+entity "vw_budget_summary" as vw_budget <<VIEW>> {
+  * month : INTEGER
+  * year : INTEGER
+  --
+  total : REAL <<derived>>
+  remaining : REAL <<derived>>
+  spent : REAL <<derived>>
+}
+
+entity "vw_spending_by_category" as vw_cat <<VIEW>> {
+  * month : INTEGER
+  * year : INTEGER
+  --
+  category : TEXT
+  total_amount : REAL <<derived>>
+}
+
+' Views are derived from base tables
+transactions ||--o{ vw_cat : group by
+transactions ||--o{ vw_balance : sum by
+budgets ||--o{ vw_budget : lookup by
+
+' Month/year alignment used by dashboard
+vw_budget ||--o{ vw_balance : same month/year
+vw_budget ||--o{ vw_cat : same month/year
+
+note right of vw_balance
+  From `DashBoardService.get_balance_for_month()`:
+  income = sum(amount>0), expense = sum(-amount<0), net = income - expense
+end note
+
+note right of vw_budget
+  From `DashBoardService.get_budget_summary()`:
+  total = budgets.total_amount, remaining = budgets.amount, spent = total - remaining
+end note
+
+@enduml
+

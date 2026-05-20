@@ -1,0 +1,86 @@
+@startuml
+title Dashboard (MainScreen) - load/refresh/save/export
+
+actor User
+participant "LoginScreen" as Login
+participant "MainScreen\\n(ui/frmdashboard.py)" as UI
+participant "DashBoardService\\n(services/dashboard_service.py)" as DS
+participant "TransactionRepo\\n(repository/transaction_repo.py)" as TR
+participant "BudgetRepo\\n(repository/budget_repo.py)" as BR
+database "SQLite\\n(DatabaseConnection)" as DB
+
+== Open dashboard ==
+User -> Login : Login (valid)
+Login -> UI : open_Dashboard()
+UI -> UI : __init__()
+UI -> UI : init_month_year_combos()
+UI -> UI : load_dashboard()
+
+== Load/refresh dashboard ==
+UI -> UI : get_selected_month_year()
+UI -> DS : get_transactions_for_month(month, year)
+DS -> TR : get_transactions_by_month(month, year)
+TR -> DB : execute(SELECT transactions...)
+DB --> TR : rows
+TR --> DS : list<dict>
+DS --> UI : list<dict>
+
+UI -> UI : update_balance_labels()
+UI -> DS : get_budget_summary(month, year)
+DS -> BR : get_budget(month, year)
+BR -> DB : execute(SELECT budgets...)
+DB --> BR : row/None
+BR --> DS : row/None
+DS --> UI : {total, remaining, spent}
+UI -> UI : set labels + progress bars
+
+UI -> UI : draw_charts(transactions)
+UI -> UI : draw_pie_chart(transactions)
+UI -> UI : draw_bar_chart(transactions)
+UI -> UI : draw_line_chart(transactions)
+UI -> DS : get_all_transactions()
+DS -> TR : get_transactions()
+TR -> DB : execute(SELECT transactions ORDER BY year, month)
+DB --> TR : rows
+TR --> DS : rows
+DS --> UI : rows
+loop for m=1..12
+  UI -> DS : get_budget_summary(m, year)
+  DS -> BR : get_budget(m, year)
+  BR -> DB : execute(SELECT budgets...)
+  DB --> BR : row/None
+  BR --> DS : row/None
+  DS --> UI : {total, remaining, spent}
+end
+
+== Change month/year ==
+User -> UI : Change month/year combo
+UI -> UI : on_month_changed()
+UI -> UI : load_dashboard()  ' repeats load/refresh flow
+
+== Save month data ==
+User -> UI : actSave
+UI -> UI : on_save()
+UI -> DS : save_data(month, year)
+DS -> DS : get_transactions_for_month(month, year)
+DS -> TR : get_transactions_by_month(month, year)
+TR -> DB : execute(SELECT transactions...)
+DB --> TR : rows
+TR --> DS : list<dict>
+DS -> DS : QFileDialog + write .txt
+DS --> UI : done
+
+== Export month data ==
+User -> UI : actExport
+UI -> UI : on_export()
+UI -> DS : export_data(month, year)
+DS -> DS : get_transactions_for_month(month, year)
+DS -> TR : get_transactions_by_month(month, year)
+TR -> DB : execute(SELECT transactions...)
+DB --> TR : rows
+TR --> DS : list<dict>
+DS -> DS : QFileDialog + write .csv
+DS --> UI : done
+
+@enduml
+

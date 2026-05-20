@@ -1,0 +1,54 @@
+@startuml
+title Money Manager - Activity Diagram (Add Transaction)
+
+skinparam shadowing false
+skinparam activity {
+  BackgroundColor #FFFFFF
+  BorderColor #111827
+}
+
+start
+:User opens "Add Transaction" dialog;
+
+:Read selected month/year;
+:Check budget exists (BudgetService.check_budget);
+
+while (Budget exists?) is (no)
+  :Show "No Budget Found" warning;
+  if (User clicks "Add Budget"?) then (yes)
+    :Open "Add Budget" dialog;
+    :Enter amount + date;
+    :Create/Update budget (BudgetService.create_budget);
+    :Re-check budget exists;
+  else (cancel)
+    stop
+  endif
+endwhile
+
+:Enter amount + category + date;
+if (Amount missing?) then (yes)
+  :Show error;
+  stop
+endif
+
+:Validate transaction\n(TransactionService.validate_transaction);
+if (Validation fails?) then (yes)
+  :Show error;
+  stop
+endif
+
+:Compute 80% budget warning\n(TransactionService.get_budget_warning);
+if (Warning shown?) then (yes)
+  :Ask user "Continue?";
+  if (User cancels?) then (yes)
+    stop
+  endif
+endif
+
+:Insert transaction (TransactionRepo.add_transaction);
+:Deduct budget balance (BudgetRepo.deduct_from_budget);
+:Log activity (ActivityLogger.log_transaction);
+:Show "Transaction saved!";
+stop
+
+@enduml

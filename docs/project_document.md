@@ -135,55 +135,93 @@ All components are designed in strict adherence to SOLID principles:
 ## 📁 Folder Structure
 
 ```
-Expense_Track               
-├─.gitignore                
-├─LICENSE                   
-├─README.md                 
-└─money_manager             
-  ├─__init__.py             
-  ├─main.py                 
-  ├─requirements.txt        
-  ├─resources_rc.py         
-  ├─ui_frmdashboard.py      
-  ├─data                    
-  │ ├─__init__.py           
-  │ ├─database.py           
-  │ ├─interfaces            
-  │ │ ├─__init__.py         
-  │ │ ├─IBudgetRepo.py      
-  │ │ ├─ITransactionRepo.py 
-  │ │ └─IUserRepo.py        
-  │ └─repositories          
-  │   ├─__init__.py         
-  │   ├─budget_repo.py      
-  │   ├─transaction_repo.py 
-  │   └─user_repo.py        
-  ├─Database                
-  │ ├─create table basic.py 
-  │ ├─Data_Examples.csv     
-  │ └─Money_Manager_DB.db   
-  ├─Services                
-  │ ├─__init__.py           
-  │ ├─budget_service.py     
-  │ ├─dashboard_service.py  
-  │ ├─transaction_service.py
-  │ ├─user_service.py       
-  │ └─models                
-  │   ├─__init__.py         
-  │   ├─budget.py           
-  │   ├─transaction.py      
-  │   └─user.py             
-  └─ui                      
-    ├─__init__.py           
-    ├─frmAddBudget.py       
-    ├─frmAddTransaction.py  
-    ├─frmdashboard.py       
-    ├─frmLoginScreen.py     
-    ├─ui_frmBudget.py       
-    ├─ui_frmdashboard.py    
-    ├─ui_frmLogin.py        
-    └─ui_frmTransaction.py     
-         
+money_manager                    
+├─__init__.py                    
+├─main.exe                       
+├─main.py                        
+├─main.spec                      
+├─MoneyManager.spec              
+├─pytest.ini                     
+├─requirements.txt               
+├─requirements-dev.txt           
+├─resources_rc.py                
+├─common                         
+│ ├─__init__.py                  
+│ ├─activity_logger.py           
+│ ├─global_user.py               
+│ ├─theme_manager.py             
+│ └─utils.py                     
+├─database                       
+│ ├─__init__.py                  
+│ ├─database.py                  
+│ ├─database_setup.py            
+│ ├─Money_Manager_DB.db          
+│ ├─paths.py                     
+│ └─schema.sql                   
+├─models                         
+│ ├─__init__.py                  
+│ ├─budget.py                    
+│ ├─goal.py                      
+│ ├─permissions.py               
+│ ├─transaction.py               
+│ └─user.py                      
+├─repository                     
+│ ├─__init__.py                  
+│ ├─budget_repo.py               
+│ ├─goal_repo.py                 
+│ ├─IBudgetRepo.py               
+│ ├─IGoalRepo.py                 
+│ ├─ITransactionRepo.py          
+│ ├─IUserRepo.py                 
+│ ├─transaction_repo.py          
+│ └─user_repo.py                 
+├─resources                      
+│ └─icons                        
+│   ├─barchart_black.png         
+│   ├─barchart_white.png         
+│   ├─budget.png                 
+│   ├─linegraph_black.png        
+│   ├─linegraph_white.png        
+│   ├─login.png                  
+│   ├─logo.png                   
+│   ├─piechart_black.png         
+│   ├─piechart_white.png         
+│   └─transaction.png            
+├─services                       
+│ ├─__init__.py                  
+│ ├─budget_service.py            
+│ ├─dashboard_service.py         
+│ ├─goal_service.py              
+│ ├─IBudgetService.py            
+│ ├─IDashboardService.py         
+│ ├─IGoalService.py              
+│ ├─ITransactionService.py       
+│ ├─IUserService.py              
+│ ├─transaction_service.py       
+│ └─user_service.py              
+├─tests                          
+│ ├─__init__.py                  
+│ ├─test_database_singleton.py   
+│ └─services                     
+│   ├─__init__.py                
+│   ├─test_goal_service.py       
+│   ├─test_transaction_service.py
+│   └─test_user_service.py       
+└─ui                             
+  ├─__init__.py                  
+  ├─frmAddBudget.py              
+  ├─frmAddTransaction.py         
+  ├─frmdashboard.py              
+  ├─frmGoals.py                  
+  ├─frmListTransaction.py        
+  ├─frmLoginScreen.py            
+  ├─ui_frmAddBudget.py           
+  ├─ui_frmAddTransaction.py      
+  ├─ui_frmdashboard.py           
+  ├─ui_frmGoals.py               
+  ├─ui_frmListTransaction.py     
+  └─ui_frmLogin.py                     
+
 ```
 
 ---
@@ -199,19 +237,22 @@ The application uses **SQLite** for local data persistence. All entities are lin
 │   User   │──1:N──│ Transaction  │
 │          │       └──────────────┘
 │  id (PK) │       ┌──────────────┐
-│ username │──1:N──│   Budget     │
+│ username │──1:N──│    Budget    │
 │ password │       └──────────────┘
-│          │  
-└──────────┘      
+│          │       ┌──────────────┐
+│          │──1:N──│    Goals     │
+└──────────┘       └──────────────┘
 ```
 
 ### Tables
 
-**`users`** — `id`, `username`, `password`, 
+**`users`** — `id`, `username`, `password`, `Permissions`
 
-**`transactions`** — `id`, `amount`, `category`, `date`
+**`transactions`** — `id`, `amount`, `category`, `month`, `Year`
 
-**`budgets`** — `id`,  `amount`, `date`
+**`budgets`** — `id`,  `amount`, `month`, `Year`, `Total_amount`
+
+**`Goals`** — `id`, `name`  `target_amount`, `saved_amount`
 
 ---
 
@@ -259,31 +300,120 @@ The application uses **SQLite** for local data persistence. All entities are lin
 
 ---
 
+## 📌 Prerequisites
+
+Before you start, make sure you have:
+
+* Python 3.10 or higher
+* pip (Python package manager)
+
+---
+
 ## 🚀 How to Run
 
-1. **Clone the repository:**
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/anasemadanas/Expense_Track.git
 cd Expense_Track
 ```
 
-2. **Install dependencies:**
+---
+
+### 2. Create Virtual Environment & Install Dependencies
+
+```bash
+python -m venv .venv
+```
+
+#### Activate the environment:
+
+* On Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+* On macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+#### Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Run the application:**
+---
+
+### 3. Run the Application
 
 ```bash
 python money_manager/main.py
 ```
+> ⚠️ Make sure you're in the root project folder (`Expense_Track`)
 
-### Prerequisites
+### 4. User Login
 
-- Python 3.10+
-- pip package manager
+```bash
+Username : admin
+Password : 1234
+```
+
+---
+
+## 🧪 Testing & Development
+
+### Install Dev Dependencies
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+### Run Tests
+
+```bash
+pytest
+```
+
+## 📦 Build Executable
+
+```bash
+#exe file
+pyinstaller --onefile --windowed --name main --add-data "resources;resources" --add-data "database;database" --paths=. main.py
+#dir file      
+pyinstaller --onedir --windowed --name MoneyManager --add-data "resources;resources" --add-data "database;database" --paths=. main.py 
+
+```
+or Write
+
+```bash
+#exe file
+pyinstaller main.spec
+#dir file    
+pyinstaller MoneyManager.spec
+```
+> 📌 The executable will be generated inside the `dist/` folder.
+
+---
+
+## 🎬 Preview
+
+![App Screenshot](https://raw.githubusercontent.com/anasemadanas/Expense_Track/main/screenshots/Dashboard.png)
+
+---
+
+## 🧰 Features
+
+* Add expenses
+* Track income
+* Simple and clean UI
+* Local data storage
+
+
+
 
 ---
 
@@ -297,6 +427,24 @@ python money_manager/main.py
 | **PDF/Excel Reports** | Scheduled report generation with embedded charts |
 | **AI-based Insights** | Automatic transaction classification and spending suggestions |
 | **Multi-User / Family Mode** | Role-based access (admin/viewer) for household budgets |
+
+---
+
+## 📊 UML Diagrams
+
+| Diagram | Preview |
+|--------|--------|
+| Use Case | <img src="../screenshots/uml/usecase.svg" width="300"/> |
+| ERD | <img src="../screenshots/uml/erd.svg" width="300"/> |
+| EER | <img src="../screenshots/uml/eer.svg" width="300"/> |
+| Dashboard ERD | <img src="../screenshots/uml/erd_dashboard.svg" width="300"/> |
+| Login Sequence | <img src="../screenshots/uml/sequence_login.svg" width="300"/> |
+| Add Budget | <img src="../screenshots/uml/sequence_add_budget.svg" width="300"/> |
+| Add Transaction | <img src="../screenshots/uml/activity_add_transaction.png" width="300"/> |
+| Edit Transaction | <img src="../screenshots/uml/sequence_edit_transaction.svg" width="300"/> |
+| Dashboard Flow | <img src="../screenshots/uml/sequence_dashboard.svg" width="300"/> |
+| Object Snapshot | <img src="../screenshots/uml/object_add_transaction_snapshot.svg" width="300"/> |
+| System ERD | <img src="../screenshots/uml/MoneyManagerERD.svg" width="300"/> |
 
 ---
 

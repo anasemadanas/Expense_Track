@@ -1,0 +1,35 @@
+@startuml
+title Money Manager - Component Diagram
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+package "UI Layer" {
+  [PySide6 Screens & Dialogs] as UI
+}
+
+package "Application Layer" {
+  [Services] as Services
+}
+
+package "Data Access Layer" {
+  [Repositories] as Repos
+}
+
+package "Infrastructure" {
+  database "SQLite DB\nMoney_Manager_DB.db" as SQLite
+  [Activity Log\nactivity.log] as LogFile
+  [Theme Config\ntheme.json] as ThemeFile
+  [Resources\nicons/ui files] as Resources
+}
+
+UI --> Services : calls (login, add tx, budgets,\ngoals, dashboard)
+Services --> Repos : CRUD operations
+Repos --> SQLite : SQL queries
+
+UI --> ThemeFile : read/write theme
+UI --> Resources : load icons/ui
+Services --> LogFile : write user actions
+
+@enduml
+

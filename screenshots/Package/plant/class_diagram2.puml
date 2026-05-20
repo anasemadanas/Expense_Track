@@ -1,0 +1,149 @@
+@startuml
+title Money Manager - Class Diagram (High-Level)
+
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package "ui" {
+  class LoginScreen
+  class MainScreen
+  class AddBudget
+  class AddTransaction
+  class ListTransaction
+  class GoalsDialog
+  class GoalDetailDialog
+}
+
+package "services" {
+  interface IUserService
+  interface ITransactionService
+  interface IBudgetService
+  interface IGoalService
+  interface IDashboardService
+
+  class UserService
+  class TransactionService
+  class BudgetService
+  class GoalService
+  class DashBoardService
+}
+
+package "repository" {
+  interface IUserRepo
+  interface ITransactionRepo
+  interface IBudgetRepo
+  interface IGoalRepo
+
+  class UserRepo
+  class TransactionRepo
+  class BudgetRepo
+  class GoalRepo
+}
+
+package "models" {
+  class User {
+    +name: str
+    +Password: str
+  }
+  class Transaction {
+    +id: int?
+    +amount: float
+    +category: str
+    +month: int
+    +year: int
+  }
+  class Budget {
+    +id: int?
+    +amount: float
+    +totalamount: float
+    +month: int
+    +year: int
+  }
+  class Goal {
+    +id: int?
+    +name: str
+    +target_amount: float
+    +saved_amount: float
+    +progress_percent: int
+    +is_complete: bool
+  }
+  enum UserPermissions {
+    ADD_TRANSACTION
+    ADD_BUDGET
+    LIST_TRANSACTION
+  }
+}
+
+package "database" {
+  class DatabaseConnection
+}
+
+package "common" {
+  class ThemeManager
+  class ActivityLogger
+  class global_user {
+    +current_user: dict?
+  }
+}
+
+' UI -> Services
+LoginScreen ..> UserService
+LoginScreen ..> ActivityLogger
+LoginScreen ..> global_user
+LoginScreen ..> MainScreen : opens
+
+MainScreen ..> DashBoardService
+MainScreen ..> AddBudget : opens
+MainScreen ..> AddTransaction : opens
+MainScreen ..> ListTransaction : opens
+MainScreen ..> GoalsDialog : opens
+
+AddBudget ..> BudgetService
+AddBudget ..> ActivityLogger
+
+AddTransaction ..> TransactionService
+AddTransaction ..> AddBudget : opens (if budget missing)
+AddTransaction ..> ActivityLogger
+
+ListTransaction ..> TransactionService
+
+GoalsDialog ..> GoalService
+GoalDetailDialog ..> GoalService
+
+' Services implement interfaces
+IUserService <|.. UserService
+ITransactionService <|.. TransactionService
+IBudgetService <|.. BudgetService
+IGoalService <|.. GoalService
+IDashboardService <|.. DashBoardService
+
+' Services depend on repos/services
+UserService o-- UserRepo
+TransactionService o-- TransactionRepo
+TransactionService o-- BudgetService
+BudgetService o-- BudgetRepo
+GoalService o-- GoalRepo
+DashBoardService o-- TransactionRepo
+DashBoardService o-- BudgetRepo
+
+' Repos implement interfaces
+IUserRepo <|.. UserRepo
+ITransactionRepo <|.. TransactionRepo
+IBudgetRepo <|.. BudgetRepo
+IGoalRepo <|.. GoalRepo
+
+' Repos -> DB
+UserRepo ..> DatabaseConnection
+TransactionRepo ..> DatabaseConnection
+BudgetRepo ..> DatabaseConnection
+GoalRepo ..> DatabaseConnection
+
+' Models usage
+TransactionRepo ..> Transaction
+BudgetRepo ..> Budget
+GoalRepo ..> Goal
+TransactionService ..> Transaction
+
+@enduml
+

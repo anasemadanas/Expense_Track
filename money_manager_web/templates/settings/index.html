@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Settings · Expense Track{% endblock %}
+
+{% block extra_style %}
+.wrap { max-width: 900px; margin: 0 auto; padding: 28px 20px; }
+.topbar { display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom: 18px; }
+.topbar h1 { font-size: 26px; }
+.muted { color: var(--text-muted); font-size: 13px; }
+.card { background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow: var(--shadow); overflow:hidden; }
+.card-head { padding: 16px 18px; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center; }
+.card-body { padding: 18px; }
+.row { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 760px) { .row { grid-template-columns: 1fr; } }
+.item { border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: #fff; }
+.label { font-size: 12px; text-transform: uppercase; letter-spacing: .4px; color: var(--text-muted); font-weight: 700; }
+.value { margin-top: 6px; font-weight: 700; }
+.actions { display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
+{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <div class="muted"><a href="{% url 'dashboard' %}">← Back to dashboard</a></div>
+      <h1>Settings</h1>
+      <div class="muted">Account and security.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <b>Account</b>
+      <span class="muted">Signed in</span>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="item">
+          <div class="label">Username</div>
+          <div class="value">{{ username }}</div>
+        </div>
+        <div class="item">
+          <div class="label">Email</div>
+          <div class="value">{{ email|default:"—" }}</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button class="btn btn-danger" type="submit">Sign out</button>
+        </form>
+        <a class="btn btn-secondary" href="{% url 'password_reset' %}">Reset password</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

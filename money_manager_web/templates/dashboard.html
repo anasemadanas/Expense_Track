@@ -1,0 +1,481 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard · Expense Track{% endblock %}
+
+{% block extra_style %}
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+    width: 240px;
+    background: #fff;
+    border-right: 1px solid var(--border);
+    padding: 24px 18px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 6px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+.sidebar-brand .logo {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800;
+}
+.sidebar-brand .name {
+    font-weight: 700;
+    color: var(--text);
+}
+.nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.nav a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+}
+.nav a:hover { background: #f3f4f6; color: var(--text); }
+.nav a.active { background: rgba(79,70,229,0.10); color: var(--primary); }
+
+.sidebar-footer {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+.user-chip {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px;
+    border-radius: 8px;
+}
+.user-chip .avatar {
+    width: 36px; height: 36px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.user-chip .info { flex: 1; line-height: 1.2; }
+.user-chip .info b { font-size: 13px; color: var(--text); }
+.user-chip .info span { font-size: 11px; color: var(--text-muted); }
+
+/* ---------- Main ---------- */
+.main {
+    flex: 1;
+    padding: 28px 36px;
+    max-width: 1300px;
+}
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.page-header h1 {
+    font-size: 26px;
+    color: var(--text);
+}
+.page-header p { color: var(--text-muted); font-size: 14px; }
+
+.period-form {
+    display: flex; gap: 8px; align-items: center;
+}
+.period-form select {
+    padding: 8px 12px;
+    width: auto;
+    font-size: 14px;
+}
+
+/* ---------- Stat cards ---------- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+.stat-card {
+    background: #fff;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+.stat-card .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+.stat-card .stat-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+}
+.stat-card .stat-foot {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+.stat-card .icon {
+    position: absolute;
+    top: 18px; right: 18px;
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+}
+.icon.income  { background: rgba(16,185,129,0.12); color: var(--success); }
+.icon.expense { background: rgba(239,68,68,0.12);  color: var(--danger);  }
+.icon.net     { background: rgba(79,70,229,0.12);  color: var(--primary); }
+.icon.budget  { background: rgba(245,158,11,0.12); color: var(--warning); }
+
+.value-pos { color: var(--success); }
+.value-neg { color: var(--danger); }
+
+/* ---------- Two-col layout ---------- */
+.grid-two {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 22px;
+    margin-bottom: 28px;
+}
+@media (max-width: 980px) {
+    .grid-two { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 20px; }
+}
+
+.card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+}
+.card-head h3 { font-size: 16px; color: var(--text); }
+.card-head .muted { font-size: 12px; color: var(--text-muted); }
+.card-body { padding: 18px 22px; }
+
+/* ---------- Transactions table ---------- */
+.tx-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.tx-table th, .tx-table td {
+    text-align: left;
+    padding: 12px 22px;
+    font-size: 14px;
+}
+.tx-table thead {
+    background: #f9fafb;
+    border-bottom: 1px solid var(--border);
+}
+.tx-table th {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+.tx-table tbody tr { border-bottom: 1px solid #f3f4f6; }
+.tx-table tbody tr:last-child { border-bottom: none; }
+.tx-table tbody tr:hover { background: #f9fafb; }
+.tx-amount.pos { color: var(--success); font-weight: 600; }
+.tx-amount.neg { color: var(--danger);  font-weight: 600; }
+
+.empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* ---------- Budget progress ---------- */
+.budget-summary { padding: 6px 0 14px; }
+.budget-summary .row {
+    display: flex; justify-content: space-between;
+    margin-bottom: 8px; font-size: 14px;
+}
+.budget-summary .row .label { color: var(--text-muted); }
+.budget-summary .row .value { font-weight: 600; }
+.progress {
+    height: 10px;
+    background: #f3f4f6;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 6px;
+}
+.progress > .bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transition: width 0.4s ease;
+}
+.progress.warning > .bar { background: linear-gradient(90deg, var(--warning), #fbbf24); }
+.progress.danger  > .bar { background: linear-gradient(90deg, var(--danger),  #f87171); }
+
+/* ---------- Goals ---------- */
+.goal {
+    padding: 14px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+.goal:last-child { border-bottom: none; }
+.goal-head {
+    display: flex; justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+.goal-head b { color: var(--text); }
+.goal-head span { color: var(--text-muted); font-size: 12px; }
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(16,185,129,0.15);
+    color: var(--success);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 6px;
+}
+
+.logout-link {
+    display: block;
+    text-align: center;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 8px;
+    color: var(--danger);
+    font-size: 13px;
+    font-weight: 600;
+}
+.logout-link:hover { background: #fef2f2; text-decoration: none; }
+{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="logo">$</div>
+            <div class="name">Expense Track</div>
+        </div>
+
+        <nav class="nav">
+            <a href="{% url 'dashboard' %}" class="active">Dashboard</a>
+            <a href="{% url 'transactions' %}">Transactions</a>
+            <a href="{% url 'budgets' %}">Budgets</a>
+            <a href="{% url 'goals' %}">Goals</a>
+            <a href="{% url 'settings' %}">Settings</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-chip">
+                <div class="avatar">{{ username|first|default:"U" }}</div>
+                <div class="info">
+                    <b>{{ username|default:"User" }}</b><br>
+                    <span>{{ role|default:"Member" }}</span>
+                </div>
+            </div>
+            <form method="post" action="{% url 'logout' %}" style="margin-top:10px;">
+                {% csrf_token %}
+                <button type="submit" class="logout-link" style="width:100%; text-align:left;">
+                    Sign out
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+        <div class="page-header">
+            <div>
+                <h1>Welcome back, {{ username|default:"User" }} 👋</h1>
+                <p>Here is your financial summary for {{ month_name }} {{ year }}.</p>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <form method="GET" class="period-form">
+                    <select name="month">
+                        {% for m in months %}
+                            <option value="{{ m.num }}" {% if m.num == month %}selected{% endif %}>{{ m.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="year">
+                        {% for y in years %}
+                            <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-secondary">Apply</button>
+                </form>
+                <a class="btn btn-primary" href="{% url 'transaction_new' %}">+ Add transaction</a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Income</div>
+                <div class="stat-value value-pos">${{ balance.income|floatformat:2 }}</div>
+                <div class="stat-foot">Money in this month</div>
+                <div class="icon income">↑</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Expense</div>
+                <div class="stat-value value-neg">${{ balance.expense|floatformat:2 }}</div>
+                <div class="stat-foot">Money out this month</div>
+                <div class="icon expense">↓</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Net Balance</div>
+                <div class="stat-value {% if balance.net >= 0 %}value-pos{% else %}value-neg{% endif %}">
+                    ${{ balance.net|floatformat:2 }}
+                </div>
+                <div class="stat-foot">Income − Expense</div>
+                <div class="icon net">≡</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Budget Remaining</div>
+                <div class="stat-value">${{ budget.remaining|floatformat:2 }}</div>
+                <div class="stat-foot">of ${{ budget.total|floatformat:2 }}</div>
+                <div class="icon budget">⊙</div>
+            </div>
+        </div>
+
+        <!-- Transactions + Budget -->
+        <div class="grid-two">
+            <div class="card">
+                <div class="card-head">
+                    <h3>Recent Transactions</h3>
+                    <span class="muted">{{ transactions|length }} record{{ transactions|length|pluralize }}</span>
+                </div>
+
+                {% if transactions %}
+                <table class="tx-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Period</th>
+                            <th style="text-align:right;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in transactions %}
+                        <tr>
+                            <td><b>{{ t.category }}</b></td>
+                            <td>{{ t.month }}/{{ t.year }}</td>
+                            <td style="text-align:right;"
+                                class="tx-amount {% if t.amount >= 0 %}pos{% else %}neg{% endif %}">
+                                {% if t.amount >= 0 %}+{% endif %}${{ t.amount|floatformat:2 }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <div class="empty">No transactions found for this period.</div>
+                {% endif %}
+            </div>
+
+            <div class="card">
+                <div class="card-head">
+                    <h3>Monthly Budget</h3>
+                    <span class="muted">{{ month_name }}</span>
+                </div>
+                <div class="card-body">
+                    {% if budget.total > 0 %}
+                        <div class="budget-summary">
+                            <div class="row">
+                                <span class="label">Total budget</span>
+                                <span class="value">${{ budget.total|floatformat:2 }}</span>
+                            </div>
+                            <div class="row">
+                                <span class="label">Spent</span>
+                                <span class="value value-neg">${{ budget.spent|floatformat:2 }}</span>
+                            </div>
+                            <div class="row">
+                                <span class="label">Remaining</span>
+                                <span class="value value-pos">${{ budget.remaining|floatformat:2 }}</span>
+                            </div>
+
+                            <div class="progress {% if budget.percent >= 90 %}danger{% elif budget.percent >= 70 %}warning{% endif %}">
+                                <div class="bar" style="width: {{ budget.percent }}%;"></div>
+                            </div>
+                            <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+                                {{ budget.percent }}% used
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="empty" style="padding:24px 0;">
+                            No budget set for this month.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Goals -->
+        <div class="card">
+            <div class="card-head">
+                <h3>Savings Goals</h3>
+                <span class="muted">{{ goals|length }} goal{{ goals|length|pluralize }}</span>
+            </div>
+            <div class="card-body">
+                {% if goals %}
+                    {% for g in goals %}
+                    <div class="goal">
+                        <div class="goal-head">
+                            <b>
+                                {{ g.name }}
+                                {% if g.is_complete %}<span class="badge">✓ Done</span>{% endif %}
+                            </b>
+                            <span>${{ g.saved_amount|floatformat:2 }} / ${{ g.target_amount|floatformat:2 }}</span>
+                        </div>
+                        <div class="progress {% if g.progress_percent >= 100 %}{% endif %}">
+                            <div class="bar" style="width: {{ g.progress_percent }}%;"></div>
+                        </div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
+                            {{ g.progress_percent }}% complete
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty">No savings goals yet.</div>
+                {% endif %}
+            </div>
+        </div>
+
+    </main>
+</div>
+{% endblock %}

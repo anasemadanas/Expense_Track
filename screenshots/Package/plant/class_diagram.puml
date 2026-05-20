@@ -1,0 +1,182 @@
+@startuml MoneyManagerERD
+hide empty members
+skinparam classAttributeIconSize 0
+
+package "models" {
+  class Transaction {
+    +id: int?
+    +amount: float
+    +category: str
+    +month: int
+    +year: int
+  }
+
+  class Budget {
+    +id: int?
+    +amount: float
+    +totalamount: float
+    +month: int
+    +year: int
+  }
+
+  class Goal {
+    +id: int?
+    +name: str
+    +target_amount: float
+    +saved_amount: float
+    +progress_percent: int
+    +is_complete: bool
+  }
+}
+
+package "database" {
+  class DatabaseConnection {
+    +execute(query, params=(), fetch=None)
+    +executescript(script)
+  }
+}
+
+package "repository (interfaces)" {
+  interface ITransactionRepo {
+    +add_transaction(transaction: Transaction)
+    +get_transactions()
+    +get_transaction_by_id(transaction_id: int)
+    +get_transactions_by_month(month, year)
+    +update_transaction(transaction_id, new_amount, new_month, new_year)
+    +delete_transaction(transaction_id: int)
+  }
+
+  interface IBudgetRepo {
+    +create_budget(amount: float, month: int, year: int)
+    +check_budget(month: int, year: int)
+    +deduct_from_budget(amount_spent: float, month: int, year: int)
+    +get_budget_balance(month: int, year: int)
+    +add_to_budget(amount, month, year)
+    +get_budget(month: int, year: int)
+    +update_budget(budget_id: int, amount: float)
+    +delete_budget(budget_id: int)
+    +increase_budget_total(amount, month, year)
+  }
+
+  interface IGoalRepo {
+    +create_goal(name: str, target_amount: float, initial_saved: float = 0.0)
+    +get_all_goals()
+    +add_savings(goal_id: int, amount: float)
+    +delete_goal(goal_id: int)
+  }
+
+  interface IUserRepo {
+    +find_user(username: str, password: str)
+  }
+}
+
+package "repository (implementations)" {
+  class TransactionRepo
+  class BudgetRepo
+  class GoalRepo
+  class UserRepo
+}
+
+package "services (interfaces)" {
+  interface ITransactionService {
+    +get_budget_warning(amount_trans, month, year)
+    +add_transaction(amount_trans, category, month, year)
+    +validate_transaction(amount_trans, month, year, budget)
+    +get_budget_balance(month, year)
+    +get_transactions()
+    +edit_transaction(tid, new_amount, month, year)
+    +delete_transaction(transaction_id)
+    +get_transaction_warning(old_amount, new_amount)
+  }
+
+  interface IBudgetService {
+    +create_budget(amount: float, month: int, year: int)
+    +validate_budget(amount, month, year)
+    +check_budget(month, year)
+    +deduct_from_budget(amount: float, month, year)
+    +add_to_budget(amount, month, year)
+    +get_budget_balance(month, year)
+    +delete_budget(budget_id)
+    +update_budget(budget_id, amount)
+    +increase_budget_total(amount, month, year)
+  }
+
+  interface IGoalService {
+    +add_goal(name: str, target_amount: float, initial_saved: float = 0.0)
+    +get_all_goals()
+    +add_savings(goal_id: int, amount: float)
+    +delete_goal(goal_id: int)
+  }
+
+  interface IUserService {
+    +login(username, password)
+  }
+
+  interface IDashboardService {
+    +show_about()
+    +open_guide()
+    +save_data(month, year)
+    +export_data(month, year)
+    +get_all_transactions()
+    +get_transactions_for_month(month, year)
+    +get_current_month_balance()
+    +get_balance_for_month(month, year)
+    +get_budget_summary(month, year)
+    +get_budget_for_category(month, year)
+  }
+}
+
+package "services (implementations)" {
+  class TransactionService
+  class BudgetService
+  class GoalService
+  class UserService
+  class DashBoardService
+}
+
+package "ui" {
+  class LoginScreen
+  class MainScreen
+  class AddTransaction
+  class AddBudget
+}
+
+' --- Realizations (implements) ---
+ITransactionRepo <|.. TransactionRepo
+IBudgetRepo <|.. BudgetRepo
+IGoalRepo <|.. GoalRepo
+IUserRepo <|.. UserRepo
+
+ITransactionService <|.. TransactionService
+IBudgetService <|.. BudgetService
+IGoalService <|.. GoalService
+IUserService <|.. UserService
+IDashboardService <|.. DashBoardService
+
+' --- Core dependencies ---
+TransactionRepo --> DatabaseConnection : uses
+BudgetRepo --> DatabaseConnection : uses
+GoalRepo --> DatabaseConnection : uses
+UserRepo ..> DatabaseConnection : uses (context manager)
+
+TransactionService o--> TransactionRepo
+TransactionService o--> BudgetService
+
+BudgetService o--> BudgetRepo
+GoalService o--> GoalRepo
+UserService o--> UserRepo
+DashBoardService o--> TransactionRepo
+DashBoardService o--> BudgetRepo
+
+TransactionRepo ..> Transaction
+BudgetRepo ..> Budget
+GoalRepo ..> Goal
+
+' --- UI depends on services ---
+LoginScreen --> UserService
+MainScreen --> DashBoardService
+AddTransaction --> TransactionService
+AddBudget --> BudgetService
+
+@enduml
+

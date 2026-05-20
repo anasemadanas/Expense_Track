@@ -3,6 +3,16 @@
 
 A modern and scalable financial management tool built in Python using a clean **3-Tier Architecture** and **SOLID principles**.
 
+
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Expense__Track-black?style=for-the-badge&logo=github)](https://github.com/anasemadanas/Expense_Track)
+[![Last Commit](https://img.shields.io/github/last-commit/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track)
+[![Issues](https://img.shields.io/github/issues/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track/issues)
+[![Forks](https://img.shields.io/github/forks/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track)
+[![Stars](https://img.shields.io/github/stars/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track)
+[![License](https://img.shields.io/github/license/anasemadanas/Expense_Track?style=for-the-badge)](https://github.com/anasemadanas/Expense_Track)
+[![Python](https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-Web%20Framework-green?style=for-the-badge&logo=django)](https://www.djangoproject.com/)
+
 ---
 
 ## 📑 Table of Contents
@@ -60,9 +70,9 @@ Built using:
 
 ## 🖼️ Screenshots
 
-| Login | Dashboard | Transaction | Budget |
-|-------|-----------|------------|--------|
-| ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) | ![Transaction](screenshots/transaction.png) | ![Budget](screenshots/budget.png) |
+| Login | Dashboard | Transaction | Budget | Goal | ListTransaction |
+|-------|-----------|-------------|--------|------|-----------------|
+| ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) | ![Transaction](screenshots/transaction.png) | ![Budget](screenshots/budget.png) | ![Goal](screenshots/goal.png) | ![listTransaction](screenshots/listTransaction.png) |
 
 ---
 
@@ -83,22 +93,26 @@ Built using:
 ## 📂 Project Structure
 
 ```bash
-Expense_Track/
-├── .gitignore
-├── LICENSE
-├── README.md
-│── money_manager/
-│   ├── data/
-│   │   ├── database.py
-│   │   └── repositories/
-│   │   └── interfaces/
-│   ├── services/
-│   ├── database/
-│   ├── resources/
-│   │   └── Icon/
-│   ├── ui/
-│   ├── main.py
-│── └──requirements.txt
+Expense_Track 
+├─.gitignore
+├─.github    
+├─LICENSE     
+├─README.md
+├─docs
+├─money_manager
+│ ├─__init__.py     
+│ ├─main.py   
+│ ├─resources_rc.py
+| ├─common
+│ ├─database
+│ ├─models 
+│ ├─repository   
+│ ├─resources 
+│ ├─services  
+│ ├─tests 
+│ └─ui 
+└─screenshots  
+
 ```
 
 ---
@@ -167,9 +181,16 @@ Pull Requests are welcome! Follow these steps:
 
 ---
 
-## 📝 License
+📊 Example Live Stats
 
-MIT License — see the [LICENSE](LICENSE) file for details.
+![Repo Size](https://img.shields.io/github/repo-size/anasemadanas/Expense_Track?style=for-the-badge)
+
+---
+
+## 🌐 Live Demo
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Expense%20Track-green?style=for-the-badge&logo=django)](https://anasemad.pythonanywhere.com/)
+![CI](https://img.shields.io/github/actions/workflow/status/anasemadanas/Expense_Track/django.yml?style=for-the-badge)
 
 ---
 

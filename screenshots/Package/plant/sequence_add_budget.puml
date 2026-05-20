@@ -1,0 +1,37 @@
+@startuml
+title Add Budget (save_budget)
+
+actor User
+participant "AddBudget (ui/frmAddBudget.py)" as UI
+participant "BudgetService" as BS
+participant "BudgetRepo" as BR
+database "SQLite (DatabaseConnection)" as DB
+
+User -> UI : Click "Save"
+UI -> UI : parse/validate amount, month, year
+UI -> BS : create_budget(amount, month, year)
+BS -> BS : validate_budget(...)
+BS -> BR : check_budget(month, year)
+BR -> DB : execute(SELECT budgets...)
+DB --> BR : row/None
+BR --> BS : Budget
+
+alt budget exists
+  BS --> UI : {exists=True, budget}
+  UI -> User : confirm update?
+  alt user confirms
+    UI -> BS : increase_budget_total(amount, month, year)
+    BS -> BR : increase_budget_total(...)
+    BR -> DB : execute(UPDATE budgets...)
+    UI --> User : "Budget updated!"
+  else user cancels
+    UI --> User : stop
+  end
+else new budget
+  BS -> BR : create_budget(amount, month, year)
+  BR -> DB : execute(INSERT budgets...)
+  UI --> User : "Budget saved!"
+end
+
+@enduml
+

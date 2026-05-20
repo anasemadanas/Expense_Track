@@ -1,0 +1,54 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "User" as user
+actor "Admin" as admin
+
+rectangle "Money Manager" {
+  usecase "Login" as UC_Login
+  usecase "View Dashboard" as UC_Dashboard
+  usecase "Add Budget" as UC_AddBudget
+  usecase "Add Transaction" as UC_AddTransaction
+  usecase "List Transactions" as UC_ListTx
+  usecase "Edit Transaction" as UC_EditTx
+  usecase "Delete Transaction" as UC_DeleteTx
+  usecase "Export Transactions" as UC_ExportTx
+  usecase "Save Month Data" as UC_SaveMonth
+  usecase "Manage Goals" as UC_Goals
+  usecase "View About" as UC_About
+  usecase "Open Guide" as UC_Guide
+  usecase "Change Theme" as UC_Theme
+
+  usecase "Check Budget Exists" as UC_CheckBudget
+  usecase "Validate Inputs" as UC_Validate
+  usecase "Show Budget Warning" as UC_Warn
+}
+
+admin --|> user
+
+user --> UC_Login
+user --> UC_Dashboard
+user --> UC_AddBudget
+user --> UC_AddTransaction
+user --> UC_ListTx
+user --> UC_Goals
+user --> UC_Theme
+user --> UC_About
+user --> UC_Guide
+
+UC_ListTx --> UC_EditTx
+UC_ListTx --> UC_DeleteTx
+UC_ListTx --> UC_ExportTx
+UC_Dashboard --> UC_SaveMonth
+UC_Dashboard --> UC_ExportTx
+
+UC_AddTransaction ..> UC_CheckBudget : <<include>>
+UC_AddTransaction ..> UC_Validate : <<include>>
+UC_AddTransaction ..> UC_Warn : <<extend>>
+
+UC_AddBudget ..> UC_Validate : <<include>>
+UC_EditTx ..> UC_Warn : <<extend>>
+@enduml
+
