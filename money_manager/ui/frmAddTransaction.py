@@ -10,10 +10,11 @@ from PySide6.QtCore import QDate
 from common.utils import resource_path
 
 class AddTransaction(QtWidgets.QDialog,Ui_AddTransaction):
-    def __init__(self):
+    def __init__(self, user_id: int):
         super().__init__()
         self.setupUi(self)
-        self.transaction_service = TransactionService()
+        self.user_id = user_id
+        self.transaction_service = TransactionService(user_id)
         
         self.setWindowTitle("Transaction")
 
@@ -81,7 +82,7 @@ class AddTransaction(QtWidgets.QDialog,Ui_AddTransaction):
         if msg.clickedButton() == add_budget_button:
             from ui.frmAddBudget import AddBudget
 
-            budget_dialog = AddBudget()
+            budget_dialog = AddBudget(self.user_id)
             budget_dialog.exec()
             self.update_budget_balance_label()
             

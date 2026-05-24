@@ -9,11 +9,11 @@ from services.dashboard_service import DashBoardService
 from common.utils import resource_path
 
 class ListTransaction(QtWidgets.QDialog, Ui_ListTransaction):
-    def __init__(self):
+    def __init__(self, user_id: int):
         super().__init__()
         self.setupUi(self)
-        self.transaction_service = TransactionService()
-        self.dashboard_service = DashBoardService()
+        self.transaction_service = TransactionService(user_id)
+        self.dashboard_service = DashBoardService(user_id)
         self.setWindowTitle("List Transactions")
         self.setWindowIcon(QIcon(resource_path("resources/icons/transaction.png")))
         self.btnSaveList.setText("Export")

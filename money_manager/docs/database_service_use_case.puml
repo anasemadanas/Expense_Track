@@ -1,0 +1,61 @@
+@startuml
+title Money Manager - Database and Service Use Cases
+
+left to right direction
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam UsecaseBackgroundColor #eef4fb
+
+actor "User" as User
+actor "Authenticated User" as AuthUser
+actor "Permitted User" as PermittedUser
+
+User <|-- AuthUser
+AuthUser <|-- PermittedUser
+
+rectangle "Money Manager Desktop Application" {
+  usecase "Register Account" as Register
+  usecase "Log In" as Login
+  usecase "Reset Password" as Reset
+  usecase "Set Recovery Code" as Recovery
+
+  usecase "View Dashboard\nand Charts" as Dashboard
+  usecase "Create or Increase\nMonthly Budget" as Budget
+  usecase "Add Transaction" as AddTransaction
+  usecase "Validate Budget\nand Remaining Balance" as Validate
+  usecase "Confirm 80%\nBudget Warning" as Warning
+  usecase "View, Edit, or\nDelete Transactions" as ManageTransactions
+  usecase "Restore or Adjust\nBudget Balance" as Reconcile
+  usecase "Export Transactions" as Export
+  usecase "Manage Savings Goals" as Goals
+}
+
+User --> Register
+User --> Login
+User --> Reset
+Login .> Recovery : <<extend>> first legacy login
+
+AuthUser --> Dashboard
+PermittedUser --> Budget
+PermittedUser --> AddTransaction
+PermittedUser --> ManageTransactions
+AuthUser --> Export
+
+AddTransaction .> Validate : <<include>>
+AddTransaction .> Warning : <<extend>>
+ManageTransactions .> Reconcile : <<include>>
+Budget .> Validate : <<uses amount/date rules>>
+
+note right of PermittedUser
+  Dashboard gates:
+  Add transaction = bit 1
+  Add budget = bit 2
+  List transactions = bit 4
+  Full access = -1
+end note
+
+note bottom of Goals
+  GoalService and GoalsDialog are implemented;
+  dashboard navigation is not currently wired.
+end note
+@enduml

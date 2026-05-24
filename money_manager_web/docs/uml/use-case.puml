@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+title Expense Track - Use Cases
+
+actor "Visitor" as Visitor
+actor "Member" as Member
+actor "Administrator" as Admin
+actor "Email Service" as Email
+
+rectangle "Expense Track Web Application" {
+  usecase "Create Account" as UCSignup
+  usecase "Log In\n(username or email)" as UCLogin
+  usecase "Reset Password" as UCReset
+  usecase "View Dashboard" as UCDashboard
+  usecase "Manage Transactions" as UCTransactions
+  usecase "Manage Monthly Budget" as UCBudget
+  usecase "Manage Savings Goals" as UCGoals
+  usecase "View Account Settings" as UCSettings
+  usecase "Manage Users and Records" as UCAdmin
+}
+
+Visitor --> UCSignup
+Visitor --> UCLogin
+Visitor --> UCReset
+Email --> UCReset
+
+Member --> UCDashboard
+Member --> UCTransactions
+Member --> UCBudget
+Member --> UCGoals
+Member --> UCSettings
+Member --> UCReset
+
+Admin --> UCAdmin
+Admin --> UCLogin
+
+UCTransactions ..> UCLogin : <<requires>>
+UCBudget ..> UCLogin : <<requires>>
+UCGoals ..> UCLogin : <<requires>>
+UCDashboard ..> UCLogin : <<requires>>
+UCSettings ..> UCLogin : <<requires>>
+
+note bottom of UCTransactions
+Records are filtered by the
+authenticated account owner.
+end note
+
+@enduml

@@ -8,11 +8,11 @@ from PySide6.QtCore import QDate
 
 class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
 
-    def __init__(self):
+    def __init__(self, user_id: int):
         super().__init__()
         self.setupUi(self)
 
-        self.budget_service = BudgetService()
+        self.budget_service = BudgetService(user_id)
         self.btnCloseBudget.clicked.connect(self.close)
         self.btnSaveBudget.clicked.connect(self.save_budget)
 
@@ -78,4 +78,3 @@ class AddBudget(QtWidgets.QDialog, Ui_AddBudget):
 
         except Exception as e:
             QtWidgets.QMessageBox.critical(self, "Error", str(e))
-            

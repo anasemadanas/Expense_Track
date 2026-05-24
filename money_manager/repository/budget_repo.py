@@ -3,27 +3,31 @@ from database.database import DatabaseConnection
 from repository.IBudgetRepo import IBudgetRepo
 
 class BudgetRepo(IBudgetRepo):
-    def __init__(self):
+    def __init__(self, user_id: int):
+        self.user_id = user_id
         self.db = DatabaseConnection()
 
     # ----------------------- create or update budget -----------------------
     def create_budget(self, amount: float, month: int, year: int):
 
         existing = self.db.execute(
-            "SELECT * FROM budgets WHERE month=? AND year=?",
-            (month, year),
+            "SELECT * FROM budgets WHERE user_id=? AND month=? AND year=?",
+            (self.user_id, month, year),
             fetch="one"
         )
 
         if existing:
             self.db.execute(
-                "UPDATE budgets SET amount = amount + ?, total_amount = total_amount + ? WHERE month = ? AND year = ?",
-                (amount, amount, month, year)
+                """
+                UPDATE budgets SET amount = amount + ?, total_amount = total_amount + ?
+                WHERE user_id = ? AND month = ? AND year = ?
+                """,
+                (amount, amount, self.user_id, month, year)
             )
         else:
             self.db.execute(
-                "INSERT INTO budgets (amount, total_amount, month, year) VALUES (?, ?, ?, ?)",
-                (amount, amount, month, year)
+                "INSERT INTO budgets (user_id, amount, total_amount, month, year) VALUES (?, ?, ?, ?, ?)",
+                (self.user_id, amount, amount, month, year)
             )
 
         return self.get_budget(month, year)
@@ -31,8 +35,8 @@ class BudgetRepo(IBudgetRepo):
     # ----------------------- check if budget exists -----------------------
     def check_budget(self, month, year):
         row = self.db.execute(
-            "SELECT * FROM budgets WHERE month=? AND year=?",
-            (month, year),
+            "SELECT * FROM budgets WHERE user_id=? AND month=? AND year=?",
+            (self.user_id, month, year),
             fetch="one"
         )
 
@@ -49,33 +53,36 @@ class BudgetRepo(IBudgetRepo):
 
     # ----------------------- update budgets after spending -----------------------
     def deduct_from_budget(self, amount_spent: float, month: int, year: int):
-        query = "UPDATE budgets SET amount = amount - ? WHERE month=? AND year=?"
-        return self.db.execute(query, (amount_spent, month, year))
+        query = "UPDATE budgets SET amount = amount - ? WHERE user_id=? AND month=? AND year=?"
+        return self.db.execute(query, (amount_spent, self.user_id, month, year))
 
     def add_to_budget(self, amount, month, year):
-        query = "UPDATE budgets SET amount = amount + ? WHERE month=? AND year=?"
-        return self.db.execute(query, (amount, month, year))
+        query = "UPDATE budgets SET amount = amount + ? WHERE user_id=? AND month=? AND year=?"
+        return self.db.execute(query, (amount, self.user_id, month, year))
 
     def increase_budget_total(self, amount, month, year):
-        query = "UPDATE budgets SET amount = amount + ?, total_amount = total_amount + ? WHERE month=? AND year=?"
-        return self.db.execute(query, (amount, amount, month, year))
+        query = """
+        UPDATE budgets SET amount = amount + ?, total_amount = total_amount + ?
+        WHERE user_id=? AND month=? AND year=?
+        """
+        return self.db.execute(query, (amount, amount, self.user_id, month, year))
 
     # ----------------------- return to transaction -----------------------
     def get_budget_balance(self, month, year):
-        query = "SELECT amount FROM budgets WHERE month = ? AND year = ?"
-        return self.db.execute(query, (month, year), fetch="one")
+        query = "SELECT amount FROM budgets WHERE user_id = ? AND month = ? AND year = ?"
+        return self.db.execute(query, (self.user_id, month, year), fetch="one")
 
     # ----------------------- future -----------------------
     def get_budget(self, month: int, year: int):
         return self.db.execute(
-            "SELECT * FROM budgets WHERE month=? AND year=?",
-            (month, year),
+            "SELECT * FROM budgets WHERE user_id=? AND month=? AND year=?",
+            (self.user_id, month, year),
             fetch="one"
         )  
     def update_budget(self, budget_id: int, amount: float):
-        query = "UPDATE Budgets SET Amount = ? WHERE Budget_ID = ?"
-        return self.db.execute(query, (amount, budget_id), fetch=None)
+        query = "UPDATE budgets SET amount = ? WHERE id = ? AND user_id = ?"
+        return self.db.execute(query, (amount, budget_id, self.user_id), fetch=None)
 
     def delete_budget(self, budget_id: int):
-        query = "DELETE FROM Budgets WHERE Budget_ID = ?"
-        return self.db.execute(query, (budget_id,), fetch=None)
+        query = "DELETE FROM budgets WHERE id = ? AND user_id = ?"
+        return self.db.execute(query, (budget_id, self.user_id), fetch=None)

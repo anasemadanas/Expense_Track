@@ -5,23 +5,26 @@ from PySide6.QtWidgets import QVBoxLayout
 from datetime import datetime
 import random
 from PySide6.QtWidgets import QMessageBox
-from Services.dashboard_service import DashBoardService
+from services.dashboard_service import DashBoardService
 from ui.ui_frmdashboard import Ui_MainScreen
 
-from Services.models.permissions import has_permission, UserPermissions
+from models.permissions import has_permission, UserPermissions
 
 
 class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
     def __init__(self, current_user=None, transactions=None):
         super().__init__()
         self.setupUi(self)
-        self.transactions = transactions or []
-        self.service = DashBoardService()
         self.setWindowTitle("Dashboard")
         self.setWindowIcon(QIcon("resources\\icons\\logo.png"))
         
         self.current_user = current_user
+        self.user_id = current_user["id"] if current_user else None
         self.permissions = current_user["permissions"] if current_user else 0
+        if self.user_id is None:
+            raise ValueError("A logged-in user is required to open the dashboard.")
+        self.service = DashBoardService(self.user_id)
+        self.transactions = transactions or self.service.get_all_transactions()
         
     # ------------------ Connect buttons and actions ------------------------------------------
         self.btnSpending.clicked.connect(lambda: self.stackedWidgetChart.setCurrentIndex(0))
@@ -31,7 +34,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.btnAddBudget.clicked.connect(self.open_add_budget)
         self.btnAddTransaction.clicked.connect(self.open_add_transaction)
         self.btnListTransaction.clicked.connect(self.open_list_transaction)
-        self.btnLogout.clicked.connect(self.close)
+        self.btnLogout.clicked.connect(self.logout)
 
         self.actAbout.triggered.connect(self.service.show_about)
         self.actGuide.triggered.connect(self.service.open_guide)
@@ -47,6 +50,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         
     def load_dashboard(self):
         self.update_balance_labels()
+        self.transactions = self.service.get_all_transactions()
         self.draw_charts(self.transactions)
         
     def update_balance_labels(self):
@@ -89,24 +93,27 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
             self.message_error_permissions("You do not have permission to add budgets.")
             return
         from ui.frmAddBudget import AddBudget
-        open = AddBudget()
-        open.exec()
+        dialog = AddBudget(self.user_id)
+        dialog.exec()
+        self.load_dashboard()
 
     def open_add_transaction(self):
         if not has_permission(self.permissions, UserPermissions.ADD_TRANSACTION):
             self.message_error_permissions("You do not have permission to add transactions.")
             return
         from ui.frmAddTransaction import AddTransaction
-        open = AddTransaction()
-        open.exec()
+        dialog = AddTransaction(self.user_id)
+        dialog.exec()
+        self.load_dashboard()
 
     def open_list_transaction(self):
         if not has_permission(self.permissions, UserPermissions.LIST_TRANSACTION):
             self.message_error_permissions("You do not have permission to view transactions.")
             return
         from ui.frmListTransaction import ListTransaction
-        open = ListTransaction()
-        open.exec()
+        dialog = ListTransaction(self.user_id)
+        dialog.exec()
+        self.load_dashboard()
 
     # ---- Draw Charts ----------------------------------------------------------
     def draw_charts(self, transactions):
@@ -162,7 +169,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         set_actual.setColor(QColor("#FF6384"))
 
         for cat in categories:
-            budget = self.service.get_budget_for_category(cat, 2026)
+            budget = 0
             actual = sum(t["amount"] for t in transactions if t["category"] == cat)
             set_budget.append(budget)
             set_actual.append(actual)
@@ -195,8 +202,7 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         months_labels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
         expense_by_month = {i:0 for i in range(1,13)}
         for t in transactions:
-            dt = datetime.strptime(t['date'], "%Y-%m-%d")
-            expense_by_month[dt.month] += t["amount"]
+            expense_by_month[t["month"]] += t["amount"]
 
         series_exp = QtCharts.QLineSeries()
         series_save = QtCharts.QLineSeries()
@@ -231,4 +237,13 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
 
         chart.legend().setAlignment(Qt.AlignBottom)
         self._set_chart(self.gvLineGraph, chart)
-    # ---- ------------------------------------------------------------- ----        
+
+    def logout(self):
+        import common.global_user as global_user
+        from ui.frmLoginScreen import LoginScreen
+
+        global_user.current_user = None
+        self.login_screen = LoginScreen()
+        self.login_screen.show()
+        self.close()
+    # ---- ------------------------------------------------------------- ----

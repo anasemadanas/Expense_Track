@@ -20,7 +20,10 @@ Copy-Item .env.example .env
 
 Open:
 - `http://127.0.0.1:8000/` (redirects to login)
+- `http://127.0.0.1:8000/signup/` (create a user account)
 - `http://127.0.0.1:8000/admin/` (admin)
+
+Each account has its own transactions, budgets, and goals. Users can sign in with either their username or their registered email address.
 
 ## Run “web” (production-like) locally
 
@@ -39,9 +42,13 @@ Common vars are documented in `money_manager_web/.env.example`:
 - `DEBUG`
 - `ALLOWED_HOSTS`
 - `TIME_ZONE`
-- `DATABASE_URL` (optional, e.g. Postgres)
+- `DATABASE_URL` (optional locally; set it to a PostgreSQL URL in production)
 
 ## Deploy
 
 See `money_manager_web/DEPLOYMENT.md`.
 
+## Database and diagrams
+
+- `database.sql` provisions a local or self-managed PostgreSQL database and application login. Django migrations still create the tables.
+- `docs/uml/` contains PlantUML sequence, use-case, system, and database schema diagrams.

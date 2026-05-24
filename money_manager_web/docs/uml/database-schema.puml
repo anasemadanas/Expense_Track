@@ -1,0 +1,82 @@
+@startuml
+title Expense Track - Database Schema (Django Managed)
+hide methods
+hide stereotypes
+skinparam linetype ortho
+
+entity "auth_user" as auth_user {
+  * id : bigint <<PK>>
+  --
+  username : varchar <<unique>>
+  email : varchar
+  password : varchar
+  is_active : boolean
+  is_staff : boolean
+  date_joined : timestamp
+}
+
+entity "django_session" as django_session {
+  * session_key : varchar <<PK>>
+  --
+  session_data : text
+  expire_date : timestamp
+}
+
+entity "expenses_transaction" as transaction {
+  * id : bigint <<PK>>
+  --
+  user_id : bigint <<FK>>
+  amount : decimal(12,2)
+  category : varchar(64)
+  occurred_at : date
+  note : text
+  created_at : timestamp
+}
+
+entity "expenses_budget" as budget {
+  * id : bigint <<PK>>
+  --
+  user_id : bigint <<FK>>
+  month : smallint
+  year : smallint
+  total_amount : decimal(12,2)
+  created_at : timestamp
+  updated_at : timestamp
+  ==
+  UNIQUE(user_id, month, year)
+}
+
+entity "expenses_goal" as goal {
+  * id : bigint <<PK>>
+  --
+  user_id : bigint <<FK>>
+  name : varchar(120)
+  target_amount : decimal(12,2)
+  saved_amount : decimal(12,2)
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+auth_user ||--o{ transaction : owns
+auth_user ||--o{ budget : owns
+auth_user ||--o{ goal : owns
+
+note right of django_session
+Session data identifies the logged-in
+account through Django authentication.
+end note
+
+note bottom of transaction
+Indexes: (user_id, occurred_at),
+(user_id, category)
+end note
+
+note bottom of budget
+Index: (user_id, year, month)
+end note
+
+note bottom of goal
+Index: (user_id, name)
+end note
+
+@enduml

@@ -6,9 +6,9 @@ from services.budget_service import BudgetService
 
 
 class TransactionService(ITransactionService):
-    def __init__(self):
-        self.transaction_repo = TransactionRepo()
-        self.budget_service = BudgetService()
+    def __init__(self, user_id: int, transaction_repo=None, budget_service=None):
+        self.transaction_repo = transaction_repo or TransactionRepo(user_id)
+        self.budget_service = budget_service or BudgetService(user_id)
 
     def get_budget_warning(self, amount_trans, month, year):
         budget = self.budget_service.check_budget(month, year)

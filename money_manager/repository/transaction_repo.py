@@ -3,24 +3,28 @@ from database.database import DatabaseConnection
 from repository.ITransactionRepo import ITransactionRepo
 
 class TransactionRepo(ITransactionRepo):
-    def __init__(self):
+    def __init__(self, user_id: int):
+        self.user_id = user_id
         self.db = DatabaseConnection()
 
     # ----------------------- add transaction ------------------------------------------- ----
     def add_transaction(self, transaction: Transaction):
-        query = "INSERT INTO transactions (amount, category, month, year) VALUES (?, ?, ?, ?)"
-        params = (transaction.amount, transaction.category, transaction.month, transaction.year)
+        query = "INSERT INTO transactions (user_id, amount, category, month, year) VALUES (?, ?, ?, ?, ?)"
+        params = (self.user_id, transaction.amount, transaction.category, transaction.month, transaction.year)
         return self.db.execute(query, params)
 
     # ----------------------- get transactions from list -------------------------------------------
     def get_transactions(self):
-        query = "SELECT id, amount, category, month, year FROM transactions ORDER BY year, month"
-        return self.db.execute(query, fetch="all")
+        query = """
+        SELECT id, amount, category, month, year FROM transactions
+        WHERE user_id = ? ORDER BY year, month
+        """
+        return self.db.execute(query, (self.user_id,), fetch="all")
     
     # ---------------------- List transaction to edit -----------------------------------------------------
     def get_transaction_by_id(self, transaction_id: int):
-        query = "SELECT * FROM transactions WHERE id = ?"
-        row = self.db.execute(query, (transaction_id,), fetch="one")
+        query = "SELECT id, amount, category, month, year FROM transactions WHERE id = ? AND user_id = ?"
+        row = self.db.execute(query, (transaction_id, self.user_id), fetch="one")
 
         
         if row is None:
@@ -38,13 +42,13 @@ class TransactionRepo(ITransactionRepo):
     def update_transaction(self, transaction_id, new_amount, new_month, new_year):
         query = """ UPDATE transactions
                     SET amount = ?, month = ?, year = ?
-                    WHERE id = ?"""
-        params = (new_amount, new_month, new_year, transaction_id)
+                    WHERE id = ? AND user_id = ?"""
+        params = (new_amount, new_month, new_year, transaction_id, self.user_id)
         self.db.execute(query, params)
         
     def delete_transaction(self, transaction_id: int):
-        query = "DELETE FROM transactions WHERE id = ?"
-        return self.db.execute(query, (transaction_id,), fetch=None)   
+        query = "DELETE FROM transactions WHERE id = ? AND user_id = ?"
+        return self.db.execute(query, (transaction_id, self.user_id), fetch=None)
     # ---------------------- -------------------------------------------------------------------
     
 
@@ -52,10 +56,10 @@ class TransactionRepo(ITransactionRepo):
         query = """
         SELECT id, amount, category, month, year 
         FROM transactions 
-        WHERE month = ? AND year = ?
+        WHERE user_id = ? AND month = ? AND year = ?
         """
 
-        params = (month, year)
+        params = (self.user_id, month, year)
 
         results = self.db.execute(query, params, fetch="all")
 

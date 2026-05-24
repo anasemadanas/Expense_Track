@@ -6,9 +6,9 @@ from repository.budget_repo import BudgetRepo
 from services.IDashboardService import IDashboardService
 
 class DashBoardService(IDashboardService):
-    def __init__(self):
-        self.transaction_repo =  TransactionRepo()
-        self.budget_repo = BudgetRepo()
+    def __init__(self, user_id: int):
+        self.transaction_repo = TransactionRepo(user_id)
+        self.budget_repo = BudgetRepo(user_id)
     # ------------------ Dashboard Actions ------------------------------------------
     def show_about(self):
         msg = QtWidgets.QMessageBox()
@@ -41,7 +41,8 @@ class DashBoardService(IDashboardService):
                 QtCore.QUrl("https://github.com/anasemadanas/Expense_Track/blob/main/docs/project_document.md")
             )
 
-    def save_data(self, month, year):
+    def save_data(self, month=None, year=None):
+        month, year = self._default_period(month, year)
         transactions = self.get_transactions_for_month(month, year)
         if not transactions:
             QtWidgets.QMessageBox.information(None, "Save", "No transactions found for the selected month.")
@@ -60,7 +61,8 @@ class DashBoardService(IDashboardService):
 
         QtWidgets.QMessageBox.information(None, "Saved", f"Transactions saved to:\n{file}")
 
-    def export_data(self, month, year):
+    def export_data(self, month=None, year=None):
+        month, year = self._default_period(month, year)
         transactions = self.get_transactions_for_month(month, year)
         if not transactions:
             QtWidgets.QMessageBox.information(None, "Export", "No transactions found for the selected month.")
@@ -113,5 +115,9 @@ class DashBoardService(IDashboardService):
 
     def get_budget_for_category(self, month, year):
         return self.budget_repo.get_budget(month, year)
-        
+
+    @staticmethod
+    def _default_period(month, year):
+        now = datetime.now()
+        return month or now.month, year or now.year
 

@@ -1,0 +1,71 @@
+@startuml
+title Money Manager - SQLite Database Schema
+
+hide circle
+skinparam shadowing false
+skinparam linetype ortho
+skinparam entityBackgroundColor #eef4fb
+skinparam entityBorderColor #3b4a5a
+
+entity "users" as users {
+  * id : INTEGER <<PK, AUTOINCREMENT>>
+  --
+  * username : TEXT <<UNIQUE>>
+  * password : TEXT
+  recovery_key : TEXT
+  * permissions : INTEGER = 0
+}
+
+entity "budgets" as budgets {
+  * id : INTEGER <<PK, AUTOINCREMENT>>
+  --
+  * user_id : INTEGER <<FK>>
+  * amount : REAL
+  * month : INTEGER <<CHECK 1..12>>
+  * year : INTEGER <<CHECK >= 2020>>
+  * total_amount : REAL
+  --
+  UNIQUE(user_id, month, year)
+}
+
+entity "transactions" as transactions {
+  * id : INTEGER <<PK, AUTOINCREMENT>>
+  --
+  * user_id : INTEGER <<FK>>
+  * amount : REAL
+  * category : TEXT
+  * month : INTEGER <<CHECK 1..12>>
+  * year : INTEGER <<CHECK >= 2020>>
+}
+
+entity "goals" as goals {
+  * id : INTEGER <<PK, AUTOINCREMENT>>
+  --
+  * user_id : INTEGER <<FK>>
+  * name : TEXT
+  * target_amount : REAL
+  saved_amount : REAL = 0.0
+}
+
+users ||--o{ budgets : "owns / ON DELETE CASCADE"
+users ||--o{ transactions : "owns / ON DELETE CASCADE"
+users ||--o{ goals : "owns / ON DELETE CASCADE"
+
+note right of users
+  Password and recovery values are
+  hashed by UserRepo for new writes.
+  permissions is a feature bit mask.
+end note
+
+note bottom of budgets
+  Indexed: (user_id, month, year)
+end note
+
+note bottom of transactions
+  Indexed: (user_id, month, year)
+end note
+
+note bottom of goals
+  Indexed: (user_id)
+end note
+@enduml

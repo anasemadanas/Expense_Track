@@ -1,0 +1,37 @@
+@startuml
+title Expense Track - Signup and Login Sequence
+
+actor Member
+boundary "Web Browser" as Browser
+control "Django Views / LoginView" as Views
+control "SignupForm / AuthenticationForm" as Forms
+database "PostgreSQL\n(Django auth + expenses)" as Database
+
+== Create account ==
+Member -> Browser: Open /signup/ and submit details
+Browser -> Views: POST /signup/\nusername, email, password
+Views -> Forms: Validate SignupForm
+Forms -> Database: Check username and email availability
+Database --> Forms: No existing account
+Forms --> Views: Valid form
+Views -> Database: Insert auth_user\n(hashed password)
+Views -> Database: Create login session
+Views --> Browser: Redirect /dashboard/
+Browser --> Member: Personal dashboard
+
+== Login with username or email ==
+Member -> Browser: Submit identity and password
+Browser -> Views: POST /login/
+Views -> Forms: Validate EmailOrUsernameAuthenticationForm
+alt Identity is an email
+  Forms -> Database: Find active user by email
+  Database --> Forms: Username for matching account
+end
+Forms -> Database: Verify Django password hash
+Database --> Forms: Authenticated user
+Forms --> Views: Valid login
+Views -> Database: Create/update login session
+Views --> Browser: Redirect /dashboard/
+Browser --> Member: Own transactions, budget and goals only
+
+@enduml

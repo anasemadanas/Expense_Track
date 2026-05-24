@@ -187,10 +187,10 @@ class GoalCard(QFrame):
 
 
 class GoalsDialog(QtWidgets.QDialog, Ui_GoalsDialog):
-    def __init__(self, parent=None):
+    def __init__(self, user_id: int, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        self.service = GoalService()
+        self.service = GoalService(user_id)
 
         self.setWindowTitle("Savings Goals")
         self.setWindowIcon(QIcon(resource_path("resources/icons/logo.png")))

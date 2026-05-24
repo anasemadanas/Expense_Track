@@ -1,0 +1,74 @@
+@startuml
+title Money Manager - Add Transaction Sequence
+
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+skinparam ParticipantBackgroundColor #eef4fb
+skinparam DatabaseBackgroundColor #fff5df
+
+actor User
+boundary "AddTransaction UI" as UI
+control "TransactionService" as TS
+control "BudgetService" as BS
+entity "BudgetRepo" as BR
+entity "TransactionRepo" as TR
+database "SQLite Database" as DB
+collections "ActivityLogger" as Logger
+
+User -> UI : Enter amount, category, month, year
+UI -> TS : get_budget_warning(amount, month, year)
+TS -> BS : check_budget(month, year)
+BS -> BR : check_budget(month, year)
+BR -> DB : SELECT budget WHERE user_id, month, year
+DB --> BR : budget row
+BR --> BS : Budget
+BS --> TS : Budget
+TS -> TS : validate_transaction()
+
+alt Missing budget or insufficient remaining amount
+  TS --> UI : raise ValueError
+  UI --> User : Show validation error / request budget
+else Valid transaction reaches at least 80% usage
+  TS --> UI : warning message
+  UI --> User : Confirm budget warning
+  alt User cancels
+    User --> UI : Cancel
+  else User continues
+    User --> UI : Continue
+    UI -> TS : add_transaction(amount, category, month, year)
+    TS -> BS : check_budget(month, year)
+    BS -> BR : check_budget(month, year)
+    BR -> DB : SELECT budget
+    DB --> BR : budget row
+    BR --> BS : Budget
+    BS --> TS : Budget
+    TS -> TS : validate_transaction()
+    TS -> TR : add_transaction(Transaction)
+    TR -> DB : INSERT transactions(user_id, ...)
+    TS -> BS : deduct_from_budget(amount, month, year)
+    BS -> BR : deduct_from_budget(...)
+    BR -> DB : UPDATE budgets SET amount = amount - value
+    TS --> UI : transaction
+    UI -> Logger : log_transaction(...)
+    UI --> User : Transaction saved
+  end
+else Valid transaction below warning threshold
+  TS --> UI : no warning
+  UI -> TS : add_transaction(amount, category, month, year)
+  TS -> BS : check_budget(month, year)
+  BS -> BR : check_budget(month, year)
+  BR -> DB : SELECT budget
+  DB --> BR : budget row
+  BR --> BS : Budget
+  BS --> TS : Budget
+  TS -> TS : validate_transaction()
+  TS -> TR : add_transaction(Transaction)
+  TR -> DB : INSERT transactions(user_id, ...)
+  TS -> BS : deduct_from_budget(amount, month, year)
+  BS -> BR : deduct_from_budget(...)
+  BR -> DB : UPDATE budgets SET amount = amount - value
+  TS --> UI : transaction
+  UI -> Logger : log_transaction(...)
+  UI --> User : Transaction saved
+end
+@enduml

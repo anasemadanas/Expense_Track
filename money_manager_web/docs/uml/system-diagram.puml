@@ -1,0 +1,42 @@
+@startuml
+title Expense Track - Application and Database Architecture
+
+skinparam componentStyle rectangle
+
+actor "Member / Admin" as User
+
+node "Client Device" {
+  component "Web Browser" as Browser
+}
+
+node "Django Web Server" {
+  component "URL Routes\nconfig/urls.py" as Routes
+  component "Authentication\nDjango auth + forms" as Auth
+  component "Expenses Features\nviews + models" as Expenses
+  component "Templates + Static Files" as Templates
+}
+
+database "PostgreSQL Production Database" as PostgreSQL {
+  component "Authentication Tables\nUsers and Sessions" as AuthTables
+  component "Expense Tables\nTransactions, Budgets, Goals" as ExpenseTables
+}
+
+cloud "Email Provider\n(password reset)" as Email
+
+User --> Browser
+Browser --> Routes : HTTPS requests
+Routes --> Auth : signup, login,\nlogout, reset
+Routes --> Expenses : dashboard and CRUD
+Routes --> Templates : render HTML
+Auth --> AuthTables : users and sessions
+Expenses --> ExpenseTables : user-owned data
+Expenses --> AuthTables : owner foreign key
+Auth --> Email : password-reset email
+
+note right of PostgreSQL
+Local development may use SQLite.
+Production uses DATABASE_URL
+to connect to PostgreSQL.
+end note
+
+@enduml

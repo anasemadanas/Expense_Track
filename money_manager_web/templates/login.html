@@ -30,22 +30,23 @@
 <div class="auth-wrap">
   <div class="card">
     <h1>Login</h1>
-    <div class="muted">Welcome back.</div>
+    <div class="muted">Sign in with your username or email.</div>
 
     <form method="post">
       {% csrf_token %}
 
       <div class="field">
-        <input type="text" name="username" placeholder="Username" autocomplete="username" required>
+        {{ form.username }}
       </div>
       <div class="field">
-        <input type="password" name="password" placeholder="Password" autocomplete="current-password" required>
+        {{ form.password }}
       </div>
+      <input type="hidden" name="next" value="{{ next }}">
 
       <button class="btn btn-primary" type="submit" style="width:100%;">Login</button>
 
       {% if form and form.errors %}
-        <div class="error">Invalid username or password.</div>
+        <div class="error">Invalid username, email, or password.</div>
       {% endif %}
     </form>
 

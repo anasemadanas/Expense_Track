@@ -1,0 +1,89 @@
+@startuml
+title Money Manager - Database and Service Architecture
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam ArrowColor #3b4a5a
+skinparam ComponentBackgroundColor #eef4fb
+skinparam DatabaseBackgroundColor #fff5df
+
+actor "User" as User
+
+package "PySide6 Presentation Layer" {
+  [LoginScreen] as LoginUI
+  [Dashboard] as DashboardUI
+  [AddBudget] as BudgetUI
+  [AddTransaction] as TransactionUI
+  [ListTransaction] as ListUI
+  [GoalsDialog] as GoalsUI
+}
+
+package "Business Service Layer" {
+  [UserService] as UserService
+  [DashBoardService] as DashboardService
+  [BudgetService] as BudgetService
+  [TransactionService] as TransactionService
+  [GoalService] as GoalService
+}
+
+package "Repository Layer" {
+  [UserRepo] as UserRepo
+  [BudgetRepo] as BudgetRepo
+  [TransactionRepo] as TransactionRepo
+  [GoalRepo] as GoalRepo
+}
+
+package "Database Infrastructure" {
+  [initialize_database()] as Setup
+  [DatabaseConnection] as DBConnection
+  database "SQLite\nMoney_Manager_DB.db" as SQLite
+}
+
+artifact "activity.log" as Log
+
+User --> LoginUI
+User --> DashboardUI
+DashboardUI --> BudgetUI
+DashboardUI --> TransactionUI
+DashboardUI --> ListUI
+GoalsUI ..> GoalService : available dialog
+
+LoginUI --> UserService
+DashboardUI --> DashboardService
+BudgetUI --> BudgetService
+TransactionUI --> TransactionService
+ListUI --> TransactionService
+
+TransactionService --> BudgetService : validate and reconcile balance
+
+UserService --> UserRepo
+DashboardService --> BudgetRepo
+DashboardService --> TransactionRepo
+BudgetService --> BudgetRepo
+TransactionService --> TransactionRepo
+GoalService --> GoalRepo
+
+UserRepo --> DBConnection
+BudgetRepo --> DBConnection
+TransactionRepo --> DBConnection
+GoalRepo --> DBConnection
+Setup --> DBConnection : initialize or migrate
+DBConnection --> SQLite
+
+LoginUI ..> Log : login event
+BudgetUI ..> Log : budget events
+TransactionUI ..> Log : transaction event
+
+note right of SQLite
+  User-owned rows:
+  budgets.user_id
+  transactions.user_id
+  goals.user_id
+end note
+
+note bottom of TransactionService
+  Transactions require an existing
+  monthly budget with sufficient balance.
+end note
+@enduml

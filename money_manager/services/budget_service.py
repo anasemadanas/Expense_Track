@@ -4,8 +4,8 @@ from dateutil.relativedelta import relativedelta
 from services.IBudgetService import IBudgetService
 
 class BudgetService(IBudgetService):
-    def __init__(self):
-        self.budget_repo  = BudgetRepo()
+    def __init__(self, user_id: int, budget_repo=None):
+        self.budget_repo = budget_repo or BudgetRepo(user_id)
 
 
     def create_budget(self, amount: float, month: int, year: int):

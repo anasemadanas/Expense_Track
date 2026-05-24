@@ -3,8 +3,8 @@ from services.IGoalService import IGoalService
 
 
 class GoalService(IGoalService):
-    def __init__(self):
-        self.goal_repo = GoalRepo()
+    def __init__(self, user_id: int, goal_repo=None):
+        self.goal_repo = goal_repo or GoalRepo(user_id)
 
     def add_goal(self, name: str, target_amount: float, initial_saved: float = 0.0):
         name = name.strip()

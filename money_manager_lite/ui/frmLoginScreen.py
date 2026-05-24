@@ -1,0 +1,84 @@
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtGui import Qt, QIcon
+from common.activity_logger import ActivityLogger
+from services.user_service import UserService
+from ui.ui_frmLogin import Ui_LoginScreen
+from common.utils import resource_path
+
+class LoginScreen(QtWidgets.QWidget, Ui_LoginScreen):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_LoginScreen()
+        self.ui.setupUi(self)
+        self.user_service = UserService()
+        
+        self.setWindowTitle("Login")
+
+        self.setWindowIcon(QIcon(resource_path("resources/icons/login.png")))
+        self.lblError = QtWidgets.QLabel(self)   
+        self.lblError.setGeometry(QtCore.QRect(60, 215, 360, 25))
+        self.lblError.setStyleSheet("color: red;")
+        self.lblError.setObjectName("lblError")
+        self.lblError.setText("")
+        
+        self.ui.btnLogin.clicked.connect(self.try_login)
+        self.ui.btnClose.clicked.connect(self.close)
+        
+        self.btnTheme = QtWidgets.QPushButton("Theme", self)
+        self.btnTheme.setGeometry(10, 10, 80, 30)
+
+        self.btnDefault = QtWidgets.QPushButton("Default", self)
+        self.btnDefault.setGeometry(10, 50, 80, 30)
+
+        self.ui.lblManagerMoney.setMinimumWidth(300)
+        
+        self.setTabOrder(self.ui.lneUsername, self.ui.lnePassword)
+        self.setTabOrder(self.ui.lnePassword, self.ui.btnLogin)
+        self.setTabOrder(self.ui.btnLogin, self.ui.btnClose)
+        self.setTabOrder(self.ui.btnClose, self.btnTheme)
+        self.setTabOrder(self.btnTheme, self.btnDefault)
+        
+    # ---- ------------------------------------------------------------- ----
+            
+    def try_login(self):
+        username = self.ui.lneUsername.text().strip()
+        password = self.ui.lnePassword.text().strip()
+        
+        if not username or not password:
+            self.lblError.setText("Please enter username and password.")
+            return
+
+        try:
+            user = self.user_service.login(username, password)
+            if user:
+                self.lblError.setText("")
+                import common.global_user as global_user
+                global_user.current_user = user  
+                self.current_user = user
+                ActivityLogger.log_login(user["username"])
+                
+                self.open_Dashboard()
+            else:
+                remaining = self.user_service.max_attempts - self.user_service.login_attempts
+                self.lblError.setText(f"Invalid credentials! {remaining} attempts left.")
+        except Exception as e:
+            self.lblError.setText(str(e))
+            self.lock_account()
+        
+    def lock_account(self):
+        self.ui.btnLogin.setEnabled(False)
+        self.ui.lneUsername.setEnabled(False)
+        self.ui.lnePassword.setEnabled(False)
+        msg = QtWidgets.QMessageBox()
+        msg.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+        msg.setWindowTitle("Account Locked")
+        msg.setText("You have exceeded the maximum login attempts!")
+        msg.setInformativeText("Please contact the administrator.")
+        msg.exec()
+         
+    def open_Dashboard(self):        
+        from ui.frmdashboard import MainScreen
+        self.dashboard = MainScreen(self.current_user) 
+        self.dashboard.show()
+        self.close()
+    
