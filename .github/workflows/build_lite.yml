@@ -1,4 +1,4 @@
-name: Build App (Linux + Windows + macOS)
+name: Build App Lite (Linux + Windows + macOS)
 
 on:
   workflow_dispatch:
