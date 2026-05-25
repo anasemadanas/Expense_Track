@@ -122,21 +122,21 @@ jobs:
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: Windows-Build
+          name: Windows-Build-Lite
           path: dist/*
 
       - name: Upload Linux Build
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: Linux-Build
+          name: Linux-Build-Lite
           path: dist/*
 
       - name: Upload macOS ARM64 Build
         if: matrix.os == 'macos-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: macOS-ARM64-Build
+          name: macOS-ARM64-Build-Lite
           path: |
             dist/*
             MoneyManager-ARM64.dmg
@@ -145,7 +145,7 @@ jobs:
         if: matrix.os == 'macos-15-intel'
         uses: actions/upload-artifact@v4
         with:
-          name: macOS-x64-Build
+          name: macOS-x64-Build-Lite
           path: |
             dist/*
             MoneyManager-x64.dmg
