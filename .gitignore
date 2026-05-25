@@ -57,6 +57,9 @@ Thumbs.db
 # ============================
 build/
 dist/
+.gradle/
+local.properties
+*.apk
 
 # ============================
 # Test & Coverage
