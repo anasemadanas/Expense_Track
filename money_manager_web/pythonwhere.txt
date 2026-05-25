@@ -1,0 +1,22 @@
+git clone --depth 1 --filter=blob:none --sparse https://github.com/anasemadanas/Expense_Track.git
+cd Expense_Track
+git sparse-checkout set money_manager_web
+
+
+ALLOWED_HOSTS=anasemad.pythonanywhere.com
+DEBUG=False
+
+cd ~/Expense_Track/money_manager_web
+pip install dj-database-url
+pip install python-dotenv
+pip install whitenoise
+
+python manage.py migrate
+python manage.py collectstatic --noinput
+https://anasemad.pythonanywhere.com/
+
+ALLOWED_HOSTS = [
+    "anasemad.pythonanywhere.com",
+    "127.0.0.1",
+    "localhost",
+]

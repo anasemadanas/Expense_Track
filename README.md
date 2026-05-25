@@ -20,6 +20,7 @@ A modern and scalable financial management tool built in Python using a clean **
 - [🧾 Introduction](#-introduction)
 - [✨ Features](#-features)
 - [🖼️ Screenshots](#️-screenshots)
+- [📊 UML Diagrams](#-uml-diagrams)
 - [🧱 Architecture](#-architecture)
 - [📂 Project Structure](#-project-structure)
 - [📦 Requirements](#-requirements)
@@ -73,6 +74,26 @@ Built using:
 | Login | Dashboard | Transaction | Budget | Goal | ListTransaction |
 |-------|-----------|-------------|--------|------|-----------------|
 | ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) | ![Transaction](screenshots/transaction.png) | ![Budget](screenshots/budget.png) | ![Goal](screenshots/goal.png) | ![listTransaction](screenshots/listTransaction.png) |
+
+---
+
+## 📊 UML Diagrams
+
+The diagram SVG files are stored in the [`screenshots/`](screenshots/) folder.
+
+| Diagram | Preview | SVG Link |
+|---|---|---|
+| Use Case | <img src="screenshots/usecase.svg" width="300" alt="Use Case Diagram"/> | [Open SVG](screenshots/usecase.svg) |
+| System ERD | <img src="screenshots/MoneyManagerERD.svg" width="300" alt="Money Manager ERD"/> | [Open SVG](screenshots/MoneyManagerERD.svg) |
+| ERD | <img src="screenshots/erd.svg" width="300" alt="ERD"/> | [Open SVG](screenshots/erd.svg) |
+| EER | <img src="screenshots/eer.svg" width="300" alt="EER"/> | [Open SVG](screenshots/eer.svg) |
+| Dashboard ERD | <img src="screenshots/erd_dashboard.svg" width="300" alt="Dashboard ERD"/> | [Open SVG](screenshots/erd_dashboard.svg) |
+| Login Sequence | <img src="screenshots/sequence_login.svg" width="300" alt="Login Sequence Diagram"/> | [Open SVG](screenshots/sequence_login.svg) |
+| Add Budget Sequence | <img src="screenshots/sequence_add_budget.svg" width="300" alt="Add Budget Sequence Diagram"/> | [Open SVG](screenshots/sequence_add_budget.svg) |
+| Add Transaction | <img src="screenshots/AddTransaction.svg" width="300" alt="Add Transaction Diagram"/> | [Open SVG](screenshots/AddTransaction.svg) |
+| Edit Transaction Sequence | <img src="screenshots/sequence_edit_transaction.svg" width="300" alt="Edit Transaction Sequence Diagram"/> | [Open SVG](screenshots/sequence_edit_transaction.svg) |
+| Dashboard Sequence | <img src="screenshots/sequence_dashboard.svg" width="300" alt="Dashboard Sequence Diagram"/> | [Open SVG](screenshots/sequence_dashboard.svg) |
+| Object Snapshot | <img src="screenshots/object_add_transaction_snapshot.svg" width="300" alt="Add Transaction Object Snapshot"/> | [Open SVG](screenshots/object_add_transaction_snapshot.svg) |
 
 ---
 

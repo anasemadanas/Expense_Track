@@ -5,7 +5,19 @@ on:
 
 jobs:
   build:
+    name: Build ${{ matrix.name }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Android Debug APK
+            root_project: MoneyManagerAndroid
+            directory: money_manager_android
+            tasks: assembleDebug
+            gradle_version: "8.9"
+            artifact_name: MoneyManager-Android-Debug
+            artifact_path: money_manager_android/app/build/outputs/apk/debug/app-debug.apk
 
     steps:
       - name: Checkout Project
@@ -20,14 +32,36 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build Debug APK
-        working-directory: money_manager_android
+      - name: Build ${{ matrix.name }}
+        id: gradle_build
+        working-directory: ${{ matrix.directory }}
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew ${{ matrix.tasks }}
 
-      - name: Upload Android APK
+      - name: Upload ${{ matrix.name }}
         uses: actions/upload-artifact@v4
         with:
-          name: MoneyManager-Android-Debug
-          path: money_manager_android/app/build/outputs/apk/debug/app-debug.apk
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_path }}
+
+      - name: Add build summary
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.gradle_build.outcome }}
+        run: |
+          if [ "$BUILD_OUTCOME" = "success" ]; then
+            OUTCOME="✅ Success"
+          elif [ "$BUILD_OUTCOME" = "failure" ]; then
+            OUTCOME="❌ Failure"
+          elif [ "$BUILD_OUTCOME" = "cancelled" ]; then
+            OUTCOME="⚪ Cancelled"
+          else
+            OUTCOME="$BUILD_OUTCOME"
+          fi
+
+          echo "## Build ${{ matrix.name }} summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Gradle Root Project | Requested Tasks | Gradle Version | Build Outcome |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| ${{ matrix.root_project }} | ${{ matrix.tasks }} | ${{ matrix.gradle_version }} | $OUTCOME |" >> "$GITHUB_STEP_SUMMARY"
