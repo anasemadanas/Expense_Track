@@ -1,4 +1,4 @@
-name: Build App Lite (Linux + Windows + macOS)
+name: Build App Lite (Linux DEB/RPM + Windows + macOS)
 
 on:
   workflow_dispatch:
@@ -33,6 +33,14 @@ jobs:
           pip install -r money_manager_lite/requirements.txt
           pip install pyinstaller
 
+      - name: Install Linux Packaging Tools
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ruby ruby-dev build-essential rpm
+          sudo gem install --no-document fpm
+
       # ---------------- WINDOWS ----------------
       - name: Build Windows EXE
         if: runner.os == 'Windows'
@@ -62,6 +70,54 @@ jobs:
           --hidden-import PySide6.QtGui \
           --hidden-import PySide6.QtWidgets \
           money_manager_lite/main.py
+
+      - name: Build Linux DEB and RPM Packages
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          PACKAGE_VERSION="1.0.${GITHUB_RUN_NUMBER}"
+          PACKAGE_ROOT="package-root"
+
+          mkdir -p "$PACKAGE_ROOT/opt/moneymanager-lite"
+          mkdir -p "$PACKAGE_ROOT/usr/share/applications"
+          mkdir -p "$PACKAGE_ROOT/usr/share/icons/hicolor/256x256/apps"
+          mkdir -p packages
+
+          install -m 755 dist/MoneyManager "$PACKAGE_ROOT/opt/moneymanager-lite/MoneyManagerLite"
+          install -m 644 money_manager_lite/resources/icons/logo.png "$PACKAGE_ROOT/usr/share/icons/hicolor/256x256/apps/moneymanager-lite.png"
+
+          cat > "$PACKAGE_ROOT/usr/share/applications/moneymanager-lite.desktop" <<'EOF'
+          [Desktop Entry]
+          Type=Application
+          Name=Money Manager Lite
+          Comment=Track expenses, budgets, goals, and transactions
+          Exec=/opt/moneymanager-lite/MoneyManagerLite
+          Icon=moneymanager-lite
+          Terminal=false
+          Categories=Office;Finance;
+          EOF
+
+          fpm -s dir -t deb \
+            -n money-manager-lite \
+            -v "$PACKAGE_VERSION" \
+            --architecture amd64 \
+            --description "Money Manager Lite desktop application" \
+            --license MIT \
+            --url "https://github.com/${GITHUB_REPOSITORY}" \
+            -C "$PACKAGE_ROOT" \
+            -p "packages/money-manager-lite_${PACKAGE_VERSION}_amd64.deb" \
+            .
+
+          fpm -s dir -t rpm \
+            -n money-manager-lite \
+            -v "$PACKAGE_VERSION" \
+            --architecture x86_64 \
+            --description "Money Manager Lite desktop application" \
+            --license MIT \
+            --url "https://github.com/${GITHUB_REPOSITORY}" \
+            -C "$PACKAGE_ROOT" \
+            -p "packages/money-manager-lite-${PACKAGE_VERSION}-x86_64.rpm" \
+            .
 
       # ---------------- MAC ARM64 ----------------
       - name: Build macOS ARM64 App
@@ -130,7 +186,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Linux-Build-Lite
-          path: dist/*
+          path: |
+            dist/*
+            packages/*.deb
+            packages/*.rpm
 
       - name: Upload macOS ARM64 Build
         if: matrix.os == 'macos-latest'
