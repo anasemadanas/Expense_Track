@@ -1,0 +1,250 @@
+@startuml
+title Money Manager - Login Activity
+
+skinparam shadowing false
+skinparam activityBackgroundColor #eef4fb
+skinparam activityBorderColor #3b4a5a
+skinparam ArrowColor #3b4a5a
+
+start
+:Launch main.py;
+:initialize_database();
+:Create QApplication and LoginScreen;
+:Apply saved theme;
+:User enters username and password;
+
+if (Fields are empty?) then (yes)
+  :Show validation error;
+  stop
+else (no)
+  :UserService.login(username, password);
+endif
+
+if (Credentials valid?) then (yes)
+  :Reset login attempts;
+  if (Recovery code is missing?) then (yes)
+    :Prompt for recovery code;
+    :UserService.set_recovery_key();
+  endif
+  :Store current_user;
+  :ActivityLogger.log_login();
+  :Open MainScreen dashboard;
+  stop
+else (no)
+  :Increment login attempts;
+  if (Attempts >= 4?) then (yes)
+    :Lock login controls;
+    :Show account locked message;
+    stop
+  else (no)
+    :Show remaining attempts;
+    stop
+  endif
+endif
+@enduml
+
+@startuml
+title Money Manager - Add Budget Activity
+
+skinparam shadowing false
+skinparam activityBackgroundColor #eef4fb
+skinparam activityBorderColor #3b4a5a
+skinparam ArrowColor #3b4a5a
+
+start
+:User opens AddBudget dialog from dashboard;
+:Enter amount, month, and year;
+
+if (Amount is empty?) then (yes)
+  :Show "Please enter amount";
+  stop
+endif
+
+:BudgetService.create_budget(amount, month, year);
+:Validate amount and date range;
+
+if (Validation fails?) then (yes)
+  :Show error message;
+  stop
+endif
+
+:BudgetRepo.check_budget(month, year);
+if (Budget already exists?) then (yes)
+  :Show current total and new total;
+  if (User confirms update?) then (yes)
+    :BudgetService.increase_budget_total();
+    :ActivityLogger.log_budget("budget_updated");
+    :Show updated message;
+    :Close dialog;
+    stop
+  else (no)
+    :Return to dialog;
+    stop
+  endif
+else (no)
+  :BudgetRepo.create_budget();
+  :ActivityLogger.log_budget("budget_created");
+  :Show success message;
+  :Close dialog;
+  stop
+endif
+@enduml
+
+@startuml
+title Money Manager - Add Transaction Activity
+
+skinparam shadowing false
+skinparam activityBackgroundColor #eef4fb
+skinparam activityBorderColor #3b4a5a
+skinparam ArrowColor #3b4a5a
+
+start
+:User opens AddTransaction dialog;
+:Read selected month and year;
+:TransactionService.get_budget_balance();
+
+if (Budget exists for selected month?) then (yes)
+  :Continue with transaction form;
+else (no)
+  :Prompt user to add a budget first;
+  if (User chooses Add Budget?) then (yes)
+    :Open AddBudget dialog;
+    :Refresh budget balance label;
+  else (no)
+    stop
+  endif
+endif
+
+:User enters amount and category;
+if (Amount is empty?) then (yes)
+  :Show validation error;
+  stop
+endif
+
+:TransactionService.get_budget_warning();
+:BudgetService.check_budget();
+:Validate amount, month, year, and available balance;
+
+if (Validation fails?) then (yes)
+  :Show error message;
+  stop
+endif
+
+if (Budget usage >= 80%?) then (yes)
+  :Show budget warning;
+  if (User cancels?) then (yes)
+    stop
+  endif
+endif
+
+:TransactionService.add_transaction();
+:TransactionRepo.add_transaction();
+:BudgetService.deduct_from_budget();
+:BudgetRepo updates remaining budget;
+:ActivityLogger.log_transaction();
+:Show success message;
+:Close dialog;
+stop
+@enduml
+
+@startuml
+title Money Manager - Manage Transactions Activity
+
+skinparam shadowing false
+skinparam activityBackgroundColor #eef4fb
+skinparam activityBorderColor #3b4a5a
+skinparam ArrowColor #3b4a5a
+
+start
+:User opens ListTransaction dialog;
+:TransactionService.get_transactions();
+:Render transactions in table;
+:User opens row context menu;
+
+if (Edit selected?) then (yes)
+  :Ask for new amount;
+  if (No change or cancelled?) then (yes)
+    :Return to table;
+    stop
+  endif
+  :Show amount change warning;
+  if (User confirms?) then (yes)
+    :TransactionService.edit_transaction();
+    :Load old transaction;
+    if (New amount needs more budget?) then (yes)
+      :Check remaining budget;
+      if (Insufficient balance?) then (yes)
+        :Show error message;
+        stop
+      endif
+    endif
+    :TransactionRepo.update_transaction();
+    :Adjust budget by amount difference;
+    :Reload table;
+    stop
+  else (no)
+    stop
+  endif
+else (delete selected)
+  :Ask for delete confirmation;
+  if (User confirms twice?) then (yes)
+    :TransactionService.delete_transaction();
+    :TransactionRepo.delete_transaction();
+    :BudgetService.add_to_budget(old amount);
+    :Reload table;
+    stop
+  else (no)
+    stop
+  endif
+endif
+@enduml
+
+@startuml
+title Money Manager - Manage Savings Goals Activity
+
+skinparam shadowing false
+skinparam activityBackgroundColor #eef4fb
+skinparam activityBorderColor #3b4a5a
+skinparam ArrowColor #3b4a5a
+
+start
+:Open GoalsDialog;
+:GoalService.get_all_goals();
+:Render goal cards or empty state;
+
+if (User adds goal?) then (yes)
+  :Ask for goal name;
+  :Ask for target amount;
+  :Ask for initial savings;
+  :GoalService.add_goal();
+  if (Validation fails?) then (yes)
+    :Show error message;
+    stop
+  else (no)
+    :GoalRepo.create_goal();
+    :Reload goals;
+    stop
+  endif
+elseif (User adds savings?) then (yes)
+  :Ask for contribution amount;
+  :GoalService.add_savings();
+  if (Amount is invalid?) then (yes)
+    :Show error message;
+    stop
+  else (no)
+    :GoalRepo.add_savings();
+    :Reload goals;
+    stop
+  endif
+else (delete goal)
+  :Ask for delete confirmation;
+  if (User confirms?) then (yes)
+    :GoalService.delete_goal();
+    :GoalRepo.delete_goal();
+    :Reload goals;
+    stop
+  else (no)
+    stop
+  endif
+endif
+@enduml

@@ -138,6 +138,9 @@ plantuml docs\*.puml
 
 | Diagram | File |
 | --- | --- |
+| Project system design | `docs/system_design.puml` |
+| Project class diagram | `docs/class_diagram.puml` |
+| Main activity diagrams | `docs/activity_diagrams.puml` |
 | Database/service architecture | `docs/database_service_architecture.puml` |
 | Add-transaction service sequence | `docs/database_service_sequence.puml` |
 | Application use cases | `docs/database_service_use_case.puml` |

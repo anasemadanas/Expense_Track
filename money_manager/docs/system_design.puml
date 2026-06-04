@@ -1,0 +1,125 @@
+@startuml
+title Money Manager - System Design
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam ArrowColor #3b4a5a
+skinparam ComponentBackgroundColor #eef4fb
+skinparam DatabaseBackgroundColor #fff5df
+skinparam ArtifactBackgroundColor #f7f7f7
+
+actor "Desktop User" as User
+
+node "User Workstation" {
+  component "Money Manager\nPySide6 Desktop App" as App {
+    package "Presentation Layer\nui/" {
+      [LoginScreen] as LoginUI
+      [MainScreen Dashboard] as DashboardUI
+      [AddBudget Dialog] as BudgetUI
+      [AddTransaction Dialog] as TransactionUI
+      [ListTransaction Dialog] as ListUI
+      [GoalsDialog] as GoalsUI
+    }
+
+    package "Business Layer\nservices/" {
+      [UserService] as UserService
+      [DashBoardService] as DashboardService
+      [BudgetService] as BudgetService
+      [TransactionService] as TransactionService
+      [GoalService] as GoalService
+    }
+
+    package "Data Access Layer\nrepository/" {
+      [UserRepo] as UserRepo
+      [BudgetRepo] as BudgetRepo
+      [TransactionRepo] as TransactionRepo
+      [GoalRepo] as GoalRepo
+    }
+
+    package "Infrastructure" {
+      [initialize_database()] as Setup
+      [DatabaseConnection] as DBConnection
+      [ThemeManager] as ThemeManager
+      [ActivityLogger] as ActivityLogger
+      [resource_path()] as ResourcePath
+    }
+  }
+
+  database "SQLite Database\nMoney_Manager_DB.db" as SQLite
+  artifact "theme.json" as ThemeFile
+  artifact "activity.log" as ActivityLog
+  folder "resources/icons" as Icons
+}
+
+User --> LoginUI : starts app and signs in
+User --> DashboardUI : views and manages finances
+
+[main.py] --> Setup : initialize schema / migrate
+[main.py] --> LoginUI : show login window
+[main.py] --> ThemeManager : apply theme
+
+LoginUI --> UserService : login, register, reset password
+LoginUI ..> ActivityLogger : log login
+LoginUI ..> DashboardUI : open after authentication
+
+DashboardUI --> DashboardService : summaries, charts, save/export
+DashboardUI --> BudgetUI : add monthly budget
+DashboardUI --> TransactionUI : add transaction
+DashboardUI --> ListUI : manage transactions
+DashboardUI ..> GoalsUI : goals feature dialog exists
+DashboardUI ..> ThemeManager : theme buttons on login window
+
+BudgetUI --> BudgetService : create or increase budget
+BudgetUI ..> ActivityLogger : budget events
+TransactionUI --> TransactionService : validate and add transaction
+TransactionUI ..> BudgetUI : prompt when budget is missing
+TransactionUI ..> ActivityLogger : transaction event
+ListUI --> TransactionService : read, edit, delete
+ListUI --> DashboardService : export table data
+GoalsUI --> GoalService : add savings goals
+
+TransactionService --> BudgetService : check and reconcile budget balance
+
+UserService --> UserRepo
+DashboardService --> TransactionRepo
+DashboardService --> BudgetRepo
+BudgetService --> BudgetRepo
+TransactionService --> TransactionRepo
+GoalService --> GoalRepo
+
+UserRepo --> DBConnection
+BudgetRepo --> DBConnection
+TransactionRepo --> DBConnection
+GoalRepo --> DBConnection
+Setup --> DBConnection
+DBConnection --> SQLite : sqlite3 queries
+
+ThemeManager --> ThemeFile : load / save color mode
+ActivityLogger --> ActivityLog : append audit lines
+LoginUI ..> ResourcePath
+BudgetUI ..> ResourcePath
+TransactionUI ..> ResourcePath
+ListUI ..> ResourcePath
+GoalsUI ..> ResourcePath
+ResourcePath --> Icons : resolve packaged assets
+
+note right of UserService
+  Passwords and recovery codes are
+  validated in services and hashed
+  in UserRepo before storage.
+end note
+
+note bottom of SQLite
+  User-owned tables:
+  budgets, transactions, goals.
+  Foreign keys cascade from users.
+end note
+
+note right of DashboardUI
+  Feature buttons are guarded by
+  UserPermissions bit flags.
+end note
+@enduml
+

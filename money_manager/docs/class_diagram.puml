@@ -1,0 +1,333 @@
+@startuml
+title Money Manager - Class Diagram
+
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam ArrowColor #3b4a5a
+skinparam ClassBackgroundColor #eef4fb
+skinparam ClassBorderColor #3b4a5a
+
+package "models" {
+  class User {
+    +name: str
+    +Password: str
+    +__init__(name: str, Password: str)
+  }
+
+  class Transaction {
+    +id
+    +amount: float
+    +category: str
+    +month: int
+    +year: int
+    +__init__(amount: float, category: str, month: int, year: int, id=None)
+  }
+
+  class Budget {
+    +id
+    +amount: float
+    +totalamount: float
+    +month: int
+    +year: int
+    +__init__(amount: float, totalamount: float, month: int, year: int, id=None)
+  }
+
+  class Goal {
+    +id
+    +name: str
+    +target_amount: float
+    +saved_amount: float
+    +progress_percent: int
+    +is_complete: bool
+    +__init__(name: str, target_amount: float, saved_amount: float = 0.0, id=None)
+  }
+
+  enum UserPermissions {
+    ADD_TRANSACTION
+    ADD_BUDGET
+    LIST_TRANSACTION
+  }
+
+  class "has_permission()" as HasPermission {
+    +has_permission(user_permissions: int, permission: UserPermissions): bool
+  }
+}
+
+package "services" {
+  interface IUserService {
+    +login(username, password)
+    +register(username, password, confirm_password, recovery_key)
+    +reset_password(username, recovery_key, password, confirm_password)
+    +set_recovery_key(user_id, recovery_key, confirm_recovery_key)
+  }
+
+  class UserService {
+    -user_repo
+    -login_attempts: int
+    -max_attempts: int
+    +login(username, password)
+    +register(username, password, confirm_password, recovery_key)
+    +reset_password(username, recovery_key, password, confirm_password)
+    +set_recovery_key(user_id, recovery_key, confirm_recovery_key)
+  }
+
+  interface IBudgetService {
+    +create_budget(amount: float, month: int, year: int)
+    +validate_budget(amount, month, year)
+    +check_budget(month, year)
+    +deduct_from_budget(amount: float, month, year)
+    +add_to_budget(amount, month, year)
+    +increase_budget_total(amount, month, year)
+  }
+
+  class BudgetService {
+    -budget_repo
+    +create_budget(amount: float, month: int, year: int)
+    +validate_budget(amount, month, year)
+    +check_budget(month, year)
+    +deduct_from_budget(amount: float, month, year)
+    +add_to_budget(amount, month, year)
+    +increase_budget_total(amount, month, year)
+    +get_budget_balance(month, year)
+  }
+
+  interface ITransactionService {
+    +get_budget_warning(amount_trans, month, year)
+    +add_transaction(amount_trans, category, month, year)
+    +validate_transaction(amount_trans, month, year, budget)
+    +get_transactions()
+    +edit_transaction(tid, new_amount, month, year)
+    +delete_transaction(transaction_id)
+  }
+
+  class TransactionService {
+    -transaction_repo
+    -budget_service
+    +get_budget_warning(amount_trans, month, year)
+    +add_transaction(amount_trans, category, month, year)
+    +validate_transaction(amount_trans, month, year, budget)
+    +get_budget_balance(month, year)
+    +get_transaction_warning(old_amount, new_amount)
+    +get_transactions()
+    +edit_transaction(tid, new_amount, month, year)
+    +delete_transaction(transaction_id)
+  }
+
+  interface IDashboardService {
+    +show_about()
+    +open_guide()
+    +save_data(month, year)
+    +export_data(month, year)
+    +get_all_transactions()
+    +get_transactions_for_month(month, year)
+    +get_budget_summary(month, year)
+  }
+
+  class DashBoardService {
+    -transaction_repo
+    -budget_repo
+    +show_about()
+    +open_guide()
+    +save_data(month=None, year=None)
+    +export_data(month=None, year=None)
+    +get_all_transactions()
+    +get_transactions_for_month(month, year)
+    +get_current_month_balance()
+    +get_balance_for_month(month, year)
+    +get_budget_summary(month, year)
+  }
+
+  interface IGoalService {
+    +add_goal(name: str, target_amount: float, initial_saved: float = 0.0)
+    +get_all_goals()
+    +add_savings(goal_id: int, amount: float)
+    +delete_goal(goal_id: int)
+  }
+
+  class GoalService {
+    -goal_repo
+    +add_goal(name: str, target_amount: float, initial_saved: float = 0.0)
+    +get_all_goals()
+    +add_savings(goal_id: int, amount: float)
+    +delete_goal(goal_id: int)
+  }
+}
+
+package "repository" {
+  interface IUserRepo {
+    +find_user(username: str, password: str)
+    +create_user(username: str, password: str, recovery_key: str, permissions: int = 7)
+    +reset_password(username: str, recovery_key: str, password: str)
+    +set_recovery_key(user_id: int, recovery_key: str)
+  }
+
+  class UserRepo {
+    +find_user(username: str, password: str)
+    +create_user(username: str, password: str, recovery_key: str, permissions: int = 7)
+    +reset_password(username: str, recovery_key: str, password: str)
+    +set_recovery_key(user_id: int, recovery_key: str)
+  }
+
+  interface IBudgetRepo {
+    +create_budget(amount: float, month: int, year: int)
+    +check_budget(month: int, year: int)
+    +deduct_from_budget(amount_spent: float, month: int, year: int)
+    +add_to_budget(amount, month, year)
+    +get_budget(month: int, year: int)
+    +update_budget(budget_id: int, amount: float)
+    +delete_budget(budget_id: int)
+  }
+
+  class BudgetRepo {
+    -user_id: int
+    -db: DatabaseConnection
+    +create_budget(amount: float, month: int, year: int)
+    +check_budget(month, year)
+    +deduct_from_budget(amount_spent: float, month: int, year: int)
+    +add_to_budget(amount, month, year)
+    +increase_budget_total(amount, month, year)
+    +get_budget_balance(month, year)
+    +get_budget(month: int, year: int)
+    +update_budget(budget_id: int, amount: float)
+    +delete_budget(budget_id: int)
+  }
+
+  interface ITransactionRepo {
+    +add_transaction(transaction: Transaction)
+    +get_transactions()
+    +delete_transaction(transaction_id: int)
+    +update_transaction(transaction_id, new_amount, new_month, new_year)
+    +get_transaction_by_id(transaction_id: int)
+    +get_transactions_by_month(month, year)
+  }
+
+  class TransactionRepo {
+    -user_id: int
+    -db: DatabaseConnection
+    +add_transaction(transaction: Transaction)
+    +get_transactions()
+    +get_transaction_by_id(transaction_id: int)
+    +update_transaction(transaction_id, new_amount, new_month, new_year)
+    +delete_transaction(transaction_id: int)
+    +get_transactions_by_month(month, year)
+  }
+
+  interface IGoalRepo {
+    +create_goal(name: str, target_amount: float, initial_saved: float = 0.0)
+    +get_all_goals()
+    +add_savings(goal_id: int, amount: float)
+    +delete_goal(goal_id: int)
+  }
+
+  class GoalRepo {
+    -user_id: int
+    -db: DatabaseConnection
+    +create_goal(name: str, target_amount: float, initial_saved: float = 0.0)
+    +get_all_goals()
+    +add_savings(goal_id: int, amount: float)
+    +delete_goal(goal_id: int)
+  }
+}
+
+package "database" {
+  class DatabaseConnection {
+    -db_path
+    -conn
+    +execute(query, params=None, fetch=None)
+    +executescript(script)
+    +__enter__()
+    +__exit__(exc_type, exc_value, traceback)
+  }
+
+  class "database_setup" as DatabaseSetup {
+    +initialize_database()
+    -_migrate_existing_database(db)
+  }
+}
+
+package "ui" {
+  class LoginScreen <<boundary>>
+  class MainScreen <<boundary>>
+  class AddBudget <<boundary>>
+  class AddTransaction <<boundary>>
+  class ListTransaction <<boundary>>
+  class GoalsDialog <<boundary>>
+}
+
+package "common" {
+  class ActivityLogger {
+    +log_login(username: str)
+    +log_budget(amount: float, month: int, year: int, action: str)
+    +log_transaction(amount: float, category: str, month: int, year: int)
+    +log_exit(username: str)
+  }
+
+  class ThemeManager {
+    -app
+    -theme
+    +choose_color()
+    +reset_theme()
+    +apply_theme()
+    +save_theme()
+    +load_theme()
+  }
+}
+
+UserService ..|> IUserService
+BudgetService ..|> IBudgetService
+TransactionService ..|> ITransactionService
+DashBoardService ..|> IDashboardService
+GoalService ..|> IGoalService
+
+UserRepo ..|> IUserRepo
+BudgetRepo ..|> IBudgetRepo
+TransactionRepo ..|> ITransactionRepo
+GoalRepo ..|> IGoalRepo
+
+LoginScreen --> UserService
+MainScreen --> DashBoardService
+MainScreen ..> AddBudget
+MainScreen ..> AddTransaction
+MainScreen ..> ListTransaction
+MainScreen ..> UserPermissions
+MainScreen ..> HasPermission
+AddBudget --> BudgetService
+AddTransaction --> TransactionService
+ListTransaction --> TransactionService
+ListTransaction --> DashBoardService
+GoalsDialog --> GoalService
+
+UserService o--> UserRepo
+BudgetService o--> BudgetRepo
+TransactionService o--> TransactionRepo
+TransactionService o--> BudgetService
+DashBoardService o--> TransactionRepo
+DashBoardService o--> BudgetRepo
+GoalService o--> GoalRepo
+
+UserRepo --> DatabaseConnection
+BudgetRepo --> DatabaseConnection
+TransactionRepo --> DatabaseConnection
+GoalRepo --> DatabaseConnection
+DatabaseSetup --> DatabaseConnection
+
+TransactionRepo ..> Transaction : creates / returns
+BudgetRepo ..> Budget : returns
+GoalRepo ..> Goal : returns
+TransactionService ..> Transaction : creates
+ActivityLogger ..> User : reads current user dictionary
+
+note right of UserRepo
+  Hashes new passwords and recovery keys.
+  Legacy plaintext passwords are upgraded
+  after a successful login.
+end note
+
+note bottom of TransactionService
+  Adds, edits, and deletes transactions
+  while adjusting the matching monthly budget.
+end note
+@enduml
+
